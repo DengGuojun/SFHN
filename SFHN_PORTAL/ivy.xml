@@ -1,0 +1,55 @@
+<ivy-module version="1.0"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"            
+            xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
+    <info organisation="trendy" module="poc_test"/>
+
+	<configurations>
+		<include file="../../IVY_LIB/default-ivy-configurations.xml"/>
+	</configurations>
+     
+	<dependencies>
+		<dependency org="apache" name="commons-logging" rev="1.2" transitive="false"/>
+		<dependency org="apache" name="commons-beanutils" rev="1.9.2" transitive="false"/>
+		<dependency org="apache" name="commons-collections" rev="3.2.1" transitive="false"/>
+		<dependency org="apache" name="commons-codec" rev="1.10" transitive="false"/>
+		<dependency org="apache" name="commons-pool" rev="1.6" transitive="false"/>
+		<dependency org="apache" name="commons-pool2" rev="2.4.2" transitive="false"/>
+		<dependency org="apache" name="commons-fileupload" rev="1.3.1" transitive="false"/>
+		<dependency org="apache" name="commons-io" rev="2.4" transitive="false"/>
+		<dependency org="apache" name="httpclient" rev="4.5.1" transitive="false"/>
+		<dependency org="apache" name="httpcore" rev="4.4.4" transitive="false"/>
+		<dependency org="apache" name="log4j-api" rev="2.4.1" transitive="false"/>
+		<dependency org="apache" name="log4j-core" rev="2.4.1" transitive="false"/>
+		<dependency org="apache" name="log4j-slf4j-impl" rev="2.4.1" transitive="false"/>
+		<dependency org="slf4j" name="slf4j-api" rev="1.7.12" transitive="false"/>
+		<dependency org="coobird" name="thumbnailator" rev="0.4.8" transitive="false"/>
+		<dependency org="dom4j" name="dom4j" rev="2.0.0" transitive="false"/>
+		<dependency org="logicalcobwebs" name="proxool-cglib" rev="0.9.1" transitive="false"/>
+		<dependency org="logicalcobwebs" name="proxool" rev="0.9.1" transitive="false"/>
+		<dependency org="mysql" name="mysql-connector-java" rev="5.1.37" transitive="false"/>	
+		<dependency org="fastxml" name="jackson-core" rev="2.7.0" transitive="false"/>
+		<dependency org="fastxml" name="jackson-annotations" rev="2.7.0" transitive="false"/>
+		<dependency org="fastxml" name="jackson-databind" rev="2.7.0" transitive="false"/>
+		<dependency org="lpmas" name="lpmas-framework" rev="1.0.0" transitive="false"/>
+		<dependency org="lpmas" name="lpmas-tools" rev="0.1.0" transitive="false"/>
+		<dependency org="lpmas" name="lpmas-region-client" rev="0.1.0" transitive="false"/>
+		<dependency org="lpmas" name="lpmas-passport-client" rev="1.0.0" transitive="false"/>
+		<dependency org="lpmas" name="lpmas-constant" rev="1.0.0" transitive="false"/>
+		<dependency org="lpmas" name="lpmas-picture-client" rev="0.1.0" transitive="false"/>
+		<dependency org="lpmas" name="lpmas-sfhn-base" rev="1.0.0" transitive="false"/>
+		<dependency org="lpmas" name="lpmas-user-client" rev="0.1.0" transitive="false"/>
+		<dependency org="lpmas" name="lpmas-ccp-message-client" rev="0.1.0" transitive="false"/>
+	    <dependency org="aliyun" name="aliyun-sdk-oss" rev="2.2.1" transitive="false"/>     
+	    <dependency org="hamcrest" name="hamcrest-core" rev="1.1" transitive="false"/>
+	    <dependency org="jdom" name="jdom" rev="1.1" transitive="false"/>
+	    <dependency org="mongodb" name="mongo-java-driver" rev="3.2.2" transitive="false"/>
+	    <dependency org="opencsv" name="opencsv" rev="3.5" transitive="false"/>
+	    <dependency org="apache" name="poi" rev="3.13" transitive="false"/> 
+		<dependency org="apache" name="poi-ooxml" rev="3.13" transitive="false"/>
+		<dependency org="apache" name="poi-ooxml-schemas" rev="3.13" transitive="false"/>
+		<dependency org="apache" name="xmlbeans" rev="2.6.0" transitive="false"/> 
+		<dependency org="apache" name="activemq-client" rev="5.13.2" transitive="false"/>
+		<dependency org="apache" name="geronimo-j2ee-management" rev="1.1" transitive="false"/>
+	</dependencies>
+        
+</ivy-module>		

@@ -1,0 +1,216 @@
+@charset "utf-8";
+/*!=================
+ * 文件编码：utf-8
+ * 开发版本：v1.0     2016.01.05  wenyang.zhou
+ * 文件说明：首页样式
+==================*/
+/* ==================
+* 文件编码：utf-8
+* 开发版本：v1.0     2016.01.05  wenyang.zhou
+* 文件说明：基础变量
+================== */
+/* 文字大小 */
+/* 页面宽度 */
+/* 颜色值*/
+/* 图片路径 */
+/* ==================
+* 文件编码：utf-8
+* 开发版本：v1.0     2016.01.05  wenyang.zhou
+* 文件说明：混合变量
+================== */
+/* ==================
+* 文件编码：utf-8
+* 开发版本：v1.0     2016.01.05  wenyang.zhou
+* 文件说明：css3混合变量
+================== */
+@-webkit-keyframes 'rotate' {
+  0% {
+    transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+  }
+}
+.home-slide {
+  max-width: 750px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.home-slide .item {
+  max-height: 200px;
+  overflow: hidden;
+}
+.home-slide .owl-text {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 8px 16px;
+  font-size: 1.125rem;
+  color: #fff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.home-h2 {
+  background-color: #fff;
+  padding: 13px 13px 0;
+  color: #5dab2f;
+  position: relative;
+}
+.home-h2:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 25px;
+  border-bottom: solid 2px #f2f2f2;
+  width: 100%;
+  z-index: 2;
+}
+.home-h2 .tit {
+  padding: 1px 13px;
+  background-color: #fff;
+  position: relative;
+  z-index: 9;
+  border-radius: 20px;
+  border: solid 1px #f2f2f2;
+}
+.home-more {
+  background-color: #fff;
+  border-top: solid 1px #f2f2f2;
+  color: #5dab2f;
+  padding: 13px 0;
+  text-align: center;
+  display: block;
+}
+/* ==================
+ * 文件编码：utf-8
+ * 开发版本：v1.0     2015.03.30  wenyang.zhou
+ * 文件说明：页脚
+================== */
+/* 返回顶部 */
+.g-totop {
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  z-index: 99;
+  width: 46px;
+  height: 46px;
+  text-align: center;
+  line-height: 46px;
+  border-radius: 25px;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: inline-block;
+  border: solid 2px #fff;
+}
+.g-totop:hover {
+  background-color: #5dab2f;
+}
+/* 底部悬浮 */
+.footer-fixed {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 999;
+  width: 100%;
+}
+/* 底部菜单 */
+.footer-nav {
+  height: 48px;
+  max-width: 750px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #fff;
+  border-top: solid 1px #e0e0e0;
+  padding: 0 13px;
+  font-size: .75rem;
+  overflow: hidden;
+}
+.footer-nav.li-half {
+  position: relative;
+  font-size: .875rem;
+  color: #666;
+}
+.footer-nav.li-half:after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 15%;
+  height: 70%;
+  border-left: solid 1px #d8d8d8;
+}
+.footer-nav.li-half li {
+  width: 50%;
+}
+.footer-nav.li-half li a {
+  line-height: 40px;
+}
+.footer-nav li {
+  float: left;
+  width: 25%;
+  text-align: center;
+}
+.footer-nav li a {
+  display: block;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  line-height: 1.3;
+}
+.footer-nav li.selected a {
+  color: #5dab2f;
+}
+.footer-nav li.selected .icon-ft.ft-nav01 {
+  background-position: 0 -96px;
+}
+.footer-nav li.selected .icon-ft.ft-nav02 {
+  background-position: 0 -120px;
+}
+.footer-nav li.selected .icon-ft.ft-nav03 {
+  background-position: 0 -144px;
+}
+.footer-nav li.selected .icon-ft.ft-nav04 {
+  background-position: 0 -168px;
+}
+.footer-nav li.selected .icon-ft.ft-nav05 {
+  background-position: 0 -218px;
+}
+.icon-ft {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 0;
+  background: url("../../images/ft-nav.png") no-repeat;
+  background-size: 24px;
+  width: 24px;
+  height: 24px;
+}
+.icon-ft.ft-nav01 {
+  background-position: 0 0;
+}
+.icon-ft.ft-nav02 {
+  background-position: 0 -24px;
+}
+.icon-ft.ft-nav03 {
+  background-position: 0 -48px;
+}
+.icon-ft.ft-nav04 {
+  background-position: 0 -72px;
+}
+.icon-ft.ft-nav05 {
+  background-position: 0 -288px;
+}
+.icon-ft.ft-nav06 {
+  background-position: 0 -192px;
+}
+.icon-ft.ft-nav07 {
+  background-position: 0 -242px;
+}
+/*!=================
+ * 开发版本：v2.0     2016.03.08  xql
+ * 文件说明：首页模块更新
+==================*/
+.footer-nav {
+  background-color: #fffdf9;
+}

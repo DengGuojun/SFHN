@@ -1,0 +1,507 @@
+@charset "utf-8";
+/*!=================
+ * 文件编码：utf-8
+ * 开发版本：v1.0     2016.01.05  wenyang.zhou
+ * 文件说明：会员中心样式
+==================*/
+/* ==================
+* 文件编码：utf-8
+* 开发版本：v1.0     2016.01.05  wenyang.zhou
+* 文件说明：基础变量
+================== */
+/* 文字大小 */
+/* 页面宽度 */
+/* 颜色值*/
+/* 图片路径 */
+/* ==================
+* 文件编码：utf-8
+* 开发版本：v1.0     2016.01.05  wenyang.zhou
+* 文件说明：混合变量
+================== */
+/* ==================
+* 文件编码：utf-8
+* 开发版本：v1.0     2016.01.05  wenyang.zhou
+* 文件说明：css3混合变量
+================== */
+@-webkit-keyframes 'rotate' {
+  0% {
+    transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+  }
+}
+.member-box {
+  padding: 50px 10%;
+  min-height: 430px;
+  color: #999;
+}
+.member-box input {
+  border: none;
+}
+.member-info {
+  padding: 2rem 10%;
+  color: #fff;
+  background: url("../../images/me_bg.jpg") no-repeat;
+  background-position: center center;
+  background-size: 100%;
+  text-align: center;
+}
+.member-info .mb-name {
+  font-size: 1.125rem;
+}
+.member-info .mb-info,
+.member-info .mb-area {
+  font-size: .75rem;
+}
+.member-info .mb-info {
+  color: #fffea8;
+}
+.member-btn {
+  margin: 36px 10px 0;
+}
+.member-callback {
+  text-align: center;
+  padding-bottom: 50px;
+}
+.member-head {
+  width: 85px;
+  height: 85px;
+  background-color: #ccc;
+  border-radius: 100%;
+  margin: 0 auto 20px;
+}
+.member-head img {
+  width: 100%;
+  border-radius: 100%;
+}
+.member-list {
+  background-color: #fff;
+}
+.member-list li {
+  min-height: 50px;
+  line-height: 50px;
+  border-bottom: solid 1px #f2f2f2;
+}
+.member-list li:last-child {
+  border-bottom: none;
+}
+.member-list li a {
+  padding: 0 16px;
+  display: block;
+}
+.member-list li .mb-quit {
+  text-align: center;
+  color: #ff7d7d;
+}
+.member-msg {
+  padding: 0 3px;
+}
+.member-msg li {
+  padding: 16px 0;
+  border-bottom: solid 1px #f2f2f2;
+}
+.member-msg li .m-time {
+  font-size: .75rem;
+  color: #999;
+}
+.member-msg li .m-txt {
+  font-size: .875rem;
+  color: #535353;
+  margin-top: 4px;
+}
+.member-msg li .m-aq {
+  color: #ff7b50;
+}
+.member-about {
+  padding: 30px 7px;
+  color: #666;
+  font-size: .875rem;
+}
+.member-about .about-hd {
+  margin-bottom: 2rem;
+}
+.member-about .about-hd img {
+  float: left;
+  margin-right: 10px;
+}
+.member-about .about-hd .about-tit {
+  font-size: 1.125rem;
+  color: #333;
+}
+.member-about .m-h2 {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+  margin: 1rem 0 .5rem;
+}
+.member-path {
+  background-color: #fff;
+  padding: 13px 16px;
+}
+.member-marketlist dt {
+  background-color: #f2f2f2;
+  padding: 27px 16px 5px;
+  color: #999;
+  font-size: .75rem;
+}
+.member-marketlist dd {
+  border-bottom: solid 1px #f2f2f2;
+  background-color: #fff;
+  padding: 13px 16px;
+  line-height: 28px;
+}
+
+
+/*!=================
+ * 文件更新
+ * 开发版本：v2.0  2016.03.08  Ming
+==================*/
+
+.member-list{
+    background: #fffdf9;
+}
+
+.member-btn.g-mt0{
+  margin-top: 0
+}
+.member-space{
+  padding-bottom: 45px
+}
+.crop{
+    background: #fffdf9;
+    padding: 0 16px;
+}
+.crop .crop-h2{
+    // padding-top: 10px;
+    font-size: .75rem;
+    line-height: 50px;
+    height: 50px;
+}
+.crop .crop-h2 h2{
+    font-size: .7rem;
+    font-weight: 400;
+    color: #999
+}
+.likes-list{
+    list-style: none;
+}
+.likes-list li{
+    line-height: 34px;
+    border-bottom: 1px solid #f2f2f2;
+    background: #fffdf9
+}
+.likes-list li a{
+    padding: 16px 0;
+    height: 36px;
+    display: block
+}
+.likes-list li .name{
+    float: left;
+}
+.likes-list li .btn-likes{
+    float: right;
+    margin-top: 2px;
+    border: 1px solid #ff7b50;
+    color: #ff7b50;
+}
+.likes-list li .dislike{
+    border: 1px solid #b0b0af;
+    color: #b0b0af;
+}
+.member-info .mb-area.font-99c{
+    color: #fff99c;
+}
+.member-info .menu{
+    margin: 5px 0 0;
+}
+.member-info .menu:after{
+    content: '';
+    display: table;
+    clear: both;
+}
+.member-info .menu a{
+    color: #fff;
+    font-size: .875rem;
+    text-align: left;
+}
+.member-info .menu .g-fl{
+    float: left;
+}
+.member-info .menu .g-fr{
+    float: right;
+}
+.member-info .menu .f-tar{
+    text-align: right
+}
+.member-header{
+    position: relative;
+    width: 85px;
+    height: 85px;
+    margin: 0 auto 15px;
+    text-align: center;
+}
+.member-header .member-head{
+    margin: 0;
+}
+.member-header .piont{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border-radius: 50%;
+    border: 2px solid #2f9f1c;
+    width: 20px;
+    height: 20px;
+    background: #fa6d36;
+    font-size: .875rem;
+    line-height: 16px;
+    text-align: center;
+}
+.icon-weather{
+    display: inline-block;
+    width: 30px;
+    font-size: 0;
+    line-height: 0;
+    vertical-align: middle
+
+}
+.icon-weather img{
+    width: 100%;
+}
+.member-list-icon{
+    margin-right:16px;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    font-size: 0;
+    background: url(../../images/member-list.png) no-repeat;
+    background-size: 20px;
+    vertical-align: middle;
+}
+.member-list-icon.icon-wd{
+    background-position: 0 0;
+}
+.member-list-icon.icon-zw{
+    background-position: 0 -26px;
+}
+.member-list-icon.icon-gzwd{
+    background-position: 0 -52px;
+}
+.member-list-icon.icon-xx{
+    background-position: 0 -78px;
+}
+.u-btn.btn-maincolor:hover,.u-btn.btn-maincolor:active{
+    background-color: #459516;
+    border-color: #459516;
+}
+.ask-item{
+    background: #fffdf9;
+}
+.ask-label{
+    position: relative;
+    margin: 10px 0;
+    border-bottom: 1px solid #e0e0e0;
+    width: 100%;
+    height: 0px;
+}
+.ask-label span{
+    display: block;
+    position: absolute;
+    top: -10px;
+    left: 0;
+    padding-right: 10px;
+    height: 20px;
+    font-size: .75rem;
+    color: #4a4a4a;
+    line-height: 20px;
+    background: #fff;
+
+}
+.g-h2 a:first-child{
+    margin: 0;
+}
+.btn-abs{
+    position:absolute;
+    top: 0;
+    left: 0;
+}
+.g-logo{
+    margin-bottom: 50px;
+    text-align: center;
+    color: #454442;
+}
+.g-logo .logo-img{
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    font-size: 0;
+    vertical-align: middle;
+    background: url(../../images/logo-img.png) no-repeat;
+    background-size: 100%;
+}
+.member-btn.disabled .m-btn{
+    background-color: #cfe4bd;
+    color: #fff;
+    border-color: #cfe4bd;
+}
+.other-login{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 0 10%;
+    max-width: 750px;
+}
+.other-login a{
+    padding: 5px 10px;
+    font-size: .875rem;
+    line-height: 30px;
+}
+.other-login .login-qq{
+    margin-left: 13px;
+    color: #3d7196;
+    float: left;
+}
+.other-login .login-wx{
+    margin-right: 13px;
+    color: #429240;
+    float: right;
+}
+.icon-other{
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    font-size: 0;
+    vertical-align: middle;
+    background: url(../../images/icon-other.png) no-repeat;
+    background-size: 100%;
+}
+.icon-other.icon-qq{
+    background-position: 0 -62px;
+}
+.icon-other.icon-wx{
+    background-position: 0 -32px;
+}
+.header-dots{
+    text-align: left;
+    padding-left: 100px;
+    top: 15px;
+    // left: 0;
+}
+.header-dots.swiper-pagination .swiper-pagination-bullet{
+    margin:0;
+    margin-left: 4px;
+    width: 5px;
+    height: 5px;
+    background: #D8E783;
+}
+.header-dots.swiper-pagination .swiper-pagination-bullet-active{
+    margin-bottom: -2px;
+    width: 10px;
+    height: 10px;
+}
+.c-646{
+    color: #646464;
+}
+.member-callback{
+    padding-bottom: 25px;
+}
+.member-btn.callback-btn{
+    margin-top: 0 
+}
+.logo-index{
+    margin: 50px auto 0;
+    width: 90px;
+    height: 90px;
+}
+.logo-index img{
+    width: 100%;
+    height: 100%;
+}
+.logo-title{
+    margin-top: 10px;
+    text-align: center;
+    font-size: 1.25rem;
+    line-height: 24px;
+    color: #666;
+}
+.btn-cont{
+    margin-top: 80px;
+}
+.member-btn .m-btn.btn-white{
+    background:#fffdf9;
+    border:1px solid #979797;
+    color: #5dab2f;
+}
+.member-btn .m-btn.btn-white:hover,.member-btn .m-btn.btn-white:active{
+    background:#fffdf9;
+    border:1px solid #979797;
+    color: #5dab2f;
+}
+/*!=================
+ * 文件更新
+ * 开发版本：v2.0  2016.04.11  XQl
+==================*/
+
+.myPerson{
+background:#fffdf9;
+    margin-bottom: 10px;
+}
+.myPerson::after{
+    content: '';
+    clear: both;
+    display: block;
+}
+.myPerson-one{
+    background: #fffdf9 !important;
+    border-bottom: 1px solid #f2f2f2;
+}
+.myPerson-status{
+    background: url('../../images/right-point.png') no-repeat right/10px auto;
+    padding-right:20px;
+    display: inline-block;
+    min-width: 20px;
+    height: 22px;
+}
+.myPerson-que{
+    font-size: 0.875rem !important;
+    color: #4a4a4a;
+    background: #fffdf9 !important;
+}
+.myPerson-article{
+    font-size: 0.875rem !important;
+    color: #9b9b9b;
+    border-bottom: 1px solid #f2f2f2;
+    padding: 0;
+}
+.myPerson-num{
+    font-size:0.75rem;
+    color:#fa6d36;
+    padding: 10px 16px;
+    border-bottom: 1px solid #f2f2f2;
+}
+.myPerson-btn{
+    background:#ffffff;
+    border:1px solid #444444;
+    border-radius:4px;
+    -webkit-border-radius: 4px;
+    float: right;
+    text-align: center;
+    padding: 5px 14px;
+    margin:8px 16px;
+    font-size:13px;
+    color:#444444;
+}
+.myPerson-ansbtn{
+    background: #5dab2f;
+    color: #fff;
+    border: 1px solid #5dab2f;
+}
+.detail-article.myPerson-article img{
+    display: none;
+}

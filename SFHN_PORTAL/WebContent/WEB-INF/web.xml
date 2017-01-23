@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <servlet>
+    <servlet-name>proxoolServletConfigurator</servlet-name>
+    <servlet-class>org.logicalcobwebs.proxool.configuration.ServletConfigurator</servlet-class>
+    <init-param>
+      <param-name>xmlFile</param-name>
+      <param-value>WEB-INF/classes/config/proxool.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet>
+    <servlet-name>AdminProxool</servlet-name>
+    <servlet-class>org.logicalcobwebs.proxool.admin.servlet.AdminServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminProxool</servlet-name>
+    <url-pattern>/adminProxool</url-pattern>
+  </servlet-mapping>
+  <filter>
+    <filter-name>requestCharsetEncodingFilter</filter-name>
+    <filter-class>com.lpmas.framework.web.filter.RequestCharsetEncodingFilter</filter-class>
+    <init-param>
+      <param-name>forceEncoding</param-name>
+      <param-value>false</param-value>
+    </init-param>
+    <init-param>
+      <param-name>defaultEncoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>requestCharsetEncodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <!-- AJAX CALL拦截 -->
+    <filter>
+    <filter-name>AjaxActionAuthFilter</filter-name>
+    <filter-class>com.lpmas.sfhn.portal.filter.AjaxActionAuthFilter</filter-class>
+    <!-- 豁免的路径 -->
+    <init-param>
+      <param-name>excludeURI</param-name>
+      <param-value>/user/Logon.do;/user/Logout.do;</param-value>
+    </init-param>
+     <!-- 需要拦截的方法 -->
+    <init-param>
+      <param-name>filterMethod</param-name>
+      <param-value>POST;PUT;</param-value>
+    </init-param>
+     <!-- 拦截后还需要继续走后续拦截器的方法 -->
+    <init-param>
+      <param-name>continueMethod</param-name>
+      <param-value>PUT;</param-value>
+    </init-param>
+    <!-- SSO登陆路径 -->
+    <init-param>
+      <param-name>SsoLogonUrl</param-name>
+      <param-value>http://passport.1haowenjian.cn/user/UserAccountLogin.do?target=</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>AjaxActionAuthFilter</filter-name>
+    <url-pattern>/*.do</url-pattern>
+  </filter-mapping>
+  <!-- 页面请求拦截 -->
+  <filter>
+    <filter-name>SsoClientAuthFilter</filter-name>
+    <filter-class>com.lpmas.ow.passport.sso.filter.SsoClientAuthFilter</filter-class>
+    <init-param>
+      <param-name>excludeURI</param-name>
+      <param-value>
+      		/user/Logon.do;/user/Logout.do;
+      </param-value>
+    </init-param>
+    <init-param>
+      <param-name>localLogonUrl</param-name>
+      <param-value>/user/Logon.do</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>SsoClientAuthFilter</filter-name>
+    <url-pattern>/*.do</url-pattern>
+  </filter-mapping>
+  <welcome-file-list>
+    <welcome-file>sfhn/DeclarePortalIndex.do</welcome-file>
+  </welcome-file-list>
+</web-app>

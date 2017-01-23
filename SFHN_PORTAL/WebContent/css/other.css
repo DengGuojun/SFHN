@@ -1,0 +1,161 @@
+.divider {margin-left: 20px}
+.table>thead>tr>th{text-align: center}
+.table>tbody>tr>td{text-align: center}
+.content{width:100%; height: 200px}
+/*
+*
+* add by XQL 2016/06/04ttt t
+*
+*/
+.glyphicon-chevron-right::before{
+    content: '>';
+}
+.glyphicon-chevron-left::before{
+    content: '<';
+}
+.pagination ul {
+    display: inline-block;
+    *display: inline;
+    margin-bottom: 0;
+    margin-left: 0;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    *zoom: 1;
+    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+.pagination ul{padding: 0}
+.pagination ul > li {
+    display: inline;
+}
+
+.pagination ul > li > a,
+.pagination ul > li > span {
+    float: left;
+    padding: 4px 12px;
+    line-height: 20px;
+    text-decoration: none;
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-left-width: 0;
+}
+
+.pagination ul > li > a:hover,
+.pagination ul > li > a:focus,
+.pagination ul > .active > a,
+.pagination ul > .active > span {
+    background-color: #f5f5f5;
+}
+
+.pagination ul > .active > a,
+.pagination ul > .active > span {
+    color: #999999;
+    cursor: default;
+}
+
+.pagination ul > .disabled > span,
+.pagination ul > .disabled > a,
+.pagination ul > .disabled > a:hover,
+.pagination ul > .disabled > a:focus {
+    color: #999999;
+    cursor: default;
+    background-color: transparent;
+}
+
+.pagination ul > li:first-child > a,
+.pagination ul > li:first-child > span {
+    border-left-width: 1px;
+    -webkit-border-bottom-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    -webkit-border-top-left-radius: 4px;
+    border-top-left-radius: 4px;
+    -moz-border-radius-bottomleft: 4px;
+    -moz-border-radius-topleft: 4px;
+}
+
+.pagination ul > li:last-child > a,
+.pagination ul > li:last-child > span {
+    -webkit-border-top-right-radius: 4px;
+    border-top-right-radius: 4px;
+    -webkit-border-bottom-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    -moz-border-radius-topright: 4px;
+    -moz-border-radius-bottomright: 4px;
+}
+.num-page{display: inline-block;margin-left:10px;position: relative;top:-9px;}
+.pagination em{margin: 8px;color: #428bca !important;cursor: pointer}
+.pagination li{color: #999;}
+.pagination b{color: #333}
+.pagination .pag-num{border: 1px solid #999;width: 40px;  }
+.pagination .pag-go{height: 26px;width: 34px;margin-left: 7px;text-align: center;padding: 0 0 0 3px;background: #428bca;border: 1px solid #428bca;color: #fff;}
+
+#content{ background: url(../images/index-bg.png) no-repeat 100% 68%/cover;width: 100%;height: 100%;margin-top: 50px;
+}
+.index .index-contain{margin: 0 auto;width: 850px;text-align: center;padding-top: 60px;}
+.index .content-box{position:relative;float: left;width: 270px;height: 230px;border: 1px solid #E0E0E0;background: #fff;margin: 5px;display: inline-block;vertical-align: top;}
+.index .content-box img{ position: relative;top:70px;}
+.index .content-p{font-size: 18px;color: #000000;position: absolute;top:155px;text-align: center;width: 100%}
+.index footer{position: absolute;bottom: 10px;color: #fff;font-size: 12px;width: 100%;text-align: center}
+.table-striped>tbody>tr:nth-child(odd)>td.item-left, .table>tbody>tr>td.item-left{
+    border: 1px solid #dddddd;
+    background: #9d9d9d;
+    color:#fff
+}
+.upload{
+    position: relative;
+    display: inline-block;
+	overflow:hidden;
+	vertical-align:middle;
+}
+.upload a{text-align: center; display: block; }
+td a{text-decoration: underline; cursor:pointer }
+input[type='file']{opacity: 0; position: absolute;top:0px; right:0; width:500px; cursor:pointer}
+.popup{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 50%;
+    top:0;
+    background: rgba(255, 255, 255, 0.8);
+    z-index: 2;
+    margin: 0 auto;
+    transform: translate(-50%, 0);
+    -webkit-transform:translate(-50%, 0);
+    display: none;
+
+}
+
+.loadingbox{
+    text-align: center;
+    vertical-align: middle;
+    height: 100%;
+    margin-top: 300px;
+}
+.loadingbtn {
+    margin: 2px 0;
+    display: inline-block;
+    vertical-align: middle;
+    height: 30px;
+    width: 30px;
+    overflow: hidden;
+    text-indent: 999em;
+    line-height: 30px;
+    background: url(../images/loading_40.40.png) 0 0 no-repeat;
+    background-position: 0 100%;
+    background-size: 30px auto;
+    -webkit-animation-name: loading;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+}
+
+@-webkit-keyframes loading {
+    from {
+        -webkit-transform: rotate(0deg) translateZ(0);
+    }
+    to {
+        -webkit-transform: rotate(360deg) translateZ(0);
+    }
+}

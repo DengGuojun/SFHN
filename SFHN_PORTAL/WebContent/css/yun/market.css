@@ -1,0 +1,625 @@
+@charset "utf-8";
+/*!=================
+ * 文件编码：utf-8
+ * 开发版本：v1.0     2016.01.05  wenyang.zhou
+ * 文件说明：行情样式
+==================*/
+/* ==================
+* 文件编码：utf-8
+* 开发版本：v1.0     2016.01.05  wenyang.zhou
+* 文件说明：基础变量
+================== */
+/* 文字大小 */
+/* 页面宽度 */
+/* 颜色值*/
+/* 图片路径 */
+/* ==================
+* 文件编码：utf-8
+* 开发版本：v1.0     2016.01.05  wenyang.zhou
+* 文件说明：混合变量
+================== */
+/* ==================
+* 文件编码：utf-8
+* 开发版本：v1.0     2016.01.05  wenyang.zhou
+* 文件说明：css3混合变量
+================== */
+@-webkit-keyframes 'rotate' {
+  0% {
+    transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+  }
+}
+/*body{
+	background-color: @color-white;
+}
+*/
+.market {
+  padding: 16px;
+  background-color: #fff;
+}
+.market-bdbox {
+  border-top: solid 1px #ccc;
+  border-bottom: solid 1px #ccc;
+  color: #999;
+  margin-bottom: 13px;
+  margin-top: 13px;
+  padding: 0 13px;
+  background-color: #fff;
+}
+.market-bdbox:last-child {
+  margin-bottom: 0;
+}
+.market-bdbox li {
+  position: relative;
+}
+.market-bdbox li a {
+  color: #999;
+  display: block;
+  padding: 11px 0;
+}
+.market-bdbox li.has-arr:after {
+  content: "";
+  position: absolute;
+  right: 13px;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  margin-top: -5px;
+  border-top: 2px solid #ccc;
+  border-right: 2px solid #ccc;
+  -webkit-animation-name: "rotate";
+  -webkit-animation-duration: 45deg;
+  -webkit-animation-iteration-count: 1;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+}
+.market-bdbox li.market-zw {
+  padding: 0 0 13px;
+  overflow: hidden;
+}
+.market-bdbox li.market-zw a {
+  padding: 0;
+  display: inline;
+}
+.market-bdbox li.market-zw .zw-item {
+  float: left;
+  width: 33.33%;
+  text-align: center;
+}
+.market-bdbox li.market-zw .zw-item a {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  display: inline-block;
+  font-size: .875rem;
+  border: 1px solid #fff;
+  width: 86px;
+  height: 86px;
+  box-sizing: border-box;
+}
+.market-bdbox li.market-zw .zw-item a:hover,
+.market-bdbox li.market-zw .zw-item a.selected {
+  color: #5dab2f;
+  border-color: #dbdbdb;
+}
+.market-bdbox li.market-zw .zw-item a img {
+  width: 48px;
+  height: 48px;
+}
+.market-bdbox li.market-zw .zw-item a span {
+  display: block;
+}
+.market-btn {
+  background-color: #ff7b50;
+  border-color: #ff7b50;
+  color: #fff;
+  padding: 8px;
+  margin-left: 2%;
+  margin-right: 2%;
+  width: 96%;
+}
+.market-btn:hover {
+  background-color: #c06446;
+  border-color: #c06446;
+  color: #fff;
+}
+.market-list li {
+  line-height: 34px;
+  border-bottom: solid 1px #f2f2f2;
+}
+.market-list li a {
+  display: block;
+  padding: 16px 0;
+  height: 36px;
+}
+.market-list li .m-name {
+  float: left;
+  width: 25%;
+}
+.market-list li .m-city {
+  float: left;
+  width: 47%;
+  font-size: .75rem;
+  line-height: 18px;
+}
+.market-list li .m-price {
+  float: left;
+  width: 28%;
+  color: #fb875a;
+  text-align: right;
+}
+.market-h2 {
+  padding-top: 10px;
+  font-size: .75rem;
+}
+.market-h2 h2 {
+  font-size: 1.125rem;
+  font-weight: normal;
+}
+.market-search {
+  border-bottom: solid 1px #f2f2f2;
+  background-color: #fff;
+  position: relative;
+  padding-left: 32px;
+}
+.market-search:after {
+  content: "";
+  position: absolute;
+  left: 13px;
+  top: 50%;
+  background: url("../../images/icon-ui.png") no-repeat;
+  background-size: 24px;
+  width: 24px;
+  height: 24px;
+  background-position: 0 -72px;
+  margin-top: -12px;
+}
+.market-search input[type='text'] {
+  border: none;
+}
+.market-title {
+  padding: 13px 16px;
+  color: #5dab2f;
+  background-color: #fff;
+}
+.market-city.shichang {
+  border-top: solid 6px #eee;
+}
+.market-city dt {
+  background-color: #f2f2f2;
+  padding: 0 16px;
+}
+.market-city dd {
+  border-bottom: solid 1px #f2f2f2;
+  background-color: #fff;
+}
+.market-city dd a {
+  display: block;
+  padding: 13px 16px;
+}
+.market-letter {
+  position: fixed;
+  right: 0;
+  top: 124px;
+}
+.market-letter a {
+  display: block;
+  font-size: .875rem;
+  text-align: center;
+  padding-left: 6px;
+  padding-right: 6px;
+}
+
+/*!=================
+ * 样式更新
+ * 开发版本：v2.0     2016.03.09  Ming
+==================*/
+.g-h2{
+  position: relative;
+}
+.market-city dd{
+  background: #fffdf9;
+}
+.search-item{
+  margin: 0 auto;
+  max-width: 750px;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 10px 16px;
+  background: #f8f9fb;
+}
+.search-item .market-search{
+  overflow: hidden;
+  border: 1px solid #dbdbdb;
+  border-radius: 22px;
+}
+.market-search input[type=text]{
+  height: 34px;
+  background: #fffdf9;
+}
+.search-item .search-fcous{
+  padding: 0;
+}
+.search-item .search-fcous:after{
+  content: '';
+  display: none;
+}
+.choose-city{
+  padding: 0 16px;
+}
+.choose-city .city-title{
+  font-size: .75rem;
+  margin-bottom: 10px;
+}
+.choose-city .cityBox{
+  margin-bottom: 10px;
+}
+.choose-city .cityBox ul{
+  list-style: none;
+}
+.choose-city .cityBox ul:after{
+  content: '';
+  display: table;
+  clear: both;
+}
+.choose-city .cityBox ul li{
+  margin-bottom: 10px;
+  float: left;
+  width: 33.3%;
+  text-align: left;
+}
+.choose-city .cityBox ul li:nth-of-type(3n+2){
+  text-align: center;
+}
+.choose-city .cityBox ul li:nth-of-type(3n){
+  text-align: right;
+}
+.choose-city .cityBox .city-item{
+  border: 1px solid #e6e5e5;
+  border-radius: 4px;
+  padding: 5px 30px;
+  font-size: .875rem;
+  line-height: 30px;
+  background: #fffdf9;
+  color: #333;
+}
+.choose-city .cityBox .city-item.city-cur{
+  color: #5dab2f;
+}
+.market-city dt{
+  background: #eee;
+}
+.market-letter{
+  top: 320px;
+}
+.icon-psa{
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.f-close{
+  width: 50px;
+  height: 50px;
+  background: url(../../images/close.png) no-repeat;
+  background-size: 16px;
+  background-position: 50% 50%;
+}
+.g-mask{
+  position: fixed;
+  top:0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, .6)
+}
+.market-nav{
+    position: relative;
+  padding: 0;
+  height: 50px;
+  background: #6be942
+}
+.market-nav  .swiper-pagination-bullet{
+    border-radius: 0;
+    width: 50%;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    color: rgba(255,255,255,.7);
+    font-size: 1rem;
+    opacity: 1;
+    background: #6be942;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.market-nav .swiper-pagination-bullet-active{
+    // border-bottom: 2px solid #fff99c;
+    color: #fff99c;
+    background: #6be942;
+}
+.content-nav .thumbs-scrollbar{
+    position: relative;
+    top:-2px;
+    left: 0;
+    height: 2px;
+}
+.content-nav .thumbs-scrollbar .swiper-scrollbar-drag{
+    
+    background: #fff99c;
+}
+.icon-arw{
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  font-size: 0;
+  vertical-align: middle;
+  background: url(../../images/icon-arw.png) no-repeat;
+  background-size: 24px;
+  background-position: 0 0;
+}
+.g-h2 .f-tag:first-child{
+  width: auto;
+  margin:0;
+}
+.g-h2 .tagSelect{
+  color: #fff99c;
+}
+.g-h2 .tagSelect .icon-arw{
+  background-position: 0 -30px;
+}
+.result-show{
+  margin: 0 auto;
+  padding: 0 13px;
+  max-width: 750px;
+  height: 50px;
+  line-height: 50px;
+  background: #eee;
+  box-shadow:0px 2px 3px 0px rgba(222,222,222,0.50);
+}
+.result-show span{
+  font-size: .75rem;
+  color: #9b9b9b
+}
+.icon-collect{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    font-size: 0;
+    vertical-align: text-bottom;
+    background: url(../../images/collect.png) no-repeat;
+    background-size: 100%;
+    background-position: 50% 50%;
+    opacity: 0;
+}
+.market-list .selected .m-name .icon-collect{
+    opacity: 1;
+}
+.market-navbar{
+    position: relative;
+    padding-left: 13px;
+    padding-right: 13px;
+    height: 210px;
+    background:linear-gradient(-180deg, #449623 0%, #5dab2f 100%);
+    background:-webkit-linear-gradient(top, #449623, #5dab2f);
+    background:-webkit-gradient(linear,left top,left bottom,from(#449623),to(#5dab2f));
+    box-shadow:0px 1px 1px 0px rgba(203,203,203,0.50);
+    // overflow: hidden;
+}
+.market-navbar .m-name,.market-navbar .m-goods{
+    padding-top: 110px;
+    font-size: 1rem;
+    line-height: 1;
+    color: #fff;
+}
+.market-navbar .m-goods{
+    padding-top: 15px;
+    color: #fff99c;
+}
+.market-navbar .m-price{
+    font-size: 1.375rem;
+    color: #fff;
+    line-height: 1.5
+}
+.market-navbar .m-shucai{
+    position: absolute;
+    bottom: -35px;
+    left: 50%;
+    margin-left: -35px;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background-color: #fff;
+    overflow: hidden;
+    text-align: center;
+    line-height: 70px;
+}
+.market-navbar .m-shucai a{
+    display: inline-block;
+    padding: 10px;
+    width: 50px;
+    height: 50px;
+    font-size: 0;
+}
+.market-navbar .m-shucai img{
+    width: 100%;
+}
+.g-collect{
+    position: relative;
+    border: 1px solid #f2f2f2;
+    margin-top: 50px;
+    height: 50px;
+    background: #fffdf9;
+}
+.g-collect a{
+    padding: 16px 16px;
+    font-size: .875rem;
+    line-height: 50px;
+    color: #9b9b9b;
+    text-decoration: underline;
+}
+.btn-collect{
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0 14px;
+    font-size: .875rem;
+    height: 50px;
+    border-radius: 0;
+    border: 1px solid #fa6d36;
+    background:#fa6d36;
+    color: #fff;
+}
+.icon-other{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    font-size: 0;
+    vertical-align: middle;
+    background: url(../../images/icon-other.png) no-repeat;
+    background-size: 100%;
+}
+.icon-other.icon-star{
+    background-position: 0 0;
+}
+.btn-collect.selected{
+    border: 1px solid #e7e7e7;
+    background: #e7e7e7;
+    color: #9b9b9b;
+}
+.btn-collect:hover{
+    color: #d9d9d9;
+    border-color: #e7e7e7;
+}
+.market-list li .m-price .p-sub{
+    font-size: .625rem;
+}
+.search-close{
+    display: none;
+    position: absolute;
+    top: 50%;
+    right: 6px;
+    margin-top: -0.75rem;
+    width: 1.5rem;
+    height: 1.5rem;
+}
+.search-close img{
+    width: 100%;
+    height: 100%;
+}
+.market-search{
+    // padding-left: 0;
+    transition: padding-left .3s;
+}
+.market-search.selected{
+    padding-left: 0;
+    transition: padding-left .3s;
+}
+.market-search.selected:after{
+    display: none;
+}
+.market-search.selected .search-close{
+    display: block;
+}
+.result-city dd{
+    border-bottom: solid 1px #f2f2f2;
+    background: #fffdf9;
+}
+.result-city dd a{
+    display: block;
+    padding: 13px 16px;
+}
+.search-result{
+    margin: 0 auto;
+    max-width: 750px;
+    height: 306px;
+    overflow-y: scroll;
+}
+.market-bdbox{
+    border:0;
+}
+.market-bdbox li.market-zw{
+    padding: 13px 0 13px;
+}
+.content-nav .swiper-slide{
+    height: 284px;
+    overflow: hidden;
+    border-bottom: 1px solid #f2f2f2;
+}
+.market-choose{
+    font-size: .875rem;
+    border-bottom: 1px solid #f2f2f2;
+}
+.market-choose .left-slide{
+    float: left;
+    width: 110px;
+    background: #eee;
+    overflow-y:scroll;
+    height: 284px; 
+}
+.left-slide dd{
+    // padding: 0 13px; 
+}
+.left-slide dd.selected{
+    background: #fffdf9;
+}
+.left-slide dd a{
+    display: block;
+    padding: 13px 16px;
+    color: #4a4a4a;
+}
+.left-slide::-webkit-scrollbar {
+        display: none;
+}
+.market-choose .right-slide{
+    // padding-left: 110px;
+    background: #fffdf9;
+    height: 284px;
+    overflow-y: scroll;
+
+}
+.right-slide dd,.right-slide dt{
+    display: block;
+    border-bottom: 1px solid #f2f2f2;
+    box-sizing: border-box;
+    margin: 0 16px;
+}
+.right-slide dd a,.right-slide dt a{
+    display: block;
+    padding: 13px 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #4a4a4a;
+}
+.right-slide dd.selected{
+    border-bottom: 1px solid #5dab2f;
+}
+.right-slide dd.selected a{
+    color: #5dab2f;
+}
+.right-slide::-webkit-scrollbar {
+        display: none;
+}
+.reset-box{
+    padding:30px 13px;
+    text-align: center;
+    background: #fffdf9;
+}
+.reset-box .btn-reset{
+    border-radius: 2px;
+    padding-left: 30px;
+    padding-right: 30px;
+    color: #4a4a4a;
+    background: #f8f9fb
+}
+.reset-box .btn-reset:active,.reset-box .btn-reset:hover{
+    background: #eee;
+}
+.content-nav .swiper-slide .loading{
+    min-height: 284px;
+    background: #fffdf9;
+}

@@ -1,0 +1,255 @@
+@charset "UTF-8";
+/*!=================
+ * 文件编码：utf-8
+ * 开发版本：v1.0     2016.01.05  wenyang.zhou
+ * 文件说明：全局样式
+==================*/
+/* ==================
+* 文件编码：utf-8
+* 开发版本：v1.0     2016.01.05  wenyang.zhou
+* 文件说明：基础变量
+================== */
+/* 文字大小 */
+/* 页面宽度 */
+/* 颜色值*/
+/* 图片路径 */
+/* ==================
+* 文件编码：utf-8
+* 开发版本：v2.0     2016.03.08  xql
+* 文件说明：v2全局样式change
+================== */
+html{
+  -webkit-tap-highlight-color: transparent;
+}
+.g-nav{
+  background-color: #5dab2f;
+  padding:0 13%;
+  height: 67%;
+  -moz-b0ox-shadow: 0px 1px 10px 0px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0px 1px 10px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 10px 0px rgba(0, 0, 0, 0.5);
+}
+.g-nav:after{
+  border-bottom: none;
+}
+.g-nav .tab-slide{
+  height: 50px;
+  line-height: 50px;
+  font-size: 16px;
+  margin: 0 6%;
+  width: 20%;
+}
+.g-nav .tab-slide a{
+  min-width: initial;
+  padding: 0;
+}
+.g-nav .tab-slide:first-child{
+  margin-left: 8%;
+}
+.g-nav .tab-slide:last-child{
+  margin-right: 8%;
+}
+.g-nav .tab-slide.selected {
+  border-bottom: solid 2px #fff99c;
+}
+.g-nav .tab-slide.selected a{
+  color: #fff99c;
+}
+.swiper-wrapper.g-nav.tab-nav{
+  width: auto !important;
+}
+.swiper-slide.tab-slide{
+  width: auto !important;
+}
+.container,.footer-nav,.body-bc{
+  background-color:#fffdf9;
+}
+.g-mb0{
+  margin-bottom: 0 !important;  }
+.g-mt0{
+  margin-top: 0 !important;  }
+.g-pt2{
+  padding-top: 2px !important;
+}
+.g-pt10{
+  padding-top: 10px !important;
+}
+.g-pb0{
+  padding-bottom: 0 !important;
+}
+.g-pb48{
+  padding-bottom: 48px;
+}
+.g-pt20{
+  padding-top: 20px;
+}
+.g-pt30{
+  padding-top: 30px;
+}
+.g-p13{
+  padding: 0 13px !important;
+}
+.g-p0{
+  padding:0;
+}
+.g-mb10{
+  margin-bottom: 10px;
+}
+.c-979797{
+  color: #979797 !important;
+}
+.c-lwhite{
+  color:#99c888 !important;
+}
+.c-fff{
+  color: #fff;
+}
+.c-orange{
+  color: #fa6d36;
+}
+.c-dyellow{
+  color: #fff99c !important;
+}
+.c-4a4{
+  color: #4a4a4a !important;
+}
+.c-9b9{
+  color: #9b9b9b !important;
+}
+.bg-df9{
+  background: #fffdf9;
+}
+.bg-5da{
+  background-color: #5dac2f;
+}
+.bg-pink{
+  background-color:#eeedeb;
+}
+.bg-f8f9fb{
+ background-color: #f8f9fb;
+}
+.bg-e0e{
+  background:#cbcdcd;
+}
+.g-h2{
+  position: fixed;
+  width: 100%;
+  top:0;
+  z-index: 10000;
+}
+.fa-mx{
+  font-size: 0.875rem;
+}
+.a-active{
+  color: #fff;
+}
+.a-active:active{
+  color: #fff99c;
+}
+.g-h2 a{
+  min-width: 30px;
+}
+.g-h2 a:first-child{
+width: auto;
+  margin-left: auto;
+}
+.footer-nav.li-half:after{
+  display: none;
+}
+.footer-nav.g-p0 li.selected a,.footer-nav.g-p0 li a{
+  color: #fff;
+}
+.g-vam{
+  vertical-align: middle;
+}
+.li-btn .u-btn:hover{
+  background-color:transparent;
+}
+.placeHolder{
+  height: 50px;
+  width: 100%;
+}
+a,a:link,a:active,a:hover,a:focus,a:visited{
+  text-decoration: none;
+}
+.back-a{
+  position: absolute;
+  left: 5px;
+}
+.back-point{
+  display: inline-block;
+  width:14px;
+  height:30px;
+  background: url(../../images/h-point.png) no-repeat center/100%;
+  vertical-align: middle;
+  margin-top: -2px;}
+.f-divide{
+  width: 100%;
+  height: 10px;
+  background-color: #eee;
+}
+.overline1{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.overline2{
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+.w100{
+  width: 100% !important;
+}
+.icon-ft.ft-nav01{
+  background-position: 0 -313px;
+}
+.footer-nav li.selected .icon-ft.ft-nav01{
+  background-position: 0 -336px;
+}
+
+.g-font-color{
+  font-size: 0.875rem;
+  color: #333;
+}
+.g-font-color2{
+  font-size: 0.75rem;color: #999;
+}
+.g-font-color3{
+  font-size: 0.75rem;color: #666;
+}
+.g-font-color4{
+  font-size: 18px; color: #FA6D36}
+.g-font-color5{
+  font-size: 1rem;color: #333;
+}
+.g-font-color6{
+  font-size: 0.875rem;color: #fff;
+}
+.g-font-color7{
+  font-size: 0.75rem;color: #5dab2f;
+}
+
+
+.left-h2:after {
+  background-color: #5dab2f;
+  content: "";
+  height: 18px;
+  left: 0;
+  margin-top: -9px;
+  position: absolute;
+  top: 50%;
+  width: 3px;
+}
+.unshow-h2:after{
+  content: "";
+  background-color: transparent;
+
+}
+.left-h2 {
+  color: #5dab2f;
+  padding: 8px 13px;
+  position: relative;
+  background: #fffdf9;
+}
