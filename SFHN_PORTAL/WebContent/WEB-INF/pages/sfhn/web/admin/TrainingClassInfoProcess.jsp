@@ -61,7 +61,7 @@
                       </button>
                       <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                         <li><a href="http://passport.1haowenjian.cn/user/UserInfoManage.do">个人设置</a></li>
-                        <li><a href="http://passport.1haowenjian.cn/user/Logout.do">退出</a></li>
+                        <li><a href="http://passport.1haowenjian.cn/user/Logout.do?target=http://zhxn.1haowenjian.cn/sfhn/admin/Index.do">退出</a></li>
                       </ul>
                     </div>
                 </div>
@@ -274,19 +274,11 @@
             mScroller();
             
             $('.js-pass').click(function(){
-        		if($('.js-unit.selected').length != $('.js-unit').length){
-        			alert("请先查阅附件");
-        			return;
-        		}
         		$('.u-mask').removeClass('dn');
         		$('#pass-reason').removeClass('dn');
         	});
         	
         	$('.js-reject').click(function(){
-        		if($('.js-unit.selected').length != $('.js-unit').length){
-        			alert("请先查阅附件");
-        			return;
-        		}
         		$('.u-mask').removeClass('dn');
         		$('#reject-reason').removeClass('dn');
         	});

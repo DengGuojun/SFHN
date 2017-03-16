@@ -33,7 +33,7 @@
     String userName = (String)request.getAttribute("UserName");
     Integer unreadMessageCount = (Integer)request.getAttribute("unreadMessageCount");;
     GovernmentOrganizationInfoBean governmentOrgInfoBean = (GovernmentOrganizationInfoBean)request.getAttribute("GovernmentOrgInfoBean");
-    int isTrain = ParamKit.getIntParameter(request, "isTrain", 1);
+    int isTrain = ParamKit.getIntParameter(request, "isTrain", -1);
     int declareYear = ParamKit.getIntParameter(request, "declareYear", 0);
     String userStatus = ParamKit.getParameter(request, "userStatus", "");
     Integer declareType = ParamKit.getIntParameter(request, "declareType", 0);
@@ -77,7 +77,7 @@
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                             <li><a href="http://passport.1haowenjian.cn/user/UserInfoManage.do">个人设置</a></li>
-                            <li><a href="http://passport.1haowenjian.cn/user/Logout.do">退出</a></li>
+                            <li><a href="http://passport.1haowenjian.cn/user/Logout.do?target=http://zhxn.1haowenjian.cn/sfhn/admin/Index.do">退出</a></li>
                         </ul>
                     </div>
                 </div>
@@ -114,6 +114,7 @@
                                     <div class="form-label text-right col-xs-6">培育年份:</div>
                                     <div class="col-xs-6">
                                         <select class="form-control" name="declareYear" id="declareYear" >
+                                             <option value="" ></option>
 					                         <%for(Integer InfoYear : trainingOrganizationInfoHelper.getTrainingYearList()){ %>
 						                     <option value="<%=InfoYear %>" <%=declareYear == InfoYear? "selected" : ""%>><%=InfoYear %></option>
 				                             <%}%>	
@@ -153,9 +154,10 @@
                          <div class="col-xs-6">
                             <div class="form-horizontal">
                                 <div class="form-group">
-                                    <div class="form-label text-right col-xs-6">是否参与培训班:</div>
+                                    <div class="form-label text-right col-xs-6">报班状态:</div>
                                     <div class="col-xs-6">
                                         <select class="form-control" name="isTrain" id="isTrain">
+                                           <option >全部</option>
 					                       <%for(StatusBean<Integer,String> trainStatus : TrainingClassUserConfig.SELECT_LIST){ %>
 						                   <option value="<%=trainStatus.getStatus() %>" <%=trainStatus.getStatus() == isTrain? "selected" : ""%>><%=trainStatus.getValue()%></option>
 				                            <%}%>
@@ -192,9 +194,9 @@
 	                                    <button  class="btn btn-success btn-block">查询</button>
 	                                </div>
 	                                <%if(isGovernment) {%>
-	                                <div class="col-xs-3">
+	                               <!--  <div class="col-xs-3">
 	                                	<a href="ActiveCodeInfoList.do">激活码使用情况</a>
-	                                </div>
+	                                </div> -->
 	                                <%} %>
                                 </div>
                             </div>
@@ -608,10 +610,6 @@ function filterAcceptRecord(){
 	
 }
 
-function jump(){
-	var page = $("#pageBar  option:selected").val();
-	goPage('formPage',page);
-}
 
 //选项
 $('.select-item select').change(function(){

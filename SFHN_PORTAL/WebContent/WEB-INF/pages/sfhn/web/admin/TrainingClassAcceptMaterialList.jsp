@@ -22,13 +22,13 @@
                              <div class="col-xs-2 form-label">集中培训材料</div>
                                 <div class="col-xs-10 normal">
 
-                                    <span>已上传了<%=centralizedMaterialCount %>/17</span><a class="ml-10" onclick="javascript:location.href='TrainingClassCentralizedManage.do?classId=<%=classId%>'">查看详情</a>
+                                    <span>已上传了<%=centralizedMaterialCount %>/18</span><a class="ml-10" onclick="javascript:location.href='TrainingClassCentralizedManage.do?classId=<%=classId%>'">查看详情</a>
                                 </div>
                             </div>
-                            <div class="form-group">
+                          <%--   <div class="form-group">
                                 <div class="col-xs-2 form-label">田间实训材料</div>
                                 <div class="col-xs-10 normal">
                                     <span>已上传了<%=fieldMaterialCount %>/2</span><a class="ml-10" onclick="javascript:location.href='TrainingClassFieldManage.do?classId=<%=classId%>'">查看详情</a>
                                 </div>
-                            </div>
+                            </div> --%>
                         <p class="bg-info pd-15"> 欠缺材料：<%=lackOfMaterial %></p>

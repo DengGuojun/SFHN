@@ -57,8 +57,7 @@ public class TrainingClassAcceptProcess extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
@@ -66,8 +65,7 @@ public class TrainingClassAcceptProcess extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		int classId = ParamKit.getIntParameter(request, "classId", 0);
 		if (classId <= 0) {
@@ -100,13 +98,11 @@ public class TrainingClassAcceptProcess extends HttpServlet {
 		}
 
 		// 获取培训机构
-		TrainingOrganizationInfoBean trainingOrgInfoBean = trainingOrgBusiness
-				.getTrainingOrganizationInfoByKey(classInfoBean.getOrganizationId());
+		TrainingOrganizationInfoBean trainingOrgInfoBean = trainingOrgBusiness.getTrainingOrganizationInfoByKey(classInfoBean.getOrganizationId());
 
 		// 获取培训班流程
 		ProcessLogBusiness processLogBusiness = new ProcessLogBusiness();
-		List<ProcessLogBean> processLogList = processLogBusiness
-				.getProcessLogListByTrainingClassAccept(classAcceptBean);
+		List<ProcessLogBean> processLogList = processLogBusiness.getProcessLogListByTrainingClassAccept(classAcceptBean);
 
 		// 获取当前流程内容
 		String logContent = "";
@@ -136,8 +132,8 @@ public class TrainingClassAcceptProcess extends HttpServlet {
 		fileInfoMap = ListKit.list2Map(fileInfoList, "fileType", "fileId");
 		// 判断集中培训材料是否齐全
 		int centralizedMaterialCount = 0;
-		for (int i = FileInfoConfig.FILE_TYPE_TRAINING_MATERIAL_CATALOG; i <= FileInfoConfig.FILE_TYPE_TRAINING_CLASS_SUMMARY; i++) {
-			if (fileInfoMap.get(i) != null) {
+		for (Integer key : FileInfoConfig.ALLOWED_FILE_TYPE_MAP.keySet()) {
+			if (fileInfoMap.get(key) != null) {
 				centralizedMaterialCount++;
 			}
 		}

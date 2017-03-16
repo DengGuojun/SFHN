@@ -64,7 +64,7 @@
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                             <li><a href="http://passport.1haowenjian.cn/user/UserInfoManage.do">个人设置</a></li>
-                            <li><a href="http://passport.1haowenjian.cn/user/Logout.do">退出</a></li>
+                            <li><a href="http://passport.1haowenjian.cn/user/Logout.do?target=http://zhxn.1haowenjian.cn/sfhn/admin/Index.do">退出</a></li>
                         </ul>
                     </div>
                 </div>
@@ -138,14 +138,12 @@
 	                            		<div class="col-xs-4">
 	                            			<button type="submit" class="btn btn-success btn-block">查询</button>
 	                            		</div>
-	                            		<%if(isGovernment){ %>
                                         <div class="col-xs-4">
                                             <button type="button" class="btn btn-success btn-block" onclick="javascript:location.href='TeacherInfoManage.do'">新增师资信息</button>
                                         </div>
                                         <div class="col-xs-4">
                                         <a class="upload-wrp" ><input type="file" id="file" name="file" value="上传" class="form-control" onchange="submitSheet();"  ><label for="file">导入师资</label></a>
                                         </div>
-                                     <%} %>
 	                            	</div>
 	                            </div> 
                             </div>
@@ -169,7 +167,7 @@
                                 <td><%=majorInfoMap.get(bean.getTeacherId()) %></td>
                                 <td><%=bean.getCorporateName() %></td>
                                 <td><%=bean.getMainCourse() %></td>
-                                <td><%if(isGovernment){ %><a onclick="javascript:location.href='TeacherInfoManage.do?teacherId=<%=bean.getTeacherId()%>'" class="ml-10">编辑</a><%} %><a onclick="javascript:location.href='TeacherInfoView.do?teacherId=<%=bean.getTeacherId()%>'" class="ml-10">查看详情</a></td>
+                                <td><a onclick="javascript:location.href='TeacherInfoManage.do?teacherId=<%=bean.getTeacherId()%>'" class="ml-10">编辑</a><a onclick="javascript:location.href='TeacherInfoView.do?teacherId=<%=bean.getTeacherId()%>'" class="ml-10">查看详情</a></td>
                             </tr>
                             <%} %>
                         </table>            

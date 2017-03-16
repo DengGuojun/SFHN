@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="off">
 	<properties>
-		<property name="LOG_HOME">f:\Logs\erp</property>
+		<property name="LOG_HOME">E:\Logs\sfhn_portal</property>
 		<property name="PATTERN_LAYOUT">%-r %d [%t] %level %C.%M(%F:%line) - %m%n</property>
 		<property name="FILE_PATTERN">%d{yyyy-MM-dd}</property>
 		<property name="DEFAULT_LOG_LEVEL">debug</property>

@@ -31,6 +31,11 @@ public class TeacherInfoBusiness {
 		return dao.insertTeacherInfo(bean);
 	}
 
+	public int addTeacherInfoWithCreateTime(TeacherInfoBean bean) {
+		TeacherInfoDao dao = new TeacherInfoDao();
+		return dao.insertTeacherInfoWithCreateTime(bean);
+	}
+
 	public int updateTeacherInfo(TeacherInfoBean bean) {
 		TeacherInfoDao dao = new TeacherInfoDao();
 		return dao.updateTeacherInfo(bean);
@@ -51,8 +56,12 @@ public class TeacherInfoBusiness {
 		return dao.getTeacherInfoByMobileAndStatus(teacherMobile, status);
 	}
 
-	public PageResultBean<TeacherInfoBean> getTeacherInfoPageListByMap(HashMap<String, String> condMap,
-			PageBean pageBean) {
+	public TeacherInfoBean getTeacherInfoByIdentityNumber(String identityNumber) {
+		TeacherInfoDao dao = new TeacherInfoDao();
+		return dao.getTeacherInfoByIdentityNumber(identityNumber);
+	}
+
+	public PageResultBean<TeacherInfoBean> getTeacherInfoPageListByMap(HashMap<String, String> condMap, PageBean pageBean) {
 		TeacherInfoDao dao = new TeacherInfoDao();
 		return dao.getTeacherInfoPageListByMap(condMap, pageBean);
 	}
@@ -68,11 +77,8 @@ public class TeacherInfoBusiness {
 			result.setMessage("手机号码不能为空");
 		} else if (!NumberKit.isAllDigit(bean.getTeacherMobile())) {
 			result.setMessage("手机号码必须是数字");
-		} else if (!StringKit.isValid(bean.getProvince()) && !StringKit.isValid(bean.getCity())
-				&& !StringKit.isValid(bean.getRegion())) {
+		} else if (!StringKit.isValid(bean.getProvince()) && !StringKit.isValid(bean.getCity()) && !StringKit.isValid(bean.getRegion())) {
 			result.setMessage("地区不能为空");
-		} else if (isExistsTeacherInfo(bean)) {
-			result.setMessage("系统已存在该师资信息");
 		}
 		return result;
 	}
@@ -154,12 +160,11 @@ public class TeacherInfoBusiness {
 		}
 	}
 
-	public TeacherAddBean teacherInfo2TeacherAddBean(TeacherInfoBean bean, String activationCode) {
+	public TeacherAddBean teacherInfo2TeacherAddBean(TeacherInfoBean bean) {
 		TeacherAddBean teacherAddBean = new TeacherAddBean();
 		teacherAddBean.setUserId(String.valueOf(bean.getUserId()));
 		teacherAddBean.setPhone(bean.getTeacherMobile());
 		teacherAddBean.setIdcard(bean.getIdentityNumber());
-		teacherAddBean.setActivationCode(activationCode);
 		teacherAddBean.setName(bean.getTeacherName());
 		teacherAddBean.setAge(String.valueOf(bean.getTeacherAge()));
 
@@ -181,7 +186,7 @@ public class TeacherInfoBusiness {
 
 	public static void main(String[] args) {
 		int result = 0;
-		String mobile = "15387581535";
+		String mobile = "18175196916";
 		// 根据手机号获取userId
 		UserServiceClient client = new UserServiceClient();
 		// 先检查是否存在uesrId
@@ -211,7 +216,7 @@ public class TeacherInfoBusiness {
 				result = Integer.valueOf((String) returnMessage.getContent());
 				System.out.println(result);
 				// 手机发送短信通知用户
-				//notifyUser("13874969388", 23);
+				// notifyUser("13874969388", 23);
 			}
 		}
 	}

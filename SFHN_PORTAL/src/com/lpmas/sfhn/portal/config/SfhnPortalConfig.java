@@ -3,7 +3,7 @@ package com.lpmas.sfhn.portal.config;
 import com.lpmas.framework.config.Constants;
 
 public class SfhnPortalConfig {
-	
+
 	public static final String APP_ID = "SFHN";
 
 	public static final String SFHN_PROP_FILE_NAME = Constants.PROP_FILE_PATH + "/sfhn_config";
@@ -16,5 +16,6 @@ public class SfhnPortalConfig {
 	public static final String ERROR_PAGE = Constants.PAGE_PATH + "common/error_page.jsp";
 	public static final String ADMIN_PAGE_PATH = Constants.PAGE_PATH + "sfhn/{0}/admin/";
 	public static final String USER_PAGE_PATH = Constants.PAGE_PATH + "sfhn/{0}/user/";
+	public static final String MIGRATE_PAGE_PATH = Constants.PAGE_PATH + "sfhn/web/migrate/";
 
 }

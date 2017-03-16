@@ -236,7 +236,7 @@ public class TrainingClassAcceptManage extends HttpServlet {
 				// 修改
 				// 判断审核状态没有被修改
 				if (originalBean == null || !originalBean.getAcceptStatus().equals(bean.getAcceptStatus())) {
-					HttpResponseKit.alertMessage(response, "页面已过期，请刷新重试", HttpResponseKit.ACTION_HISTORY_BACK);
+					HttpResponseKit.alertMessage(response, "项目已经发起验收流程，请不要重复操作", HttpResponseKit.ACTION_HISTORY_BACK);
 					return;
 				}
 				if (bean.getAcceptStatus().equals(TrainingClassInfoConfig.ACCEPT_STATUS_WAIT_APPROVE_CITY)

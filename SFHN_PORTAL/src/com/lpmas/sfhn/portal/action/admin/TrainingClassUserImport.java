@@ -38,7 +38,6 @@ import com.lpmas.sfhn.bean.TrainingClassInfoBean;
 import com.lpmas.sfhn.bean.TrainingClassUserBean;
 import com.lpmas.sfhn.bean.TrainingOrganizationInfoBean;
 import com.lpmas.sfhn.business.DeclareInfoHelper;
-import com.lpmas.sfhn.config.ActiveCodeInfoConfig;
 import com.lpmas.sfhn.config.GovernmentOrganizationConfig;
 import com.lpmas.sfhn.config.InfoTypeConfig;
 import com.lpmas.sfhn.declare.bean.DeclareInfoBean;
@@ -51,7 +50,6 @@ import com.lpmas.sfhn.declare.bean.IndustryTypeBean;
 import com.lpmas.sfhn.declare.config.DeclareInfoConfig;
 import com.lpmas.sfhn.declare.config.FarmerInfoConfig;
 import com.lpmas.sfhn.portal.bean.FileInfoBean;
-import com.lpmas.sfhn.portal.business.ActiveCodeInfoBusiness;
 import com.lpmas.sfhn.portal.business.FileInfoBusiness;
 import com.lpmas.sfhn.portal.business.GovernmentOrganizationInfoBusiness;
 import com.lpmas.sfhn.portal.business.MessageInfoBusiness;
@@ -391,7 +389,7 @@ public class TrainingClassUserImport extends HttpServlet {
 									if (industryUnit.equals(industryInfoBean.getUnit())) {
 										farmerIndustryInfoBean.setIndustryUnit1(industryInfoBean.getUnit());
 									}
-									if (industryType.equals("其他") && StringKit.isValid(industryUnit)) {
+									if (industryType.equals("其他产业") && StringKit.isValid(industryUnit)) {
 										farmerIndustryInfoBean.setIndustryUnit1(industryUnit);
 									}
 								}
@@ -453,7 +451,7 @@ public class TrainingClassUserImport extends HttpServlet {
 									.getDeclareReportByUserIdAndYear(classUserId,
 											DateKit.formatDate(new Date(), DateKit.REGEX_YEAR));
 							// 获取激活码
-							ActiveCodeInfoBusiness activeCodeBusiness = new ActiveCodeInfoBusiness();
+							/*ActiveCodeInfoBusiness activeCodeBusiness = new ActiveCodeInfoBusiness();
 							ReturnMessageBean returnMessageBean = activeCodeBusiness.bindActiveCodeWithUser(province,
 									city, region, trainingClassInfoBean.getTrainingYear(),
 									ActiveCodeInfoConfig.USER_TYPE_FARMER, classUserId, userId);
@@ -461,7 +459,7 @@ public class TrainingClassUserImport extends HttpServlet {
 								message.add(name + "," + identityNumber + ",获取激活码有误," + returnMessageBean.getMessage());
 								++countFail;
 								continue;
-							}
+							}*/
 							// 修改申报对象
 							DeclareInfoBean updateDeclareInfoBean = declareInfoBusiness
 									.getDeclareInfoByKey(declareReportBean.getDeclareId());
@@ -515,8 +513,7 @@ public class TrainingClassUserImport extends HttpServlet {
 							YunClassInvokeCommandBean commandBean = new YunClassInvokeCommandBean();
 							commandBean.setMethod(YunClassInvokeExecutor.HTTP_POST);
 							commandBean.setService(YunClassInvokeConfig.YUN_SERVICE_ADD_USER_TO_CLASS);
-							commandBean.setBody(trainingClassUserBusiness.trainingClassUser2MemberAddBean(userBean,
-									(String) returnMessageBean.getContent()));
+							commandBean.setBody(trainingClassUserBusiness.trainingClassUser2MemberAddBean(userBean));
 
 							YunClassInvoker invoker = new YunClassInvoker(commandBean, new YunClassInvokCallBack() {
 								@Override
@@ -567,7 +564,7 @@ public class TrainingClassUserImport extends HttpServlet {
 							// }
 						} else {
 							// 获取激活码
-							ActiveCodeInfoBusiness activeCodeBusiness = new ActiveCodeInfoBusiness();
+							/*ActiveCodeInfoBusiness activeCodeBusiness = new ActiveCodeInfoBusiness();
 							ReturnMessageBean returnMessageBean = activeCodeBusiness.bindActiveCodeWithUser(province,
 									city, region, trainingClassInfoBean.getTrainingYear(),
 									ActiveCodeInfoConfig.USER_TYPE_FARMER, classUserId, userId);
@@ -575,7 +572,7 @@ public class TrainingClassUserImport extends HttpServlet {
 								message.add(name + "," + identityNumber + ",获取激活码有误," + returnMessageBean.getMessage());
 								++countFail;
 								continue;
-							}
+							}*/
 							// 从Mongo中根据userId获取用户的数据
 							DeclareReportBean declareReportBean = declareReportBusiness
 									.getDeclareReportByUserIdAndYear(classUserId,
@@ -682,8 +679,7 @@ public class TrainingClassUserImport extends HttpServlet {
 							YunClassInvokeCommandBean commandBean = new YunClassInvokeCommandBean();
 							commandBean.setMethod(YunClassInvokeExecutor.HTTP_POST);
 							commandBean.setService(YunClassInvokeConfig.YUN_SERVICE_ADD_USER_TO_CLASS);
-							commandBean.setBody(trainingClassUserBusiness.trainingClassUser2MemberAddBean(userBean,
-									(String) returnMessageBean.getContent()));
+							commandBean.setBody(trainingClassUserBusiness.trainingClassUser2MemberAddBean(userBean));
 
 							YunClassInvoker invoker = new YunClassInvoker(commandBean, new YunClassInvokCallBack() {
 								@Override

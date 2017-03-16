@@ -25,6 +25,9 @@
 	String fixProvince = (String)request.getAttribute("FixProvince");
 	String fixCity = (String)request.getAttribute("FixCity");
 	String fixRegion = (String)request.getAttribute("FixRegion");
+	String teacherProvince = (String)request.getAttribute("TeacherProvince");
+	String teacherCity = (String)request.getAttribute("TeacherCity");
+	String teacherRegion = (String)request.getAttribute("TeacherRegion");
 %>
 <%@ include file="../../../include/header.jsp" %>
 <!DOCTYPE html>
@@ -59,7 +62,7 @@
                       </button>
                       <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                         <li><a href="http://passport.1haowenjian.cn/user/UserInfoManage.do">个人设置</a></li>
-                        <li><a href="http://passport.1haowenjian.cn/user/Logout.do">退出</a></li>
+                        <li><a href="http://passport.1haowenjian.cn/user/Logout.do?target=http://zhxn.1haowenjian.cn/sfhn/admin/Index.do">退出</a></li>
                       </ul>
                     </div>
                 </div>
@@ -246,7 +249,10 @@ function provinceData(data){
 	   	for(var i =0;i<items.length;i++) {
 	      	var item=items[i];
 	      	var fixProvince = "<%=fixProvince%>";
+	      	var teacherProvince = "<%=teacherProvince%>";
 	      	if(fixProvince == item.provinceName){
+	      		sel.append("<option value = '"+item.provinceId+"' selected>"+item.provinceName+"</option>");
+	      	}else if(teacherProvince == item.provinceName){
 	      		sel.append("<option value = '"+item.provinceId+"' selected>"+item.provinceName+"</option>");
 	      	}else{
 	      		sel.append("<option value = '"+item.provinceId+"'>"+item.provinceName+"</option>");
@@ -275,6 +281,7 @@ function showCity(){
 
 function cityData(data){
 	var isFix;
+	var isModify;
 	var sel = $("#selectCity");  
 	sel.empty();  
 	sel.append("<option value = ''>全部</option>");
@@ -283,9 +290,13 @@ function cityData(data){
 	   	for(var i =0;i<items.length;i++) {
 	      	var item=items[i];
 	      	var fixCity = "<%=fixCity%>";
+	      	var teacherCity = "<%=teacherCity%>";
 	      	if(fixCity == item.cityName){
 	      		sel.append("<option value = '"+item.cityId+"' selected>"+item.cityName+"</option>");
 	      		isFix = true;
+	      	}else if(teacherCity == item.cityName){
+	      		sel.append("<option value = '"+item.cityId+"' selected>"+item.cityName+"</option>");
+	      		isModify = true;
 	      	}else{
 	      		sel.append("<option value = '"+item.cityId+"'>"+item.cityName+"</option>");
 	      	}
@@ -294,6 +305,9 @@ function cityData(data){
 	    		$("#selectCity").attr("disabled","disabled");
 	    		showRegion();
 	    }
+	    if(isModify){
+    		showRegion();
+        }
     } else{
    		sel.empty();  
     }
@@ -329,9 +343,12 @@ function regionData(data){
 	   	for(var i =0;i<items.length;i++) {
 	      	var item=items[i];
 	      	var fixRegion = "<%=fixRegion%>";
+	      	var teacherRegion = "<%=teacherRegion%>";
 	      	if(fixRegion == item.regionName){
 	      		sel.append("<option value = '"+item.regionId+"' selected>"+item.regionName+"</option>");
 	      		isFix = true;
+	      	}else if(teacherRegion == item.regionName){
+	      		sel.append("<option value = '"+item.regionId+"' selected>"+item.regionName+"</option>");
 	      	}else{
 	      		sel.append("<option value = '"+item.regionId+"'>"+item.regionName+"</option>");
 	      	}

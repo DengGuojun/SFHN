@@ -77,8 +77,7 @@ public class TrainingClassInfoManage extends HttpServlet {
 			return;
 		}
 		TrainingOrganizationInfoBusiness trainingOrgBusiness = new TrainingOrganizationInfoBusiness();
-		TrainingOrganizationInfoBean trainingOrgBean = trainingOrgBusiness.getTrainingOrganizationInfoByKey(orgUserBean
-				.getOrganizationId());
+		TrainingOrganizationInfoBean trainingOrgBean = trainingOrgBusiness.getTrainingOrganizationInfoByKey(orgUserBean.getOrganizationId());
 		if (trainingOrgBean.getStatus() == Constants.STATUS_NOT_VALID) {
 			HttpResponseKit.alertMessage(response, "你没有该功能的操作权限", HttpResponseKit.ACTION_HISTORY_BACK);
 			return;
@@ -168,8 +167,7 @@ public class TrainingClassInfoManage extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
-			IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 获取用户Id
 		SsoClientHelper helper = new SsoClientHelper(request, response, false);
 		int userId = helper.getUserId();
@@ -182,8 +180,7 @@ public class TrainingClassInfoManage extends HttpServlet {
 			return;
 		}
 		TrainingOrganizationInfoBusiness trainingOrgBusiness = new TrainingOrganizationInfoBusiness();
-		TrainingOrganizationInfoBean trainingOrgBean = trainingOrgBusiness.getTrainingOrganizationInfoByKey(orgUserBean
-				.getOrganizationId());
+		TrainingOrganizationInfoBean trainingOrgBean = trainingOrgBusiness.getTrainingOrganizationInfoByKey(orgUserBean.getOrganizationId());
 		if (trainingOrgBean.getStatus() == Constants.STATUS_NOT_VALID) {
 			HttpResponseKit.alertMessage(response, "你没有该功能的操作权限", HttpResponseKit.ACTION_HISTORY_BACK);
 			return;
@@ -258,11 +255,9 @@ public class TrainingClassInfoManage extends HttpServlet {
 				if (bean.getClassType() == TrainingClassInfoConfig.CLASS_TYPE_OFFLINE) {
 					// 线下培训班需要提交审核
 					bean.setClassStatus(TrainingClassInfoConfig.CLASS_STATUS_WAIT_APPROVE_REGION);
-					if (!trainingOrgBean.getProvince().equals(bean.getProvince())
-							|| !trainingOrgBean.getCity().equals(bean.getCity())
+					if (!trainingOrgBean.getProvince().equals(bean.getProvince()) || !trainingOrgBean.getCity().equals(bean.getCity())
 							|| !trainingOrgBean.getRegion().equals(bean.getRegion())) {
-						HttpResponseKit.alertMessage(response, "班级的省市区信息与培训机构省市区不一致",
-								HttpResponseKit.ACTION_HISTORY_BACK);
+						HttpResponseKit.alertMessage(response, "班级的省市区信息与培训机构省市区不一致", HttpResponseKit.ACTION_HISTORY_BACK);
 						return;
 					}
 				} else {
@@ -317,12 +312,13 @@ public class TrainingClassInfoManage extends HttpServlet {
 						messageInfoBean.setSendOrganizationType(InfoTypeConfig.INFO_TYPE_TRAINING_ORGANIZATION);
 						messageInfoBean.setSendOrganizationId(trainingOrgBean.getOrganizationId());
 						GovernmentOrganizationInfoBusiness governmentOrgBusiness = new GovernmentOrganizationInfoBusiness();
-						GovernmentOrganizationInfoBean governmentOrgBean = governmentOrgBusiness
-								.getGovernmentOrganizationInfoByRegion(trainingOrgBean.getProvince(),
-										trainingOrgBean.getCity(), trainingOrgBean.getRegion(),
-										GovernmentOrganizationConfig.ORGANIZATION_LEVEL_REGION);
+						GovernmentOrganizationInfoBean governmentOrgBean = governmentOrgBusiness.getGovernmentOrganizationInfoByRegion(
+								trainingOrgBean.getProvince(), trainingOrgBean.getCity(), trainingOrgBean.getRegion(),
+								GovernmentOrganizationConfig.ORGANIZATION_LEVEL_REGION);
 						messageInfoBean.setReceiveOrganizationType(InfoTypeConfig.INFO_TYPE_GOVERNMENT_ORGANIZATION);
-						messageInfoBean.setReceiveOrganizationId(governmentOrgBean.getOrganizationId());
+						if (governmentOrgBean != null) {
+							messageInfoBean.setReceiveOrganizationId(governmentOrgBean.getOrganizationId());
+						}
 						messageInfoBean.setIsRead(Constants.STATUS_NOT_VALID);
 						messageInfoBean.setStatus(Constants.STATUS_VALID);
 						messageInfoBean.setCreateUser(userId);
@@ -332,8 +328,7 @@ public class TrainingClassInfoManage extends HttpServlet {
 			}
 
 			if (result > 0) {
-				HttpResponseKit.alertMessage(response, "处理成功", "/sfhn/admin/TrainingClassInfoProcess.do?classId="
-						+ bean.getClassId());
+				HttpResponseKit.alertMessage(response, "处理成功", "/sfhn/admin/TrainingClassInfoProcess.do?classId=" + bean.getClassId());
 			} else {
 				HttpResponseKit.alertMessage(response, "处理失败", HttpResponseKit.ACTION_HISTORY_BACK);
 			}

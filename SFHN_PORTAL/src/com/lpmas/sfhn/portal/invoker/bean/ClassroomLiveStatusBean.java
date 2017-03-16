@@ -8,6 +8,7 @@ public class ClassroomLiveStatusBean {
 	private String sourceid = "";
 	private String streamurl = "";
 	private String playurl = "";
+	private String thirdClassroomId = "";
 
 	public String getUid() {
 		return uid;
@@ -56,5 +57,15 @@ public class ClassroomLiveStatusBean {
 	public void setPlayurl(String playurl) {
 		this.playurl = playurl;
 	}
+
+	public String getThirdClassroomId() {
+		return thirdClassroomId;
+	}
+
+	public void setThirdClassroomId(String thirdClassroomId) {
+		this.thirdClassroomId = thirdClassroomId;
+	}
+	
+	
 
 }

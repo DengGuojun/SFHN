@@ -110,7 +110,11 @@
                                         <select class="form-control" name="classStatusSelection" id="classStatusSelection" >
                                              <option value="">请选择</option>
 					                         <%for(StatusBean<String, String> status : TrainingClassInfoConfig.CLASS_STATUS_SELECTION_LIST){ %>
-						                     <option value="<%=status.getStatus() %>" <%=classStatusSelection.equals(status.getStatus()) ? "selected" : ""%>><%=status.getValue() %></option>
+						                      <%if(!isGovernment) {%>
+						                      <option value="<%=status.getStatus() %>" <%=classStatusSelection.equals(status.getStatus()) ? "selected" : ""%>><%=status.getValue() %></option>
+						                      <%} else if (isGovernment && !status.getStatus().equals(TrainingClassInfoConfig.CLASS_STATUS_EDIT)){%>
+						                      <option value="<%=status.getStatus() %>" <%=classStatusSelection.equals(status.getStatus()) ? "selected" : ""%>><%=status.getValue() %></option>
+						                      <%} %>
 				                             <%}%>	
                                         </select>
                                     </div>
@@ -248,7 +252,7 @@
                                 <td><%=MapKit.getValueFromMap(bean.getClassType(), TrainingClassInfoConfig.CLASS_TYPE_MAP) %></td>
                                 <td><%=bean.getProvince() %>-<%=bean.getCity() %>-<%=bean.getRegion() %></td>
                                 <%if(bean.getClassStatus().equals(TrainingClassInfoConfig.CLASS_STATUS_OPENED) && (DateKit.getCurrentTimestamp().after(bean.getTrainingEndTime()))){ %>
-                                <td>已结束</td>
+                                <td>培训结束</td>
                                 <%}else{ %>
                                 <td><%=MapKit.getValueFromMap(bean.getClassStatus(), TrainingClassInfoConfig.CLASS_STATUS_MAP) %></td>
                                 <%} %>

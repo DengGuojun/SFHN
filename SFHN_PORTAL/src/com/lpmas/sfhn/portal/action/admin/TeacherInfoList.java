@@ -64,8 +64,7 @@ public class TeacherInfoList extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
-			IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		int pageNum = ParamKit.getIntParameter(request, "pageNum", SfhnPortalConfig.DEFAULT_PAGE_NUM);
 		int pageSize = ParamKit.getIntParameter(request, "pageSize", SfhnPortalConfig.DEFAULT_PAGE_SIZE);
@@ -107,11 +106,11 @@ public class TeacherInfoList extends HttpServlet {
 		HashMap<String, String> condMap = ParamKit.getParameterMap(request,
 				"majorTypeId,majorId,teacherName,teacherMobile,identityNumber,mainCourse,");
 		condMap.put("province", fixProvince);
-		String queryCity = StringKit.isValid(fixCity) ? fixCity :ParamKit.getParameter(request, "queryCity", "").trim();
+		String queryCity = StringKit.isValid(fixCity) ? fixCity : ParamKit.getParameter(request, "queryCity", "").trim();
 		if (StringKit.isValid(queryCity)) {
 			condMap.put("city", queryCity);
 		}
-		String queryRegion = StringKit.isValid(fixRegion) ? fixRegion :ParamKit.getParameter(request, "queryRegion","").trim();
+		String queryRegion = StringKit.isValid(fixRegion) ? fixRegion : ParamKit.getParameter(request, "queryRegion", "").trim();
 		if (StringKit.isValid(queryRegion)) {
 			condMap.put("region", queryRegion);
 		}
@@ -154,5 +153,5 @@ public class TeacherInfoList extends HttpServlet {
 		// 转发
 		PortalKit.forwardPage(request, response, SfhnPortalConfig.ADMIN_PAGE_PATH + "TeacherInfoList.jsp");
 	}
-	
+
 }

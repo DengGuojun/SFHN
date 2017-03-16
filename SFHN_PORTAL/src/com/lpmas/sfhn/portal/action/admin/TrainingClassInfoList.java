@@ -109,6 +109,7 @@ public class TrainingClassInfoList extends HttpServlet {
 			return;
 		} else if (orgUserBean.getInfoType() == InfoTypeConfig.INFO_TYPE_GOVERNMENT_ORGANIZATION) {
 			// 用户是政府机构
+			condMap.put("noEdit", String.valueOf(Constants.STATUS_VALID));
 			String organizationId = ParamKit.getParameter(request, "organizationId", "").trim();
 			if (StringKit.isValid(organizationId)) {
 				condMap.put("organizationId", organizationId);

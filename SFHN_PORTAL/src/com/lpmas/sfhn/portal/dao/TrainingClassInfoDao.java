@@ -219,7 +219,7 @@ public class TrainingClassInfoDao {
 					paramList.add(TrainingClassInfoConfig.CLASS_STATUS_WAIT_APPROVE_PROVINCE);
 					paramList.add(TrainingClassInfoConfig.CLASS_STATUS_WAIT_APPROVE_CITY);
 					paramList.add(TrainingClassInfoConfig.CLASS_STATUS_WAIT_APPROVE_REGION);
-				} else if (classStatusSelection.equals(TrainingClassInfoConfig.ACCEPT_STATUS_REJECTED)) {
+				} else if (classStatusSelection.equals(TrainingClassInfoConfig.CLASS_STATUS_REJECTED)) {
 					condList.add("(class_status = ? or class_status = ? or class_status = ?)");
 					paramList.add(TrainingClassInfoConfig.CLASS_STATUS_REJECTED_PROVINCE);
 					paramList.add(TrainingClassInfoConfig.CLASS_STATUS_REJECTED_CITY);
@@ -257,6 +257,11 @@ public class TrainingClassInfoDao {
 				condList.add("registration_end_time >= ?");
 				paramList.add(registrationEndTime);
 			}
+			String noEdit = condMap.get("noEdit");
+			if (StringKit.isValid(noEdit)) {
+				condList.add("class_status != ?");
+				paramList.add(TrainingClassInfoConfig.CLASS_STATUS_EDIT);
+			}
 			String status = condMap.get("status");
 			if (StringKit.isValid(status)) {
 				condList.add("status = ?");
@@ -277,7 +282,7 @@ public class TrainingClassInfoDao {
 				condList.add("organization_id = ?");
 				paramList.add(organizationId);
 			}
-			String orderQuery = "order by class_id desc";
+			String orderQuery = "order by memo desc,class_id desc";
 			String orderBy = condMap.get("orderBy");
 			if (StringKit.isValid(orderBy)) {
 				orderQuery = " order by " + orderBy;

@@ -21,21 +21,20 @@ import com.lpmas.framework.util.JsonKit;
 import com.lpmas.framework.util.NumberKit;
 import com.lpmas.framework.util.StringKit;
 import com.lpmas.framework.web.HttpResponseKit;
-import com.lpmas.framework.web.ReturnMessageBean;
 import com.lpmas.ow.passport.sso.business.SsoClientHelper;
 import com.lpmas.sfhn.bean.GovernmentOrganizationInfoBean;
 import com.lpmas.sfhn.bean.MajorInfoBean;
 import com.lpmas.sfhn.bean.MajorTypeBean;
 import com.lpmas.sfhn.bean.OrganizationUserBean;
-import com.lpmas.sfhn.config.ActiveCodeInfoConfig;
+import com.lpmas.sfhn.bean.TrainingOrganizationInfoBean;
 import com.lpmas.sfhn.config.InfoTypeConfig;
 import com.lpmas.sfhn.portal.bean.TeacherInfoBean;
-import com.lpmas.sfhn.portal.business.ActiveCodeInfoBusiness;
 import com.lpmas.sfhn.portal.business.GovernmentOrganizationInfoBusiness;
 import com.lpmas.sfhn.portal.business.MajorInfoBusiness;
 import com.lpmas.sfhn.portal.business.MajorTypeBusiness;
 import com.lpmas.sfhn.portal.business.OrganizationUserBusiness;
 import com.lpmas.sfhn.portal.business.TeacherInfoBusiness;
+import com.lpmas.sfhn.portal.business.TrainingOrganizationInfoBusiness;
 import com.lpmas.sfhn.portal.config.FileInfoConfig;
 import com.lpmas.sfhn.portal.invoker.bean.TeacherAddBean;
 import com.lpmas.sfhn.portal.invoker.bean.YunClassInvokeCommandBean;
@@ -59,8 +58,7 @@ public class TeacherInfoImport extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
@@ -68,8 +66,7 @@ public class TeacherInfoImport extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		// 获取用户Id
 		SsoClientHelper helper = new SsoClientHelper(request, response, false);
@@ -77,16 +74,27 @@ public class TeacherInfoImport extends HttpServlet {
 		TeacherInfoBusiness business = new TeacherInfoBusiness();
 		OrganizationUserBusiness orgUserBusiness = new OrganizationUserBusiness();
 		OrganizationUserBean orgUserBean = orgUserBusiness.getOrganizationUserByUserId(userId);
-		if (orgUserBean == null || orgUserBean.getInfoType() != InfoTypeConfig.INFO_TYPE_GOVERNMENT_ORGANIZATION) {
+		if (orgUserBean == null || (orgUserBean.getInfoType() != InfoTypeConfig.INFO_TYPE_GOVERNMENT_ORGANIZATION
+				&& orgUserBean.getInfoType() != InfoTypeConfig.INFO_TYPE_TRAINING_ORGANIZATION)) {
 			HttpResponseKit.alertMessage(response, "你没有该功能的操作权限", HttpResponseKit.ACTION_HISTORY_BACK);
 			return;
 		}
-		GovernmentOrganizationInfoBusiness governmentOrgBusiness = new GovernmentOrganizationInfoBusiness();
-		GovernmentOrganizationInfoBean governmentOrgBean = governmentOrgBusiness
-				.getGovernmentOrganizationInfoByKey(orgUserBean.getOrganizationId());
-		if (governmentOrgBean.getStatus() == Constants.STATUS_NOT_VALID) {
-			HttpResponseKit.alertMessage(response, "你没有该功能的操作权限", HttpResponseKit.ACTION_HISTORY_BACK);
-			return;
+		if (orgUserBean.getInfoType() == InfoTypeConfig.INFO_TYPE_GOVERNMENT_ORGANIZATION) {
+			GovernmentOrganizationInfoBusiness governmentOrgBusiness = new GovernmentOrganizationInfoBusiness();
+			GovernmentOrganizationInfoBean governmentOrgBean = governmentOrgBusiness
+					.getGovernmentOrganizationInfoByKey(orgUserBean.getOrganizationId());
+			if (governmentOrgBean.getStatus() == Constants.STATUS_NOT_VALID) {
+				HttpResponseKit.alertMessage(response, "你没有该功能的操作权限", HttpResponseKit.ACTION_HISTORY_BACK);
+				return;
+			}
+		} else {
+			TrainingOrganizationInfoBusiness trainingOrganizationInfoBusiness = new TrainingOrganizationInfoBusiness();
+			TrainingOrganizationInfoBean trainingOrganizationInfoBean = trainingOrganizationInfoBusiness
+					.getTrainingOrganizationInfoByKey(orgUserBean.getOrganizationId());
+			if (trainingOrganizationInfoBean.getStatus() == Constants.STATUS_NOT_VALID) {
+				HttpResponseKit.alertMessage(response, "你没有该功能的操作权限", HttpResponseKit.ACTION_HISTORY_BACK);
+				return;
+			}
 		}
 
 		// 上传Excel到服务器
@@ -123,26 +131,22 @@ public class TeacherInfoImport extends HttpServlet {
 					String gender = content.get(1);
 					if (StringKit.isValid(gender) && GenderConfig.GENDER_MALE != Integer.valueOf(gender)
 							&& GenderConfig.GENDER_FEMALE != Integer.valueOf(gender)) {
-						HttpResponseKit.alertMessage(response, "第" + i + "行数据的性别信息错误",
-								"/sfhn/admin/TeacherInfoList.do");
+						HttpResponseKit.alertMessage(response, "第" + i + "行数据的性别信息错误", "/sfhn/admin/TeacherInfoList.do");
 						return;
 					}
 					String age = content.get(2);
 					if (StringKit.isValid(age) && !NumberKit.isPositiveInteger(age)) {
-						HttpResponseKit.alertMessage(response, "第" + i + "行数据的年龄信息错误",
-								"/sfhn/admin/TeacherInfoList.do");
+						HttpResponseKit.alertMessage(response, "第" + i + "行数据的年龄信息错误", "/sfhn/admin/TeacherInfoList.do");
 						return;
 					}
 					String identityNumber = content.get(3);
 					if (!StringKit.isValid(identityNumber) || !NumberKit.isAllDigit(identityNumber)) {
-						HttpResponseKit.alertMessage(response, "第" + i + "行数据的身份证信息错误",
-								"/sfhn/admin/TeacherInfoList.do");
+						HttpResponseKit.alertMessage(response, "第" + i + "行数据的身份证信息错误", "/sfhn/admin/TeacherInfoList.do");
 						return;
 					}
 					String mobile = content.get(4);
 					if (!StringKit.isValid(mobile) || !NumberKit.isAllDigit(mobile)) {
-						HttpResponseKit.alertMessage(response, "第" + i + "行数据的手机号码信息错误",
-								"/sfhn/admin/TeacherInfoList.do");
+						HttpResponseKit.alertMessage(response, "第" + i + "行数据的手机号码信息错误", "/sfhn/admin/TeacherInfoList.do");
 						return;
 					}
 					String province = content.get(5);
@@ -156,8 +160,7 @@ public class TeacherInfoImport extends HttpServlet {
 					MajorTypeBean majorTypeBean = null;
 					majorTypeBean = majorTypeBusiness.getMajorTypeByName(majorType);
 					if (majorTypeBean == null) {
-						HttpResponseKit.alertMessage(response, "第" + i + "行数据的专业类型错误",
-								"/sfhn/admin/TeacherInfoList.do");
+						HttpResponseKit.alertMessage(response, "第" + i + "行数据的专业类型错误", "/sfhn/admin/TeacherInfoList.do");
 						return;
 					}
 					int majorTypeId = majorTypeBean.getMajorId();// 专业类型ID
@@ -165,15 +168,13 @@ public class TeacherInfoImport extends HttpServlet {
 					String majorName = content.get(11).trim();
 					MajorInfoBean majorInfoBean = new MajorInfoBean();
 					if (!StringKit.isValid(majorName)) {
-						HttpResponseKit.alertMessage(response, "第" + i + "行数据的专业信息错误",
-								"/sfhn/admin/TeacherInfoList.do");
+						HttpResponseKit.alertMessage(response, "第" + i + "行数据的专业信息错误", "/sfhn/admin/TeacherInfoList.do");
 						return;
 					} else {
 						MajorInfoBusiness majorInfoBusiness = new MajorInfoBusiness();
 						majorInfoBean = majorInfoBusiness.getMajorInfoByCondition(majorName, majorTypeId);
 						if (majorInfoBean == null) {
-							HttpResponseKit.alertMessage(response, "第" + i + "行数据的专业信息错误",
-									"/sfhn/admin/TeacherInfoList.do");
+							HttpResponseKit.alertMessage(response, "第" + i + "行数据的专业信息错误", "/sfhn/admin/TeacherInfoList.do");
 							return;
 						}
 					}
@@ -196,8 +197,7 @@ public class TeacherInfoImport extends HttpServlet {
 					bean.setStatus(Constants.STATUS_VALID);
 					bean.setUserId(business.getUserIdByUserClient(bean.getTeacherMobile()));
 					if (business.isExistsTeacherInfo(bean)) {
-						HttpResponseKit.alertMessage(response, "师资" + bean.getTeacherName() + "的数据已经存在，不能导入",
-								"/sfhn/admin/TeacherInfoList.do");
+						HttpResponseKit.alertMessage(response, "师资" + bean.getTeacherName() + "的数据已经存在，不能导入", "/sfhn/admin/TeacherInfoList.do");
 						return;
 					}
 					teacherInfoList.add(bean);
@@ -205,16 +205,14 @@ public class TeacherInfoImport extends HttpServlet {
 				// Excel表通过验证，则开始导入师资
 				for (TeacherInfoBean bean : teacherInfoList) {
 					// 获取激活码
-					ActiveCodeInfoBusiness activeCodeBusiness = new ActiveCodeInfoBusiness();
-					ReturnMessageBean returnMessageBean = activeCodeBusiness.bindActiveCodeWithUser(bean.getProvince(),
-							bean.getCity(), bean.getRegion(),
-							DateKit.formatTimestamp(DateKit.getCurrentTimestamp(), DateKit.REGEX_YEAR),
+					/*ActiveCodeInfoBusiness activeCodeBusiness = new ActiveCodeInfoBusiness();
+					ReturnMessageBean returnMessageBean = activeCodeBusiness.bindActiveCodeWithUser(bean.getProvince(), bean.getCity(),
+							bean.getRegion(), DateKit.formatTimestamp(DateKit.getCurrentTimestamp(), DateKit.REGEX_YEAR),
 							ActiveCodeInfoConfig.USER_TYPE_TEACHER, bean.getUserId(), userId);
 					if (returnMessageBean.getCode() == Constants.STATUS_NOT_VALID) {
-						HttpResponseKit.alertMessage(response, "师资[" + bean.getTeacherName() + "]获取激活码失败，后续数据停止导入",
-								"/sfhn/admin/TeacherInfoList.do");
+						HttpResponseKit.alertMessage(response, "师资[" + bean.getTeacherName() + "]获取激活码失败，后续数据停止导入", "/sfhn/admin/TeacherInfoList.do");
 						return;
-					}
+					}*/
 
 					bean.setCreateUser(userId);
 					int result = business.addTeacherInfo(bean);
@@ -224,19 +222,17 @@ public class TeacherInfoImport extends HttpServlet {
 							YunClassInvokeCommandBean commandBean = new YunClassInvokeCommandBean();
 							commandBean.setMethod(YunClassInvokeExecutor.HTTP_POST);
 							commandBean.setService(YunClassInvokeConfig.YUN_SERVICE_ADD_TEACHER);
-							commandBean.setBody(
-									business.teacherInfo2TeacherAddBean(bean, (String) returnMessageBean.getContent()));
+							commandBean.setBody(business.teacherInfo2TeacherAddBean(bean));
 
 							YunClassInvoker invoker = new YunClassInvoker(commandBean, new YunClassInvokCallBack() {
 								@Override
 								public boolean process(Object data) {
 									int result = 0;
 									try {
-										TeacherAddBean postResult = JsonKit.toBean(data.toString(),
-												TeacherAddBean.class);
+										TeacherAddBean postResult = JsonKit.toBean(data.toString(), TeacherAddBean.class);
 										// 更新到数据库
-										TeacherInfoBean bean = business.getTeacherInfoByUserIdAndStatus(
-												Constants.STATUS_VALID, Integer.valueOf(postResult.getUserId()));
+										TeacherInfoBean bean = business.getTeacherInfoByUserIdAndStatus(Constants.STATUS_VALID,
+												Integer.valueOf(postResult.getUserId()));
 										bean.setSyncStatus(Constants.STATUS_VALID);
 										result = business.updateTeacherInfo(bean);
 										if (result > 0) {

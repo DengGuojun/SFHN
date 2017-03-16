@@ -64,7 +64,7 @@
                       </button>
                       <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                         <li><a href="http://passport.1haowenjian.cn/user/UserInfoManage.do">个人设置</a></li>
-                        <li><a href="http://passport.1haowenjian.cn/user/Logout.do">退出</a></li>
+                        <li><a href="http://passport.1haowenjian.cn/user/Logout.do?target=http://zhxn.1haowenjian.cn/sfhn/admin/Index.do">退出</a></li>
                       </ul>
                     </div>
                 </div>
@@ -133,7 +133,7 @@
 						   <%}%>
 						   <tr>
                     			<td class="frm-label">集中培训资料</td>
-                    			<td class="frm-content">已上传<%=centralizedMaterialCount %>/17<a onclick="javascript:location.href='TrainingClassCentralizedManage.do?classId=<%=classInfoBean.getClassId()%>'" class="fr">查看文件</a></td>
+                    			<td class="frm-content">已上传<%=centralizedMaterialCount %>/18<a onclick="javascript:location.href='TrainingClassCentralizedManage.do?classId=<%=classInfoBean.getClassId()%>'" class="fr">查看文件</a></td>
                     		</tr>
                     		<tr>
                     			<td class="frm-label">田间实训资料</td>
@@ -267,19 +267,11 @@
             mScroller();
             
             $('.js-pass').click(function(){
-        		if($('.js-unit.selected').length != $('.js-unit').length){
-        			alert("请先查阅附件");
-        			return;
-        		}
         		$('.u-mask').removeClass('dn');
         		$('#pass-reason').removeClass('dn');
         	});
         	
         	$('.js-reject').click(function(){
-        		if($('.js-unit.selected').length != $('.js-unit').length){
-        			alert("请先查阅附件");
-        			return;
-        		}
         		$('.u-mask').removeClass('dn');
         		$('#reject-reason').removeClass('dn');
         	});

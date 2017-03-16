@@ -60,7 +60,7 @@
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                             <li><a href="http://passport.1haowenjian.cn/user/UserInfoManage.do">个人设置</a></li>
-                            <li><a href="http://passport.1haowenjian.cn/user/Logout.do">退出</a></li>
+                            <li><a href="http://passport.1haowenjian.cn/user/Logout.do?target=http://zhxn.1haowenjian.cn/sfhn/admin/Index.do">退出</a></li>
                         </ul>
                     </div>
                 </div>
@@ -121,7 +121,7 @@
                             <li class="active"><a href="TrainingClassUserList.do?classId=<%=classInfoBean.getClassId()%>">学员信息</a></li>
                             <li ><a href="TrainingClassTeacherList.do?classId=<%=classInfoBean.getClassId()%>">教师信息</a></li>
                             <li><a href="TrainingClassCentralizedManage.do?classId=<%=classInfoBean.getClassId()%>">集中培训材料</a></li>
-                            <li><a href="TrainingClassFieldManage.do?classId=<%=classInfoBean.getClassId()%>">田间实训材料</a></li>
+                           <%--  <li><a href="TrainingClassFieldManage.do?classId=<%=classInfoBean.getClassId()%>">田间实训材料</a></li> --%>
                             <li><a href="TrackingServiceInfoList.do?classId=<%=classInfoBean.getClassId()%>">跟踪服务</a></li>
                             <%if(isGovernment){ %>
                             <li><a href="TrainingClassUserEvaluate.do?classId=<%=classInfoBean.getClassId()%>">学员评定</a></li>
@@ -147,7 +147,7 @@
                                         <!-- <td><%=MapKit.getValueFromMap(reportBean.getUserGender(), GenderConfig.GENDER_MAP) %></td> -->
                                         <td><%=classInfoBean.getClassType()==Constants.STATUS_VALID ? MapKit.getValueFromMap(reportBean.getDeclareId(), learningTimeMap):"--" %></td>
                                         <!-- <td><%=MapKit.getValueFromMap(reportBean.getIndustryTypeId1(),industryTypeMap) %></td> -->
-                                        <td><a class="ml-10" href="TrainingClassUserManage.do?declareId=<%=reportBean.getDeclareId() %>">查看详情</a><a class="ml-10" onclick="javascript:location.href='FileInfoDownload.do?fileId=<%=fileInfoMap.get(reportBean.getIdentityNumber()) %>'">信息采集表</a></td>
+                                        <td><a class="ml-10" href="TrainingClassUserManage.do?declareId=<%=reportBean.getDeclareId() %>">查看详情</a><%-- <a class="ml-10" onclick="javascript:location.href='FileInfoDownload.do?fileId=<%=fileInfoMap.get(reportBean.getIdentityNumber()) %>'">信息采集表</a> --%></td>
                                     </tr>
                                     <%} %>
                                 </table>

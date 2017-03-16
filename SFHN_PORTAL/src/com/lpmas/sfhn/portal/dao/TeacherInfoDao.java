@@ -65,6 +65,49 @@ public class TeacherInfoDao {
 		return result;
 	}
 
+	public int insertTeacherInfoWithCreateTime(TeacherInfoBean bean) {
+		int result = -1;
+		DBFactory dbFactory = new SfhnDBFactory();
+		DBObject db = null;
+		try {
+			db = dbFactory.getDBObjectW();
+			String sql = "insert into teacher_info ( user_id, teacher_name, identity_number, tearcher_type, teacher_gender, teacher_age, major_type_id, major_id, province, city, region, main_course, corporate_name, teacher_mobile, address, sync_status, status, create_time, create_user, memo) value( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			PreparedStatement ps = db.getPreparedStatement(sql);
+			ps.setInt(1, bean.getUserId());
+			ps.setString(2, bean.getTeacherName());
+			ps.setString(3, bean.getIdentityNumber());
+			ps.setString(4, bean.getTearcherType());
+			ps.setInt(5, bean.getTeacherGender());
+			ps.setInt(6, bean.getTeacherAge());
+			ps.setInt(7, bean.getMajorTypeId());
+			ps.setInt(8, bean.getMajorId());
+			ps.setString(9, bean.getProvince());
+			ps.setString(10, bean.getCity());
+			ps.setString(11, bean.getRegion());
+			ps.setString(12, bean.getMainCourse());
+			ps.setString(13, bean.getCorporateName());
+			ps.setString(14, bean.getTeacherMobile());
+			ps.setString(15, bean.getAddress());
+			ps.setInt(16, bean.getSyncStatus());
+			ps.setInt(17, bean.getStatus());
+			ps.setTimestamp(18, bean.getCreateTime());
+			ps.setInt(19, bean.getCreateUser());
+			ps.setString(20, bean.getMemo());
+
+			result = db.executePstmtInsert();
+		} catch (Exception e) {
+			log.error("", e);
+			result = -1;
+		} finally {
+			try {
+				db.close();
+			} catch (SQLException sqle) {
+				log.error("", sqle);
+			}
+		}
+		return result;
+	}
+
 	public int updateTeacherInfo(TeacherInfoBean bean) {
 		int result = -1;
 		DBFactory dbFactory = new SfhnDBFactory();
@@ -197,8 +240,7 @@ public class TeacherInfoDao {
 		return bean;
 	}
 
-	public PageResultBean<TeacherInfoBean> getTeacherInfoPageListByMap(HashMap<String, String> condMap,
-			PageBean pageBean) {
+	public PageResultBean<TeacherInfoBean> getTeacherInfoPageListByMap(HashMap<String, String> condMap, PageBean pageBean) {
 		PageResultBean<TeacherInfoBean> result = new PageResultBean<TeacherInfoBean>();
 		DBFactory dbFactory = new SfhnDBFactory();
 		DBObject db = null;
@@ -266,8 +308,7 @@ public class TeacherInfoDao {
 			}
 
 			DBExecutor dbExecutor = dbFactory.getDBExecutor();
-			result = dbExecutor.getPageResult(sql, orderQuery, condList, paramList, TeacherInfoBean.class, pageBean,
-					db);
+			result = dbExecutor.getPageResult(sql, orderQuery, condList, paramList, TeacherInfoBean.class, pageBean, db);
 		} catch (Exception e) {
 			log.error("", e);
 		} finally {
@@ -290,6 +331,35 @@ public class TeacherInfoDao {
 			PreparedStatement ps = db.getPreparedStatement(sql);
 			ps.setInt(1, status);
 			ps.setInt(2, userId);
+			ResultSet rs = db.executePstmtQuery();
+			if (rs.next()) {
+				bean = new TeacherInfoBean();
+				bean = BeanKit.resultSet2Bean(rs, TeacherInfoBean.class);
+			}
+			rs.close();
+		} catch (Exception e) {
+			log.error("", e);
+			bean = null;
+		} finally {
+			try {
+				db.close();
+			} catch (SQLException sqle) {
+				log.error("", sqle);
+			}
+		}
+		return bean;
+	}
+
+	public TeacherInfoBean getTeacherInfoByIdentityNumber(String identityNumber) {
+		TeacherInfoBean bean = null;
+		DBFactory dbFactory = new SfhnDBFactory();
+		DBObject db = null;
+		try {
+			db = dbFactory.getDBObjectR();
+			String sql = "select * from teacher_info where identity_number = ?";
+			PreparedStatement ps = db.getPreparedStatement(sql);
+			ps.setString(1, identityNumber);
+
 			ResultSet rs = db.executePstmtQuery();
 			if (rs.next()) {
 				bean = new TeacherInfoBean();

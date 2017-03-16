@@ -75,8 +75,7 @@ public class TrainingClassInfoApprove extends HttpServlet {
 		if (!classInfoBean.getClassStatus().equals(TrainingClassInfoConfig.CLASS_STATUS_WAIT_APPROVE_REGION)
 				&& !classInfoBean.getClassStatus().equals(TrainingClassInfoConfig.CLASS_STATUS_WAIT_APPROVE_CITY)
 				&& !classInfoBean.getClassStatus().equals(TrainingClassInfoConfig.CLASS_STATUS_WAIT_APPROVE_PROVINCE)) {
-			HttpResponseKit.alertMessage(response, "页面已过期，请刷新重试", "/sfhn/admin/TrainingClassInfoProcess.do?classId="
-					+ classId);
+			HttpResponseKit.alertMessage(response, "页面已过期，请刷新重试", "/sfhn/admin/TrainingClassInfoProcess.do?classId=" + classId);
 			return;
 		}
 
@@ -91,8 +90,7 @@ public class TrainingClassInfoApprove extends HttpServlet {
 		}
 		// 获取培训机构
 		TrainingOrganizationInfoBusiness trainingOrgBusiness = new TrainingOrganizationInfoBusiness();
-		TrainingOrganizationInfoBean trainingOrgInfoBean = trainingOrgBusiness
-				.getTrainingOrganizationInfoByKey(classInfoBean.getOrganizationId());
+		TrainingOrganizationInfoBean trainingOrgInfoBean = trainingOrgBusiness.getTrainingOrganizationInfoByKey(classInfoBean.getOrganizationId());
 
 		// 获取附件信息
 		Map<Integer, Integer> fileInfoMap = new HashMap<Integer, Integer>();
@@ -115,8 +113,7 @@ public class TrainingClassInfoApprove extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
-			IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		int classId = ParamKit.getIntParameter(request, "classId", 0);
 		if (classId <= 0) {
@@ -135,8 +132,7 @@ public class TrainingClassInfoApprove extends HttpServlet {
 		if (!classInfoBean.getClassStatus().equals(TrainingClassInfoConfig.CLASS_STATUS_WAIT_APPROVE_REGION)
 				&& !classInfoBean.getClassStatus().equals(TrainingClassInfoConfig.CLASS_STATUS_WAIT_APPROVE_CITY)
 				&& !classInfoBean.getClassStatus().equals(TrainingClassInfoConfig.CLASS_STATUS_WAIT_APPROVE_PROVINCE)) {
-			HttpResponseKit.alertMessage(response, "页面已过期，请刷新重试", "/sfhn/admin/TrainingClassInfoProcess.do?classId="
-					+ classId);
+			HttpResponseKit.alertMessage(response, "页面已过期，请刷新重试", "/sfhn/admin/TrainingClassInfoProcess.do?classId=" + classId);
 			return;
 		}
 
@@ -221,18 +217,20 @@ public class TrainingClassInfoApprove extends HttpServlet {
 					messageInfoBean.setReceiveOrganizationId(classInfoBean.getOrganizationId());
 				} else if (nextStatus.equals(TrainingClassInfoConfig.CLASS_STATUS_WAIT_APPROVE_CITY)) {
 					// 如果待市审批，则消息接收者为市政府
-					GovernmentOrganizationInfoBean recevieGovernmentOrgBean = governmentOrgBusiness
-							.getGovernmentOrganizationInfoByRegion(classInfoBean.getProvince(),
-									classInfoBean.getCity(), null, GovernmentOrganizationConfig.ORGANIZATION_LEVEL_CITY);
+					GovernmentOrganizationInfoBean recevieGovernmentOrgBean = governmentOrgBusiness.getGovernmentOrganizationInfoByRegion(
+							classInfoBean.getProvince(), classInfoBean.getCity(), null, GovernmentOrganizationConfig.ORGANIZATION_LEVEL_CITY);
 					messageInfoBean.setReceiveOrganizationType(InfoTypeConfig.INFO_TYPE_GOVERNMENT_ORGANIZATION);
-					messageInfoBean.setReceiveOrganizationId(recevieGovernmentOrgBean.getOrganizationId());
+					if (recevieGovernmentOrgBean != null) {
+						messageInfoBean.setReceiveOrganizationId(recevieGovernmentOrgBean.getOrganizationId());
+					}
 				} else if (nextStatus.equals(TrainingClassInfoConfig.CLASS_STATUS_WAIT_APPROVE_PROVINCE)) {
 					// 如果待省审批，则消息接收者为省政府
-					GovernmentOrganizationInfoBean recevieGovernmentOrgBean = governmentOrgBusiness
-							.getGovernmentOrganizationInfoByRegion(classInfoBean.getProvince(), null, null,
-									GovernmentOrganizationConfig.ORGANIZATION_LEVEL_PROVINCE);
+					GovernmentOrganizationInfoBean recevieGovernmentOrgBean = governmentOrgBusiness.getGovernmentOrganizationInfoByRegion(
+							classInfoBean.getProvince(), null, null, GovernmentOrganizationConfig.ORGANIZATION_LEVEL_PROVINCE);
 					messageInfoBean.setReceiveOrganizationType(InfoTypeConfig.INFO_TYPE_GOVERNMENT_ORGANIZATION);
-					messageInfoBean.setReceiveOrganizationId(recevieGovernmentOrgBean.getOrganizationId());
+					if (recevieGovernmentOrgBean != null) {
+						messageInfoBean.setReceiveOrganizationId(recevieGovernmentOrgBean.getOrganizationId());
+					}
 				}
 				messageInfoBean.setIsRead(Constants.STATUS_NOT_VALID);
 				messageInfoBean.setCreateUser(userId);
@@ -241,7 +239,6 @@ public class TrainingClassInfoApprove extends HttpServlet {
 			}
 
 		}
-
 
 		// 存在操作成功的MEMBER当成成功
 		if (result > 0) {

@@ -57,7 +57,7 @@ String isAuth = (String)request.getAttribute("isAuth");
                       </button>
                       <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                         <li><a href="http://passport.1haowenjian.cn/user/UserInfoManage.do">个人设置</a></li>
-                        <li><a href="http://passport.1haowenjian.cn/user/Logout.do">退出</a></li>
+                        <li><a href="http://passport.1haowenjian.cn/user/Logout.do?target=http://zhxn.1haowenjian.cn/sfhn/admin/Index.do">退出</a></li>
                       </ul>
                     </div>
                 </div>
@@ -124,7 +124,7 @@ String isAuth = (String)request.getAttribute("isAuth");
 
                 </div>
             </div>
-            <div class="right-side">
+            <%-- <div class="right-side">
             	<div class="pop-box pop-positon">
             	    <div class="pop-book">
             	        <div class="book-wrp"><i class="icon-book">&nbsp;</i></div>
@@ -132,7 +132,7 @@ String isAuth = (String)request.getAttribute("isAuth");
             	    </div>
             	    <a onclick="javascript:location.href='FileInfoDownload.do?fileId=<%=fileId %>'" class="btn btn-success btn-block mt-16">下载</a>
             	</div>
-            </div>
+            </div> --%>
         </div>
     </div>
 <script src="<%=STATIC_URL %>js/jquery.min.js"></script>

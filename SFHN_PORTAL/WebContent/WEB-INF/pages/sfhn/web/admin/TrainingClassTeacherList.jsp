@@ -60,7 +60,7 @@
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                             <li><a href="http://passport.1haowenjian.cn/user/UserInfoManage.do">个人设置</a></li>
-                            <li><a href="http://passport.1haowenjian.cn/user/Logout.do">退出</a></li>
+                            <li><a href="http://passport.1haowenjian.cn/user/Logout.do?target=http://zhxn.1haowenjian.cn/sfhn/admin/Index.do">退出</a></li>
                         </ul>
                     </div>
                 </div>
@@ -115,7 +115,7 @@
                             <li ><a href="TrainingClassUserList.do?classId=<%=classInfoBean.getClassId()%>">学员信息</a></li>
                             <li class="active" ><a href="TrainingClassTeacherList.do?classId=<%=classInfoBean.getClassId()%>">教师信息</a></li>
                             <li><a href="TrainingClassCentralizedManage.do?classId=<%=classInfoBean.getClassId()%>">集中培训材料</a></li>
-                            <li><a href="TrainingClassFieldManage.do?classId=<%=classInfoBean.getClassId()%>">田间实训材料</a></li>
+                         <%--    <li><a href="TrainingClassFieldManage.do?classId=<%=classInfoBean.getClassId()%>">田间实训材料</a></li> --%>
                             <li><a href="TrackingServiceInfoList.do?classId=<%=classInfoBean.getClassId()%>">跟踪服务</a></li>
                              <%if(isGovernment){ %>
                             <li><a href="TrainingClassUserEvaluate.do?classId=<%=classInfoBean.getClassId()%>">学员评定</a></li>
@@ -142,7 +142,7 @@
                                 <%if(!isGovernment) {%>
                                 <div class="btn-wrp">
                                     <div class="btn-wrp text-right">
-                                        <a   onclick="javascript:location.href='TrainingClassTeacherManage.do?classId=<%=classInfoBean.getClassId()%>'"  class="btn btn-mini btn-success">选择授课老师</a>
+                                        <a   onclick="javascript:location.href='TrainingClassTeacherSelect.do?classId=<%=classInfoBean.getClassId()%>'"  class="btn btn-mini btn-success">选择授课老师</a>
                                     </div>
                                 </div>
                                 <%} %>

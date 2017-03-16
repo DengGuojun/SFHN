@@ -21,12 +21,7 @@ public class NicknameDisplayHelper {
 				GovernmentOrganizationInfoBean govBean = governmentOrganizationInfoBusiness
 						.getGovernmentOrganizationInfoByKey(userBean.getOrganizationId());
 				if (govBean != null) {
-					sb.append(govBean.getProvince());
-					sb.append(govBean.getCity());
-					sb.append(govBean.getRegion());
-					sb.append("-");
 					sb.append(govBean.getOrganizationName());
-					sb.append(helper.getUserLoginId());
 				}
 			} else if (userBean.getInfoType() == InfoTypeConfig.INFO_TYPE_TRAINING_ORGANIZATION) {
 				// 培训机构用 地域名+培训机构名，如长沙市隆平现代农服

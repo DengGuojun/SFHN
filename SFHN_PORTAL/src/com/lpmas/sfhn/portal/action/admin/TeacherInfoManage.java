@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
 import com.lpmas.framework.config.Constants;
 import com.lpmas.framework.tools.portal.PortalKit;
 import com.lpmas.framework.util.BeanKit;
-import com.lpmas.framework.util.DateKit;
 import com.lpmas.framework.util.JsonKit;
 import com.lpmas.framework.util.StringKit;
 import com.lpmas.framework.web.HttpResponseKit;
@@ -26,10 +25,9 @@ import com.lpmas.sfhn.bean.GovernmentOrganizationInfoBean;
 import com.lpmas.sfhn.bean.MajorInfoBean;
 import com.lpmas.sfhn.bean.MajorTypeBean;
 import com.lpmas.sfhn.bean.OrganizationUserBean;
-import com.lpmas.sfhn.config.ActiveCodeInfoConfig;
+import com.lpmas.sfhn.bean.TrainingOrganizationInfoBean;
 import com.lpmas.sfhn.config.InfoTypeConfig;
 import com.lpmas.sfhn.portal.bean.TeacherInfoBean;
-import com.lpmas.sfhn.portal.business.ActiveCodeInfoBusiness;
 import com.lpmas.sfhn.portal.business.GovernmentOrganizationInfoBusiness;
 import com.lpmas.sfhn.portal.business.MajorInfoBusiness;
 import com.lpmas.sfhn.portal.business.MajorTypeBusiness;
@@ -37,6 +35,7 @@ import com.lpmas.sfhn.portal.business.MessageInfoBusiness;
 import com.lpmas.sfhn.portal.business.NicknameDisplayHelper;
 import com.lpmas.sfhn.portal.business.OrganizationUserBusiness;
 import com.lpmas.sfhn.portal.business.TeacherInfoBusiness;
+import com.lpmas.sfhn.portal.business.TrainingOrganizationInfoBusiness;
 import com.lpmas.sfhn.portal.config.SfhnPortalConfig;
 import com.lpmas.sfhn.portal.invoker.bean.TeacherAddBean;
 import com.lpmas.sfhn.portal.invoker.bean.YunClassInvokeCommandBean;
@@ -71,20 +70,40 @@ public class TeacherInfoManage extends HttpServlet {
 		int userId = helper.getUserId();
 		OrganizationUserBusiness orgUserBusiness = new OrganizationUserBusiness();
 		OrganizationUserBean orgUserBean = orgUserBusiness.getOrganizationUserByUserId(userId);
-		if (orgUserBean == null || orgUserBean.getInfoType() != InfoTypeConfig.INFO_TYPE_GOVERNMENT_ORGANIZATION) {
+		if (orgUserBean == null || (orgUserBean.getInfoType() != InfoTypeConfig.INFO_TYPE_GOVERNMENT_ORGANIZATION
+				&& orgUserBean.getInfoType() != InfoTypeConfig.INFO_TYPE_TRAINING_ORGANIZATION)) {
 			HttpResponseKit.alertMessage(response, "你没有该功能的操作权限", HttpResponseKit.ACTION_HISTORY_BACK);
 			return;
 		}
-		GovernmentOrganizationInfoBusiness governmentOrgBusiness = new GovernmentOrganizationInfoBusiness();
-		GovernmentOrganizationInfoBean governmentOrgBean = governmentOrgBusiness
-				.getGovernmentOrganizationInfoByKey(orgUserBean.getOrganizationId());
-		if (governmentOrgBean.getStatus() == Constants.STATUS_NOT_VALID) {
-			HttpResponseKit.alertMessage(response, "你没有该功能的操作权限", HttpResponseKit.ACTION_HISTORY_BACK);
-			return;
+		String fixProvince = "";
+		String fixCity = "";
+		String fixRegion = "";
+		if (orgUserBean.getInfoType() == InfoTypeConfig.INFO_TYPE_GOVERNMENT_ORGANIZATION) {
+			GovernmentOrganizationInfoBusiness governmentOrgBusiness = new GovernmentOrganizationInfoBusiness();
+			GovernmentOrganizationInfoBean governmentOrgBean = governmentOrgBusiness
+					.getGovernmentOrganizationInfoByKey(orgUserBean.getOrganizationId());
+			if (governmentOrgBean.getStatus() == Constants.STATUS_NOT_VALID) {
+				HttpResponseKit.alertMessage(response, "你没有该功能的操作权限", HttpResponseKit.ACTION_HISTORY_BACK);
+				return;
+			}
+			fixProvince = governmentOrgBean.getProvince();
+			fixCity = governmentOrgBean.getCity();
+			fixRegion = governmentOrgBean.getRegion();
+			request.setAttribute("GovernmentOrgInfoBean", governmentOrgBean);
+			request.setAttribute("isGovernment", true);
+		} else {
+			TrainingOrganizationInfoBusiness trainingOrganizationInfoBusiness = new TrainingOrganizationInfoBusiness();
+			TrainingOrganizationInfoBean trainingOrganizationInfoBean = trainingOrganizationInfoBusiness
+					.getTrainingOrganizationInfoByKey(orgUserBean.getOrganizationId());
+			if (trainingOrganizationInfoBean.getStatus() == Constants.STATUS_NOT_VALID) {
+				HttpResponseKit.alertMessage(response, "你没有该功能的操作权限", HttpResponseKit.ACTION_HISTORY_BACK);
+				return;
+			}
+			fixProvince = trainingOrganizationInfoBean.getProvince();
+			fixCity = trainingOrganizationInfoBean.getCity();
+			fixRegion = trainingOrganizationInfoBean.getRegion();
+			request.setAttribute("isGovernment", false);
 		}
-		String fixProvince = governmentOrgBean.getProvince();
-		String fixCity = governmentOrgBean.getCity();
-		String fixRegion = governmentOrgBean.getRegion();
 
 		MajorTypeBusiness majorTypeBusiness = new MajorTypeBusiness();
 		MajorInfoBusiness majorInfoBusiness = new MajorInfoBusiness();
@@ -97,6 +116,9 @@ public class TeacherInfoManage extends HttpServlet {
 			bean = business.getTeacherInfoByKey(teacherId);
 			// 获取对应的专业类型
 			majorInfoBean = majorInfoBusiness.getMajorInfoByKey(bean.getMajorId());
+			request.setAttribute("TeacherProvince", bean.getProvince());
+			request.setAttribute("TeacherCity", bean.getCity());
+			request.setAttribute("TeacherRegion", bean.getRegion());
 		} else {
 			// 新建
 			bean.setSyncStatus(Constants.STATUS_NOT_VALID);
@@ -111,10 +133,7 @@ public class TeacherInfoManage extends HttpServlet {
 		MessageInfoBusiness messageInfoBusiness = new MessageInfoBusiness();
 		int unreadMessageCount = messageInfoBusiness.getUnreadMessageCount(orgUserBean);
 		request.setAttribute("unreadMessageCount", unreadMessageCount);
-
-		request.setAttribute("isGovernment", true);
 		request.setAttribute("MajorInfoBean", majorInfoBean);
-		request.setAttribute("GovernmentOrgInfoBean", governmentOrgBean);
 		NicknameDisplayHelper displayHelper = new NicknameDisplayHelper();
 		request.setAttribute("UserName", displayHelper.getUserDisplayNicknameByUserId(helper));
 		request.setAttribute("TeacherInfo", bean);
@@ -128,8 +147,7 @@ public class TeacherInfoManage extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
-			IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		// 获取用户Id
 		SsoClientHelper helper = new SsoClientHelper(request, response, false);
@@ -138,18 +156,28 @@ public class TeacherInfoManage extends HttpServlet {
 		TeacherInfoBusiness business = new TeacherInfoBusiness();
 		OrganizationUserBusiness orgUserBusiness = new OrganizationUserBusiness();
 		OrganizationUserBean orgUserBean = orgUserBusiness.getOrganizationUserByUserId(userId);
-		if (orgUserBean == null || orgUserBean.getInfoType() != InfoTypeConfig.INFO_TYPE_GOVERNMENT_ORGANIZATION) {
+		if (orgUserBean == null || (orgUserBean.getInfoType() != InfoTypeConfig.INFO_TYPE_GOVERNMENT_ORGANIZATION
+				&& orgUserBean.getInfoType() != InfoTypeConfig.INFO_TYPE_TRAINING_ORGANIZATION)) {
 			HttpResponseKit.alertMessage(response, "你没有该功能的操作权限", HttpResponseKit.ACTION_HISTORY_BACK);
 			return;
 		}
-		GovernmentOrganizationInfoBusiness governmentOrgBusiness = new GovernmentOrganizationInfoBusiness();
-		GovernmentOrganizationInfoBean governmentOrgBean = governmentOrgBusiness
-				.getGovernmentOrganizationInfoByKey(orgUserBean.getOrganizationId());
-		if (governmentOrgBean.getStatus() == Constants.STATUS_NOT_VALID) {
-			HttpResponseKit.alertMessage(response, "你没有该功能的操作权限", HttpResponseKit.ACTION_HISTORY_BACK);
-			return;
+		if (orgUserBean.getInfoType() == InfoTypeConfig.INFO_TYPE_GOVERNMENT_ORGANIZATION) {
+			GovernmentOrganizationInfoBusiness governmentOrgBusiness = new GovernmentOrganizationInfoBusiness();
+			GovernmentOrganizationInfoBean governmentOrgBean = governmentOrgBusiness
+					.getGovernmentOrganizationInfoByKey(orgUserBean.getOrganizationId());
+			if (governmentOrgBean.getStatus() == Constants.STATUS_NOT_VALID) {
+				HttpResponseKit.alertMessage(response, "你没有该功能的操作权限", HttpResponseKit.ACTION_HISTORY_BACK);
+				return;
+			}
+		} else {
+			TrainingOrganizationInfoBusiness trainingOrganizationInfoBusiness = new TrainingOrganizationInfoBusiness();
+			TrainingOrganizationInfoBean trainingOrganizationInfoBean = trainingOrganizationInfoBusiness
+					.getTrainingOrganizationInfoByKey(orgUserBean.getOrganizationId());
+			if (trainingOrganizationInfoBean.getStatus() == Constants.STATUS_NOT_VALID) {
+				HttpResponseKit.alertMessage(response, "你没有该功能的操作权限", HttpResponseKit.ACTION_HISTORY_BACK);
+				return;
+			}
 		}
-		
 
 		try {
 			bean = BeanKit.request2Bean(request, TeacherInfoBean.class);
@@ -166,23 +194,26 @@ public class TeacherInfoManage extends HttpServlet {
 				result = business.updateTeacherInfo(bean);
 			} else {
 				bean.setUserId(business.getUserIdByUserClient(bean.getTeacherMobile()));
-				if(business.isExistsTeacherInfo(bean)){
-					HttpResponseKit.alertMessage(response, "师资" + bean.getTeacherName() + "的数据已经存在，不能导入",
-							"/sfhn/admin/TeacherInfoList.do");
+				if (business.isExistsTeacherInfo(bean)) {
+					HttpResponseKit.alertMessage(response, "师资" + bean.getTeacherName() + "的数据已经存在，不能导入", "/sfhn/admin/TeacherInfoList.do");
 					return;
 				}
 				// 获取激活码
-				ActiveCodeInfoBusiness activeCodeBusiness = new ActiveCodeInfoBusiness();
-				ReturnMessageBean returnMessageBean = activeCodeBusiness.bindActiveCodeWithUser(bean.getProvince(),
-						bean.getCity(), bean.getRegion(),
-						DateKit.formatTimestamp(DateKit.getCurrentTimestamp(), DateKit.REGEX_YEAR),
-						ActiveCodeInfoConfig.USER_TYPE_TEACHER, bean.getUserId(), userId);
-				if (returnMessageBean.getCode() == Constants.STATUS_NOT_VALID) {
-					HttpResponseKit.alertMessage(response, returnMessageBean.getMessage(),
-							HttpResponseKit.ACTION_HISTORY_BACK);
-					return;
-				}
-				
+				/*
+				 * ActiveCodeInfoBusiness activeCodeBusiness = new
+				 * ActiveCodeInfoBusiness(); ReturnMessageBean returnMessageBean
+				 * =
+				 * activeCodeBusiness.bindActiveCodeWithUser(bean.getProvince(),
+				 * bean.getCity(), bean.getRegion(),
+				 * DateKit.formatTimestamp(DateKit.getCurrentTimestamp(),
+				 * DateKit.REGEX_YEAR), ActiveCodeInfoConfig.USER_TYPE_TEACHER,
+				 * bean.getUserId(), userId); if (returnMessageBean.getCode() ==
+				 * Constants.STATUS_NOT_VALID) {
+				 * HttpResponseKit.alertMessage(response,
+				 * returnMessageBean.getMessage(),
+				 * HttpResponseKit.ACTION_HISTORY_BACK); return; }
+				 */
+
 				// 新建师资
 				bean.setCreateUser(userId);
 				result = business.addTeacherInfo(bean);
@@ -192,8 +223,7 @@ public class TeacherInfoManage extends HttpServlet {
 					YunClassInvokeCommandBean commandBean = new YunClassInvokeCommandBean();
 					commandBean.setMethod(YunClassInvokeExecutor.HTTP_POST);
 					commandBean.setService(YunClassInvokeConfig.YUN_SERVICE_ADD_TEACHER);
-					commandBean.setBody(business.teacherInfo2TeacherAddBean(bean,
-							(String) returnMessageBean.getContent()));
+					commandBean.setBody(business.teacherInfo2TeacherAddBean(bean));
 
 					YunClassInvoker invoker = new YunClassInvoker(commandBean, new YunClassInvokCallBack() {
 						@Override

@@ -1,9 +1,6 @@
 package com.lpmas.sfhn.console.action;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,14 +13,10 @@ import com.lpmas.admin.config.OperationConfig;
 import com.lpmas.framework.config.Constants;
 import com.lpmas.framework.transfer.HttpClientKit;
 import com.lpmas.framework.transfer.HttpClientResultBean;
-import com.lpmas.framework.util.DateKit;
 import com.lpmas.framework.util.JsonKit;
 import com.lpmas.framework.web.HttpResponseKit;
 import com.lpmas.framework.web.ParamKit;
-import com.lpmas.sfhn.bean.ActiveCodeInfoBean;
 import com.lpmas.sfhn.bean.TrainingClassUserBean;
-import com.lpmas.sfhn.config.ActiveCodeInfoConfig;
-import com.lpmas.sfhn.console.business.ActiveCodeInfoBusiness;
 import com.lpmas.sfhn.console.business.TrainingClassUserBusiness;
 import com.lpmas.sfhn.console.config.ManualSyncConfig;
 import com.lpmas.sfhn.console.config.SfhnResource;
@@ -82,16 +75,22 @@ public class TrainingClassUserManualSync extends HttpServlet {
 		DeclareReportBean declareReportBean = declareReportBusiness.getDeclareReportByKey(String.valueOf(declareId));
 
 		// 判断是否已经绑定了激活码
-		ActiveCodeInfoBusiness activeCodeBusiness = new ActiveCodeInfoBusiness();
-		Map<String, String> condMap = new HashMap<String, String>();
-		condMap.put("userType", String.valueOf(ActiveCodeInfoConfig.USER_TYPE_FARMER));
-		condMap.put("userId", String.valueOf(declareReportBean.getUserId()));
-		condMap.put("trainingYear", DateKit.formatTimestamp(DateKit.getCurrentTimestamp(), DateKit.REGEX_YEAR));
-		List<ActiveCodeInfoBean> activeCodeInfoList = activeCodeBusiness.getActiveCodeInfoListByMap(condMap);
-		if (activeCodeInfoList.isEmpty()) {
-			HttpResponseKit.alertMessage(response, "找不到学员的激活码", HttpResponseKit.ACTION_HISTORY_BACK);
-			return;
-		}
+		// ActiveCodeInfoBusiness activeCodeBusiness = new
+		// ActiveCodeInfoBusiness();
+		// Map<String, String> condMap = new HashMap<String, String>();
+		// condMap.put("userType",
+		// String.valueOf(ActiveCodeInfoConfig.USER_TYPE_FARMER));
+		// condMap.put("userId", String.valueOf(declareReportBean.getUserId()));
+		// condMap.put("trainingYear",
+		// DateKit.formatTimestamp(DateKit.getCurrentTimestamp(),
+		// DateKit.REGEX_YEAR));
+		// List<ActiveCodeInfoBean> activeCodeInfoList =
+		// activeCodeBusiness.getActiveCodeInfoListByMap(condMap);
+		// if (activeCodeInfoList.isEmpty()) {
+		// HttpResponseKit.alertMessage(response, "找不到学员的激活码",
+		// HttpResponseKit.ACTION_HISTORY_BACK);
+		// return;
+		// }
 
 		// 开始同步
 		// 获取URL
@@ -99,8 +98,7 @@ public class TrainingClassUserManualSync extends HttpServlet {
 				YunClassInvokeConfig.IS_DEBUG_MODE);
 		// Http同步请求
 		HttpClientKit clientKit = new HttpClientKit();
-		String content = JsonKit.toJson(trainingClassUserBusiness.trainingClassUser2MemberAddBean(userBean,
-				activeCodeInfoList.get(0).getActiveCode()));
+		String content = JsonKit.toJson(trainingClassUserBusiness.trainingClassUser2MemberAddBean(userBean, ""));
 		String message = "";
 		try {
 			HttpClientResultBean httpResult = clientKit
@@ -141,5 +139,4 @@ public class TrainingClassUserManualSync extends HttpServlet {
 
 		HttpResponseKit.alertMessage(response, message, "TrainingClassUserManualSyncList.do");
 	}
-
 }

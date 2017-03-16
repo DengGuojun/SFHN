@@ -19,17 +19,13 @@ import com.lpmas.framework.util.DateKit;
 import com.lpmas.framework.util.JsonKit;
 import com.lpmas.framework.web.HttpResponseKit;
 import com.lpmas.framework.web.ParamKit;
-import com.lpmas.framework.web.ReturnMessageBean;
 import com.lpmas.ow.passport.sso.business.SsoClientHelper;
 import com.lpmas.sfhn.bean.OrganizationUserBean;
 import com.lpmas.sfhn.bean.TrainingClassInfoBean;
 import com.lpmas.sfhn.bean.TrainingClassUserBean;
 import com.lpmas.sfhn.bean.TrainingOrganizationInfoBean;
-import com.lpmas.sfhn.config.ActiveCodeInfoConfig;
 import com.lpmas.sfhn.declare.bean.DeclareInfoBean;
-import com.lpmas.sfhn.declare.bean.FarmerContactInfoBean;
 import com.lpmas.sfhn.declare.config.DeclareInfoConfig;
-import com.lpmas.sfhn.portal.business.ActiveCodeInfoBusiness;
 import com.lpmas.sfhn.portal.business.OrganizationUserBusiness;
 import com.lpmas.sfhn.portal.business.TrainingClassInfoBusiness;
 import com.lpmas.sfhn.portal.business.TrainingClassUserBusiness;
@@ -37,7 +33,6 @@ import com.lpmas.sfhn.portal.business.TrainingOrganizationInfoBusiness;
 import com.lpmas.sfhn.portal.config.SfhnPortalConfig;
 import com.lpmas.sfhn.portal.config.TrainingClassUserConfig;
 import com.lpmas.sfhn.portal.declare.business.DeclareInfoBusiness;
-import com.lpmas.sfhn.portal.declare.business.FarmerContactInfoBusiness;
 import com.lpmas.sfhn.portal.declare.handler.DeclareReportHandler;
 import com.lpmas.sfhn.portal.invoker.bean.ClassRoomMemberAddBean;
 import com.lpmas.sfhn.portal.invoker.bean.YunClassInvokeCommandBean;
@@ -87,27 +82,23 @@ public class TrainingClassManage extends HttpServlet {
 
 		// 检查这个用户是否填完表并提交了
 		DeclareInfoBusiness declareInfoBusiness = new DeclareInfoBusiness();
-		DeclareInfoBean declareInfoBean = declareInfoBusiness.getDeclareInfoByCondition(userId,
-				DateKit.formatDate(new Date(), DateKit.REGEX_YEAR));
+		DeclareInfoBean declareInfoBean = declareInfoBusiness.getDeclareInfoByCondition(userId, DateKit.formatDate(new Date(), DateKit.REGEX_YEAR));
 		if (declareInfoBean == null) {
 			HttpResponseKit.alertMessage(response, "类型非法，不能选择此班", HttpResponseKit.ACTION_HISTORY_BACK);
 			return;
 		}
 		if (declareInfoBean.getDeclareStatus().equals(DeclareInfoConfig.DECLARE_STATUS_EDIT)) {
-			HttpResponseKit.alertMessage(response, "未申报或申报不完整 不能报名这个课程", "DeclareInfoManage.do?declareType="
-					+ declareInfoBean.getDeclareType());
+			HttpResponseKit.alertMessage(response, "未申报或申报不完整 不能报名这个课程", "DeclareInfoManage.do?declareType=" + declareInfoBean.getDeclareType());
 			return;
 		}
 
 		// 查看这个用户是不是报名了
 		TrainingClassUserBusiness trainingClassUserBusiness = new TrainingClassUserBusiness();
-		TrainingClassUserBean trainingClassUserBean = trainingClassUserBusiness.getTrainingClassUserByKey(classId,
-				declareInfoBean.getDeclareId());
+		TrainingClassUserBean trainingClassUserBean = trainingClassUserBusiness.getTrainingClassUserByKey(classId, declareInfoBean.getDeclareId());
 
 		// 获取培训机构
 		TrainingOrganizationInfoBusiness trainingOrgBusiness = new TrainingOrganizationInfoBusiness();
-		TrainingOrganizationInfoBean trainingOrgInfoBean = trainingOrgBusiness
-				.getTrainingOrganizationInfoByKey(classInfoBean.getOrganizationId());
+		TrainingOrganizationInfoBean trainingOrgInfoBean = trainingOrgBusiness.getTrainingOrganizationInfoByKey(classInfoBean.getOrganizationId());
 
 		request.setAttribute("TrainingOrgInfoBean", trainingOrgInfoBean);
 		request.setAttribute("TrainingClassInfoBean", classInfoBean);
@@ -121,8 +112,7 @@ public class TrainingClassManage extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
-			IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int classId = ParamKit.getIntParameter(request, "classId", 0);
 		if (classId <= 0) {
 			HttpResponseKit.alertMessage(response, "班级ID非法", HttpResponseKit.ACTION_HISTORY_BACK);
@@ -160,8 +150,7 @@ public class TrainingClassManage extends HttpServlet {
 
 		// 检查这个用户的申报是否通过了
 		DeclareInfoBusiness declareInfoBusiness = new DeclareInfoBusiness();
-		DeclareInfoBean declareInfoBean = declareInfoBusiness.getDeclareInfoByCondition(userId,
-				DateKit.formatDate(new Date(), DateKit.REGEX_YEAR));
+		DeclareInfoBean declareInfoBean = declareInfoBusiness.getDeclareInfoByCondition(userId, DateKit.formatDate(new Date(), DateKit.REGEX_YEAR));
 		if (declareInfoBean == null || declareInfoBean.getDeclareStatus().equals(DeclareInfoConfig.DECLARE_STATUS_EDIT)) {
 			HttpResponseKit.alertMessage(response, "未申报或申报未通过不能报名这个课程", HttpResponseKit.ACTION_HISTORY_BACK);
 			return;
@@ -169,8 +158,7 @@ public class TrainingClassManage extends HttpServlet {
 
 		// 查看这个用户是不是报名了
 		TrainingClassUserBusiness trainingClassUserBusiness = new TrainingClassUserBusiness();
-		TrainingClassUserBean userBean = trainingClassUserBusiness.getTrainingClassUserByKey(classId,
-				declareInfoBean.getDeclareId());
+		TrainingClassUserBean userBean = trainingClassUserBusiness.getTrainingClassUserByKey(classId, declareInfoBean.getDeclareId());
 
 		int result = 0;
 		if (userBean == null) {
@@ -184,20 +172,17 @@ public class TrainingClassManage extends HttpServlet {
 			userBean.setStatus(Constants.STATUS_VALID);
 			result = trainingClassUserBusiness.addTrainingClassUser(userBean);
 			// 获取省市区
-			FarmerContactInfoBusiness farmerContactInfoBusiness = new FarmerContactInfoBusiness();
-			FarmerContactInfoBean farmerContactInfoBean = farmerContactInfoBusiness
-					.getFarmerContactInfoByKey(declareInfoBean.getDeclareId());
+			//FarmerContactInfoBusiness farmerContactInfoBusiness = new FarmerContactInfoBusiness();
+			//FarmerContactInfoBean farmerContactInfoBean = farmerContactInfoBusiness.getFarmerContactInfoByKey(declareInfoBean.getDeclareId());
 			// 获取激活码
-			ActiveCodeInfoBusiness activeCodeBusiness = new ActiveCodeInfoBusiness();
-			ReturnMessageBean returnMessageBean = activeCodeBusiness.bindActiveCodeWithUser(
-					farmerContactInfoBean.getProvince(), farmerContactInfoBean.getCity(),
-					farmerContactInfoBean.getRegion(), classInfoBean.getTrainingYear(),
+			/*ActiveCodeInfoBusiness activeCodeBusiness = new ActiveCodeInfoBusiness();
+			ReturnMessageBean returnMessageBean = activeCodeBusiness.bindActiveCodeWithUser(farmerContactInfoBean.getProvince(),
+					farmerContactInfoBean.getCity(), farmerContactInfoBean.getRegion(), classInfoBean.getTrainingYear(),
 					ActiveCodeInfoConfig.USER_TYPE_FARMER, userId, userId);
 			if (returnMessageBean.getCode() == Constants.STATUS_NOT_VALID) {
-				HttpResponseKit.alertMessage(response, returnMessageBean.getMessage(),
-						HttpResponseKit.ACTION_HISTORY_BACK);
+				HttpResponseKit.alertMessage(response, returnMessageBean.getMessage(), HttpResponseKit.ACTION_HISTORY_BACK);
 				return;
-			}
+			}*/
 			// 插入mongo
 			DeclareReportHandler handler = new DeclareReportHandler();
 			try {
@@ -205,19 +190,17 @@ public class TrainingClassManage extends HttpServlet {
 				YunClassInvokeCommandBean commandBean = new YunClassInvokeCommandBean();
 				commandBean.setMethod(YunClassInvokeExecutor.HTTP_POST);
 				commandBean.setService(YunClassInvokeConfig.YUN_SERVICE_ADD_USER_TO_CLASS);
-				commandBean.setBody(trainingClassUserBusiness.trainingClassUser2MemberAddBean(userBean,
-						(String) returnMessageBean.getContent()));
+				commandBean.setBody(trainingClassUserBusiness.trainingClassUser2MemberAddBean(userBean));
 
 				YunClassInvoker invoker = new YunClassInvoker(commandBean, new YunClassInvokCallBack() {
 					@Override
 					public boolean process(Object data) {
 						int result = 0;
 						try {
-							ClassRoomMemberAddBean postResult = JsonKit.toBean(data.toString(),
-									ClassRoomMemberAddBean.class);
+							ClassRoomMemberAddBean postResult = JsonKit.toBean(data.toString(), ClassRoomMemberAddBean.class);
 							// 更新到数据库
-							TrainingClassUserBean userBean = trainingClassUserBusiness.getTrainingClassUserByKey(
-									Integer.parseInt(postResult.getClassroomId()), declareInfoBean.getDeclareId());
+							TrainingClassUserBean userBean = trainingClassUserBusiness
+									.getTrainingClassUserByKey(Integer.parseInt(postResult.getClassroomId()), declareInfoBean.getDeclareId());
 							userBean.setModifyUser(userId);
 							userBean.setSyncStatus(Constants.STATUS_VALID);
 							result = trainingClassUserBusiness.updateTrainingClassUser(userBean);
@@ -247,15 +230,13 @@ public class TrainingClassManage extends HttpServlet {
 				userBean.setStatus(Constants.STATUS_VALID);
 				result = trainingClassUserBusiness.updateTrainingClassUser(userBean);
 			} else {
-				HttpResponseKit.alertMessage(response, "您已报名此课程,请等待审批", "TrainingClassInfoList.do?declareType="
-						+ classInfoBean.getTrainingType());
+				HttpResponseKit.alertMessage(response, "您已报名此课程,请等待审批", "TrainingClassInfoList.do?declareType=" + classInfoBean.getTrainingType());
 				return;
 			}
 		}
 
 		if (result > 0) {
-			HttpResponseKit.alertMessage(response, "恭喜!您已成功报名此课程,请等待审批", "TrainingClassInfoList.do?declareType="
-					+ classInfoBean.getTrainingType());
+			HttpResponseKit.alertMessage(response, "恭喜!您已成功报名此课程,请等待审批", "TrainingClassInfoList.do?declareType=" + classInfoBean.getTrainingType());
 			return;
 		} else {
 			HttpResponseKit.alertMessage(response, "报名失败", HttpResponseKit.ACTION_HISTORY_BACK);

@@ -44,8 +44,7 @@ public class TrainingClassAcceptMaterialList extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
-			IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		int classId = ParamKit.getIntParameter(request, "classId", 0);
 
@@ -61,22 +60,22 @@ public class TrainingClassAcceptMaterialList extends HttpServlet {
 		// 判断集中培训材料是否齐全
 		String lackOfMaterial = "";
 		int centralizedMaterialCount = 0;
-		for (int i = FileInfoConfig.FILE_TYPE_TRAINING_MATERIAL_CATALOG; i <= FileInfoConfig.FILE_TYPE_TRAINING_CLASS_SUMMARY; i++) {
-			if (fileInfoMap.get(i) != null) {
+		for (Integer key : FileInfoConfig.ALLOWED_FILE_TYPE_MAP.keySet()) {
+			if (fileInfoMap.get(key) != null) {
 				centralizedMaterialCount++;
 			} else {
-				lackOfMaterial += FileInfoConfig.FILE_TYPE_MAP.get(i) + "、";
+				lackOfMaterial += FileInfoConfig.FILE_TYPE_MAP.get(key) + "、";
 			}
 		}
 		// 判断田间实训材料是否齐全
 		int fieldMaterialCount = 0;
-		for (int i = FileInfoConfig.FILE_TYPE_FIELD_TRAINING_PLAN; i <= FileInfoConfig.FILE_TYPE_FIELD_TRAINING_PHOTO; i++) {
+		/*for (int i = FileInfoConfig.FILE_TYPE_FIELD_TRAINING_PLAN; i <= FileInfoConfig.FILE_TYPE_FIELD_TRAINING_PHOTO; i++) {
 			if (fileInfoMap.get(i) != null) {
 				fieldMaterialCount++;
 			} else {
 				lackOfMaterial += FileInfoConfig.FILE_TYPE_MAP.get(i) + "、";
 			}
-		}
+		}*/
 
 		if (lackOfMaterial.length() > 1) {
 			lackOfMaterial = lackOfMaterial.substring(0, lackOfMaterial.length() - 1);
@@ -88,8 +87,7 @@ public class TrainingClassAcceptMaterialList extends HttpServlet {
 		request.setAttribute("LackOfMaterial", lackOfMaterial);
 		request.setAttribute("ClassId", classId);
 
-		PortalKit.forwardPage(request, response, SfhnPortalConfig.ADMIN_PAGE_PATH
-				+ "TrainingClassAcceptMaterialList.jsp");
+		PortalKit.forwardPage(request, response, SfhnPortalConfig.ADMIN_PAGE_PATH + "TrainingClassAcceptMaterialList.jsp");
 
 	}
 

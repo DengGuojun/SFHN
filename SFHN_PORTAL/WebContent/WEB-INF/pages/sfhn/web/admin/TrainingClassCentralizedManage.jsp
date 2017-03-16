@@ -47,7 +47,7 @@
             <%@ include file="../../../include/web/navigation.jsp" %>
             <div class="center-side">
                 <div class="main-hd">
-                    <span class="u-title"><a href="javascript:history.go(-1);"><i class="icon-return"></i></a>返回</span>
+                    <span class="u-title"><a href="javascript:location.href='TrainingClassInfoList.do'"><i class="icon-return"></i></a>返回</span>
                     <div class="dropdown fr ">
                         <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                         个人设置
@@ -55,7 +55,7 @@
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                             <li><a href="http://passport.1haowenjian.cn/user/UserInfoManage.do">个人设置</a></li>
-                            <li><a href="http://passport.1haowenjian.cn/user/Logout.do">退出</a></li>
+                            <li><a href="http://passport.1haowenjian.cn/user/Logout.do?target=http://zhxn.1haowenjian.cn/sfhn/admin/Index.do">退出</a></li>
                         </ul>
                     </div>
                 </div>
@@ -110,7 +110,7 @@
                             <li><a href="TrainingClassUserList.do?classId=<%=classInfoBean.getClassId()%>">学员信息</a></li>
                             <li ><a href="TrainingClassTeacherList.do?classId=<%=classInfoBean.getClassId()%>">教师信息</a></li>
                             <li class="active"><a href="TrainingClassCentralizedManage.do?classId=<%=classInfoBean.getClassId()%>">集中培训材料</a></li>
-                            <li><a href="TrainingClassFieldManage.do?classId=<%=classInfoBean.getClassId()%>">田间实训材料</a></li>
+                           <%--  <li><a href="TrainingClassFieldManage.do?classId=<%=classInfoBean.getClassId()%>">田间实训材料</a></li> --%>
                             <li><a href="TrackingServiceInfoList.do?classId=<%=classInfoBean.getClassId()%>">跟踪服务</a></li>
                              <%if(isGovernment){ %>
                             <li><a href="TrainingClassUserEvaluate.do?classId=<%=classInfoBean.getClassId()%>">学员评定</a></li>
@@ -121,336 +121,354 @@
                                 <table class="table table-base table-odd">
                                 <input type="hidden" id="classId" value="<%=classInfoBean.getClassId() %>"/>
                     		<tr class="bortop-no">
-                    			<th>需要提交的文件</th>
+                    		    <th>序号</th>
+                    			<th>资料</th>
+                    			<th>支持文件类型</th>
                     			<th>状态</th>
                     			<th>时间</th>
                     			<th>操作</th>
                     		</tr>
                     		<tr>
-                    			<td>教材封面及目录（扫描件）</td>
+                    		    <td>1</td>
+                    			<td>教材封面及目录</td>
+                    			<td><%=FileInfoConfig.FILE_FORMAT_PIC_OR_WORD%></td>
                     			<%if(fileInfoMap.get(FileInfoConfig.FILE_TYPE_TRAINING_MATERIAL_CATALOG) !=null){%>
-                    			<td>已提交</td>
-                    			<td><%=DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_TRAINING_MATERIAL_CATALOG).getCreateTime(), DateKit.DEFAULT_DATE_TIME_FORMAT)%></td>
-                    			<td>
-                    			<a onclick="javascript:location.href='FileInfoDownload.do?fileId=<%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_TRAINING_MATERIAL_CATALOG).getFileId()%>'" class="">下载</a>
-                    			<%if(!isGovernment) {%>             
-								<label class="ml-10 btn-upload upload-wrp" for="file1"><a>上传</a><input type="file" id="file1" onchange="up('file1',<%=FileInfoConfig.FILE_TYPE_TRAINING_MATERIAL_CATALOG %>);"></label>								
-								<%} %>
-                         	</td>
+                    			<td>已上传</td>
+                    			<td><%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_TRAINING_MATERIAL_CATALOG).getModifyTime() == null ? DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_TRAINING_MATERIAL_CATALOG).getCreateTime(), DateKit.DEFAULT_DATE_TIME_FORMAT) : DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_TRAINING_MATERIAL_CATALOG).getModifyTime(), DateKit.DEFAULT_DATE_TIME_FORMAT)%></td>                    			
                     			<%} else{%>
-                    			<td>未提交</td>
+                    			<td>未上传</td>
+                    			<td></td>
+                    			<%}%>   
+                    			<td>                    		
+								<a onclick="javascript:location.href='TrainingClassImageList.do?classId=<%=classInfoBean.getClassId()%>&fileType=<%=FileInfoConfig.FILE_TYPE_TRAINING_MATERIAL_CATALOG%>'" class="">查看</a>
+								</td>                     			         
+                    		</tr>
+                    		<tr>
+                    		    <td>2</td>
+                    			<td>教师聘书</td>
+                    			<td><%=FileInfoConfig.FILE_FORMAT_PIC_OR_WORD%></td>
+                    			<%if(fileInfoMap.get(FileInfoConfig.FILE_TYPE_TEACHER_APPOINTMENT) !=null){%>
+                    			<td>已上传</td>
+                    			<td><%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_TEACHER_APPOINTMENT).getModifyTime() == null ? DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_TEACHER_APPOINTMENT).getCreateTime(), DateKit.DEFAULT_DATE_TIME_FORMAT) : DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_TEACHER_APPOINTMENT).getModifyTime(), DateKit.DEFAULT_DATE_TIME_FORMAT)%></td>                    			
+                    			<%} else{%>
+                    			<td>未上传</td>
+                    			<td></td>
+                    			<%}%>   
+                    			<td>                    		
+								<a onclick="javascript:location.href='TrainingClassImageList.do?classId=<%=classInfoBean.getClassId()%>&fileType=<%=FileInfoConfig.FILE_TYPE_TEACHER_APPOINTMENT%>'" class="">查看</a>
+								</td>                   			
+                    		</tr>
+                    		<tr>
+                    		    <td>3</td>
+                    			<td>培训教师师资信息</td>
+                    			<td><%=FileInfoConfig.FILE_FORMAT_WORD%></td>
+                    			<%if(fileInfoMap.get(FileInfoConfig.FILE_TYPE_TEACHER_INFORMATION) !=null){%>
+                    			<td>已上传</td>
+                    			<td><%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_TEACHER_INFORMATION).getModifyTime() == null ? DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_TEACHER_INFORMATION).getCreateTime(), DateKit.DEFAULT_DATE_TIME_FORMAT) : DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_TEACHER_INFORMATION).getModifyTime(), DateKit.DEFAULT_DATE_TIME_FORMAT)%></td>  
+                    			<td>
+                    			<a onclick="javascript:location.href='FileInfoDownload.do?fileId=<%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_TEACHER_INFORMATION).getFileId()%>'" class="">下载</a>  
+                    			<%if(!isGovernment) {%>       
+                    			|<a onclick="javascript:location.href='FileInfoRemove.do?fileId=<%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_TEACHER_INFORMATION).getFileId()%>&url=TrainingClassCentralizedManage'" class="">删除</a>|      
+								<label class="ml-10 btn-upload upload-wrp" for="file3"><a>更换</a><input type="file" id="file3" onchange="up('file3',<%=FileInfoConfig.FILE_TYPE_TEACHER_INFORMATION %>);"></label>							
+								<%} %>                  		                			
+                         	    </td>
+                    			<%} else{%>
+                    			<td>未上传</td>
                     			<td></td>
                     			<td><%if(!isGovernment) {%>
-                    			<label class="upload-wrp btn-upload"><a>上传</a><input type="file" id="file1" onchange="up('file1',<%=FileInfoConfig.FILE_TYPE_TRAINING_MATERIAL_CATALOG %>);"></label>
+                    			<label class="upload-wrp btn-upload"><a>上传</a><input type="file" id="file3" onchange="up('file3',<%=FileInfoConfig.FILE_TYPE_TEACHER_INFORMATION %>);"></label>
 								<%} %></td>
-                  			<%}%>   
-                    			<input type="hidden" id="<%=FileInfoConfig.FILE_TYPE_TRAINING_MATERIAL_CATALOG %>_id" value="<%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_TRAINING_MATERIAL_CATALOG)!=null ? fileInfoMap.get(FileInfoConfig.FILE_TYPE_TRAINING_MATERIAL_CATALOG).getFileId(): "" %>" />           
+                  			    <%}%>   
+                    			<input type="hidden" id="<%=FileInfoConfig.FILE_TYPE_TEACHER_INFORMATION %>_id" value="<%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_TEACHER_INFORMATION)!=null ? fileInfoMap.get(FileInfoConfig.FILE_TYPE_TEACHER_INFORMATION).getFileId(): "" %>" />           
                     		</tr>
                     		<tr>
-                    			<td>认定信息采集表</td>
-                    			<%if(fileInfoMap.get(FileInfoConfig.FILE_TYPE_INFORMATION_ACAUISITION_FORM) !=null){%>
-                    			<td>已提交</td>
-                    			<td><%=DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_INFORMATION_ACAUISITION_FORM).getCreateTime(), DateKit.DEFAULT_DATE_TIME_FORMAT)%></td>
-                    			<td>
-                    			<a onclick="javascript:location.href='FileInfoDownload.do?fileId=<%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_INFORMATION_ACAUISITION_FORM).getFileId()%>'" class="">下载</a>
-                    			<%if(!isGovernment) {%>
-								<label class="ml-10 btn-upload upload-wrp"><a>上传</a><input type="file" id="file2" onchange="up('file2',<%=FileInfoConfig.FILE_TYPE_INFORMATION_ACAUISITION_FORM %>);"></label>
-								<%} %>
-                    			</td>
-                    			<%} else{%>
-                    			<td>未提交</td>
-                    			<td></td>
-                    			<td><%if(!isGovernment) {%>
-                    			<label class="upload-wrp btn-upload"><a>上传</a><input type="file" id="file2" onchange="up('file2',<%=FileInfoConfig.FILE_TYPE_INFORMATION_ACAUISITION_FORM %>);"></label>
-								<%} %></td>
-                    			<%}%>   
-                    			<input type="hidden" id="<%=FileInfoConfig.FILE_TYPE_INFORMATION_ACAUISITION_FORM %>_id" value="<%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_INFORMATION_ACAUISITION_FORM)!=null ? fileInfoMap.get(FileInfoConfig.FILE_TYPE_INFORMATION_ACAUISITION_FORM).getFileId(): "" %>" />           
-                    		</tr>
-                    		<tr>
-                    			<td>参观考察基地简介</td>
-                    			<%if(fileInfoMap.get(FileInfoConfig.FILE_TYPE_VISIT_BASE_INTRODUCTION) !=null){%>
-                    			<td>已提交</td>
-                    			<td><%=DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_VISIT_BASE_INTRODUCTION).getCreateTime(), DateKit.DEFAULT_DATE_TIME_FORMAT)%></td>
-                    			<td>
-                    			<a onclick="javascript:location.href='FileInfoDownload.do?fileId=<%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_VISIT_BASE_INTRODUCTION).getFileId()%>'" class="">下载</a>
-                    			<%if(!isGovernment) {%>
-								<label class="ml-10 btn-upload upload-wrp"><a>上传</a><input type="file" id="file3" onchange="up('file3',<%=FileInfoConfig.FILE_TYPE_VISIT_BASE_INTRODUCTION %>);"></label>
-								<%} %>
-                    			</td>
-                    			<%} else{%>
-                    			<td>未提交</td>
-                    			<td></td>
-                    			<td><%if(!isGovernment) {%>
-                    			<label class="upload-wrp btn-upload"><a>上传</a><input type="file" id="file3" onchange="up('file3',<%=FileInfoConfig.FILE_TYPE_VISIT_BASE_INTRODUCTION %>);"></label>
-								<%} %></td>
-                    			<%}%>   
-                    			<input type="hidden" id="<%=FileInfoConfig.FILE_TYPE_VISIT_BASE_INTRODUCTION %>_id" value="<%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_VISIT_BASE_INTRODUCTION)!=null ? fileInfoMap.get(FileInfoConfig.FILE_TYPE_VISIT_BASE_INTRODUCTION).getFileId(): "" %>" />           
-                    		</tr>
-                    		<tr>
-                    			<td>学员培训台帐</td>
-                    			<%if(fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_USER_SHEET) !=null){%>
-                    			<td>已提交</td>
-                    			<td><%=DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_USER_SHEET).getCreateTime(), DateKit.DEFAULT_DATE_TIME_FORMAT)%></td>
-                    			<td>
-                    			<a onclick="javascript:location.href='FileInfoDownload.do?fileId=<%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_USER_SHEET).getFileId()%>'" class="ml-10">下载</a></td>
-                    			<%} else{%>
-                    			<td>未提交</td>
-                    			<td></td>                   			
-                    			<td></td>								
-                    			<%}%>   
-                    			<input type="hidden" id="<%=FileInfoConfig.FILE_TYPE_CLASS_USER_SHEET %>_id" value="<%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_USER_SHEET)!=null ? fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_USER_SHEET).getFileId(): "" %>" />           
-                    		</tr>
-                    		<tr>
-                    			<td>学员信息汇总表</td>
-                    			<%if(fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_USER_INFO_SUMMARY_SHEET) !=null){%>
-                    			<td>已提交</td>
-                    			<td><%=DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_USER_INFO_SUMMARY_SHEET).getCreateTime(), DateKit.DEFAULT_DATE_TIME_FORMAT)%></td>
-                    			<td>
-                    			<a onclick="javascript:location.href='FileInfoDownload.do?fileId=<%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_USER_INFO_SUMMARY_SHEET).getFileId()%>'" class="">下载</a>
-                    			<%if(!isGovernment) {%>
-								<label class="ml-10 btn-upload upload-wrp"><a>上传</a><input type="file" id="file5" onchange="up('file5',<%=FileInfoConfig.FILE_TYPE_CLASS_USER_INFO_SUMMARY_SHEET %>);"></label>
-								<%} %>
-                    			</td>
-                    			<%} else{%>
-                    			<td>未提交</td>
-                    			<td></td>
-                    			<td><%if(!isGovernment) {%>
-                    			<label class="upload-wrp btn-upload"><a>上传</a><input type="file" id="file5" onchange="up('file5',<%=FileInfoConfig.FILE_TYPE_CLASS_USER_INFO_SUMMARY_SHEET %>);"></label>
-								<%} %></td>
-                    			<%}%>   
-                    			<input type="hidden" id="<%=FileInfoConfig.FILE_TYPE_CLASS_USER_INFO_SUMMARY_SHEET %>_id" value="<%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_USER_INFO_SUMMARY_SHEET)!=null ? fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_USER_INFO_SUMMARY_SHEET).getFileId(): "" %>" />           
-                    		</tr>
-                    		<tr>
-                    			<td>班委会成员名单</td>
+                    		    <td>4</td>
+                    			<td>班委会名单</td>
+                    			<td><%=FileInfoConfig.FILE_FORMAT_WORD%></td>
                     			<%if(fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_COMMITTEE_LIST) !=null){%>
-                    			<td>已提交</td>
-                    			<td><%=DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_COMMITTEE_LIST).getCreateTime(), DateKit.DEFAULT_DATE_TIME_FORMAT)%></td>
+                    			<td>已上传</td>
+                    			<td><%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_COMMITTEE_LIST).getModifyTime() == null ? DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_COMMITTEE_LIST).getCreateTime(), DateKit.DEFAULT_DATE_TIME_FORMAT) : DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_COMMITTEE_LIST).getModifyTime(), DateKit.DEFAULT_DATE_TIME_FORMAT)%></td>  
                     			<td>
-                    			<a onclick="javascript:location.href='FileInfoDownload.do?fileId=<%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_COMMITTEE_LIST).getFileId()%>'" class="">下载</a>
+                    			<a onclick="javascript:location.href='FileInfoDownload.do?fileId=<%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_COMMITTEE_LIST).getFileId()%>'" class="">下载</a>  
                     			<%if(!isGovernment) {%>
-								<label class="ml-10 btn-upload upload-wrp"><a>上传</a><input type="file" id="file6" onchange="up('file6',<%=FileInfoConfig.FILE_TYPE_CLASS_COMMITTEE_LIST %>);"></label>
-								<%} %>
+                    			|<a onclick="javascript:location.href='FileInfoRemove.do?fileId=<%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_COMMITTEE_LIST).getFileId()%>&url=TrainingClassCentralizedManage'" class="">删除</a>| 
+								<label class="ml-10 btn-upload upload-wrp"><a>更换</a><input type="file" id="file4" onchange="up('file4',<%=FileInfoConfig.FILE_TYPE_CLASS_COMMITTEE_LIST %>);"></label>
+								<%} %>                   			                 			
                     			</td>
                     			<%} else{%>
-                    			<td>未提交</td>
+                    			<td>未上传</td>
                     			<td></td>
                     			<td><%if(!isGovernment) {%>
-                    			<label class="upload-wrp btn-upload"><a>上传</a><input type="file" id="file6" onchange="up('file6',<%=FileInfoConfig.FILE_TYPE_CLASS_COMMITTEE_LIST %>);"></label>
+                    			<label class="upload-wrp btn-upload"><a>上传</a><input type="file" id="file4" onchange="up('file4',<%=FileInfoConfig.FILE_TYPE_CLASS_COMMITTEE_LIST %>);"></label>
 								<%} %></td>
                     			<%}%>   
                     			<input type="hidden" id="<%=FileInfoConfig.FILE_TYPE_CLASS_COMMITTEE_LIST %>_id" value="<%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_COMMITTEE_LIST)!=null ? fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_COMMITTEE_LIST).getFileId(): "" %>" />           
                     		</tr>
                     		<tr>
+                    		    <td>5</td>
                     			<td>学员考勤表</td>
+                    			<td><%=FileInfoConfig.FILE_FORMAT_PIC_OR_EXCEL%></td>
                     			<%if(fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_ATTENDANCE_LIST) !=null){%>
-                    			<td>已提交</td>
-                    			<td><%=DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_ATTENDANCE_LIST).getCreateTime(), DateKit.DEFAULT_DATE_TIME_FORMAT)%></td>
+                    			<td>已上传</td>
+                    			<td><%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_ATTENDANCE_LIST).getModifyTime() == null ? DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_ATTENDANCE_LIST).getCreateTime(), DateKit.DEFAULT_DATE_TIME_FORMAT) : DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_ATTENDANCE_LIST).getModifyTime(), DateKit.DEFAULT_DATE_TIME_FORMAT)%></td>                   			
+                    			<%} else{%>
+                    			<td>未上传</td>
+                    			<td></td>                    			
+                    			<%}%>  
                     			<td>                    		
 								<a onclick="javascript:location.href='TrainingClassImageList.do?classId=<%=classInfoBean.getClassId()%>&fileType=<%=FileInfoConfig.FILE_TYPE_CLASS_ATTENDANCE_LIST%>'" class="">查看</a>
-								</td>
-                    			<%} else{%>
-                    			<td>未提交</td>
-                    			<td></td>
-                    			<td>
-                    			<%if(!isGovernment) {%>
-								<a onclick="javascript:location.href='TrainingClassImageList.do?classId=<%=classInfoBean.getClassId()%>&fileType=<%=FileInfoConfig.FILE_TYPE_CLASS_ATTENDANCE_LIST%>'" class="">查看</a>
-								<%} %></td>
-                    			<%}%>                      			
+								</td>                    			
                     		</tr>
                     		<tr>
-                    			<td>培训现场照片</td>
-                    			<%if(fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_PHOTO) !=null){%>
-                    			<td>已提交</td>
-                    			<td><%=DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_PHOTO).getCreateTime(), DateKit.DEFAULT_DATE_TIME_FORMAT)%></td>
+                    		    <td>6</td>
+                    			<td>结业证书发放表</td>
+                    			<td><%=FileInfoConfig.FILE_FORMAT_PIC_OR_EXCEL%></td>
+                    			<%if(fileInfoMap.get(FileInfoConfig.FILE_TYPE_CERTIFICATE_OF_COMPLETION) !=null){%>
+                    			<td>已上传</td>
+                    			<td><%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_CERTIFICATE_OF_COMPLETION).getModifyTime() == null ? DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_CERTIFICATE_OF_COMPLETION).getCreateTime(), DateKit.DEFAULT_DATE_TIME_FORMAT) : DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_CERTIFICATE_OF_COMPLETION).getModifyTime(), DateKit.DEFAULT_DATE_TIME_FORMAT)%></td>                   			
+                    			<%} else{%>
+                    			<td>未上传</td>
+                    			<td></td>                    			
+                    			<%}%>  
                     			<td>                    		
-								<a onclick="javascript:location.href='TrainingClassImageList.do?classId=<%=classInfoBean.getClassId()%>&fileType=<%=FileInfoConfig.FILE_TYPE_CLASS_PHOTO%>'" class="">查看</a>
-								</td>
-                    			<%} else{%>
-                    			<td>未提交</td>
-                    			<td></td>
-                    			<td>
-                    			<%if(!isGovernment) {%>
-								<a onclick="javascript:location.href='TrainingClassImageList.do?classId=<%=classInfoBean.getClassId()%>&fileType=<%=FileInfoConfig.FILE_TYPE_CLASS_PHOTO%>'" class="">查看</a>
-								<%} %></td>
-                    			<%}%>                      			
+								<a onclick="javascript:location.href='TrainingClassImageList.do?classId=<%=classInfoBean.getClassId()%>&fileType=<%=FileInfoConfig.FILE_TYPE_CERTIFICATE_OF_COMPLETION%>'" class="">查看</a>
+								</td>      
                     		</tr>
                     		<tr>
+                    		    <td>7</td>
                     			<td>学员满意度测评汇总表</td>
+                    			<td><%=FileInfoConfig.FILE_FORMAT_WORD%></td>
                     			<%if(fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_SATISFACTION_SURVEY) !=null){%>
-                    			<td>已提交</td>
-                    			<td><%=DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_SATISFACTION_SURVEY).getCreateTime(), DateKit.DEFAULT_DATE_TIME_FORMAT)%></td>
+                    			<td>已上传</td>
+                    			<td><%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_SATISFACTION_SURVEY).getModifyTime() == null ? DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_SATISFACTION_SURVEY).getCreateTime(), DateKit.DEFAULT_DATE_TIME_FORMAT) : DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_SATISFACTION_SURVEY).getModifyTime(), DateKit.DEFAULT_DATE_TIME_FORMAT)%></td>  
                     			<td>
-                    			<a onclick="javascript:location.href='FileInfoDownload.do?fileId=<%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_SATISFACTION_SURVEY).getFileId()%>'" class="">下载</a>
+                    			<a onclick="javascript:location.href='FileInfoDownload.do?fileId=<%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_SATISFACTION_SURVEY).getFileId()%>'" class="">下载</a>  
                     			<%if(!isGovernment) {%>
-								<label class="ml-10 btn-upload upload-wrp"><a>上传</a><input type="file" id="file9" onchange="up('file9',<%=FileInfoConfig.FILE_TYPE_CLASS_SATISFACTION_SURVEY %>);"></label>
-								<%} %>
+                    			|<a onclick="javascript:location.href='FileInfoRemove.do?fileId=<%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_SATISFACTION_SURVEY).getFileId()%>&url=TrainingClassCentralizedManage'" class="">删除</a>| 
+								<label class="ml-10 btn-upload upload-wrp"><a>更换</a><input type="file" id="file7" onchange="up('file7',<%=FileInfoConfig.FILE_TYPE_CLASS_SATISFACTION_SURVEY %>);"></label>
+								<%} %>                    			                			
                     			</td>
                     			<%} else{%>
-                    			<td>未提交</td>
+                    			<td>未上传</td>
                     			<td></td>
                     			<td><%if(!isGovernment) {%>
-                    			<label class="upload-wrp btn-upload"><a>上传</a><input type="file" id="file9" onchange="up('file9',<%=FileInfoConfig.FILE_TYPE_CLASS_SATISFACTION_SURVEY %>);"></label>
+                    			<label class="upload-wrp btn-upload"><a>上传</a><input type="file" id="file7" onchange="up('file7',<%=FileInfoConfig.FILE_TYPE_CLASS_SATISFACTION_SURVEY %>);"></label>
 								<%} %></td>
                     			<%}%>   
                     			<input type="hidden" id="<%=FileInfoConfig.FILE_TYPE_CLASS_SATISFACTION_SURVEY %>_id" value="<%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_SATISFACTION_SURVEY)!=null ? fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_SATISFACTION_SURVEY).getFileId(): "" %>" />           
                     		</tr>
                     		<tr>
+                    		    <td>8</td>
                     			<td>考试考核材料（成绩汇总表）</td>
+                    			<td><%=FileInfoConfig.FILE_FORMAT_PIC_OR_EXCEL%></td>
                     			<%if(fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_EXAM_RESULT) !=null){%>
-                    			<td>已提交</td>
-                    			<td><%=DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_EXAM_RESULT).getCreateTime(), DateKit.DEFAULT_DATE_TIME_FORMAT)%></td>
-                    			<td>
-                    			<a onclick="javascript:location.href='FileInfoDownload.do?fileId=<%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_EXAM_RESULT).getFileId()%>'" class="">下载</a>
-                    			<%if(!isGovernment) {%>
-								<label class="ml-10 btn-upload upload-wrp"><a>上传</a><input type="file" id="file10" onchange="up('file10',<%=FileInfoConfig.FILE_TYPE_CLASS_EXAM_RESULT %>);"></label>
-								<%} %>
-                    			</td>
+                    			<td>已上传</td> 
+                    			<td><%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_EXAM_RESULT).getModifyTime() == null ? DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_EXAM_RESULT).getCreateTime(), DateKit.DEFAULT_DATE_TIME_FORMAT) : DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_EXAM_RESULT).getModifyTime(), DateKit.DEFAULT_DATE_TIME_FORMAT)%></td>                   			
                     			<%} else{%>
-                    			<td>未提交</td>
-                    			<td></td>
-                    			<td><%if(!isGovernment) {%>
-                    			<label class="upload-wrp btn-upload"><a>上传</a><input type="file" id="file10" onchange="up('file10',<%=FileInfoConfig.FILE_TYPE_CLASS_EXAM_RESULT %>);"></label>
-								<%} %></td>
-                    			<%}%>   
-                    			<input type="hidden" id="<%=FileInfoConfig.FILE_TYPE_CLASS_EXAM_RESULT %>_id" value="<%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_EXAM_RESULT)!=null ? fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_EXAM_RESULT).getFileId(): "" %>" />           
+                    			<td>未上传</td>
+                    			<td></td>                    			
+                    			<%}%>  
+                    			<td>                    		
+								<a onclick="javascript:location.href='TrainingClassImageList.do?classId=<%=classInfoBean.getClassId()%>&fileType=<%=FileInfoConfig.FILE_TYPE_CLASS_EXAM_RESULT%>'" class="">查看</a>
+								</td>         
                     		</tr>
                     		<tr>
+                    		    <td>9</td>
                     			<td>跟踪管理协议</td>
+                    			<td><%=FileInfoConfig.FILE_FORMAT_PIC_OR_WORD%></td>
                     			<%if(fileInfoMap.get(FileInfoConfig.FILE_TYPE_TRACKING_MANAGEMENT_PROTOCOL) !=null){%>
-                    			<td>已提交</td>
-                    			<td><%=DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_TRACKING_MANAGEMENT_PROTOCOL).getCreateTime(), DateKit.DEFAULT_DATE_TIME_FORMAT)%></td>
-                    			<td>
-                    			<a onclick="javascript:location.href='FileInfoDownload.do?fileId=<%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_TRACKING_MANAGEMENT_PROTOCOL).getFileId()%>'" class="">下载</a>
-                    			<%if(!isGovernment) {%>
-								<label class="ml-10 btn-upload upload-wrp"><a>上传</a><input type="file" id="file11" onchange="up('file11',<%=FileInfoConfig.FILE_TYPE_TRACKING_MANAGEMENT_PROTOCOL %>);"></label>
-								<%} %>
-                    			</td>
+                    			<td>已上传</td> 
+                    			<td><%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_TRACKING_MANAGEMENT_PROTOCOL).getModifyTime() == null ? DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_TRACKING_MANAGEMENT_PROTOCOL).getCreateTime(), DateKit.DEFAULT_DATE_TIME_FORMAT) : DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_TRACKING_MANAGEMENT_PROTOCOL).getModifyTime(), DateKit.DEFAULT_DATE_TIME_FORMAT)%></td>                   			
                     			<%} else{%>
-                    			<td>未提交</td>
-                    			<td></td>
-                    			<td><%if(!isGovernment) {%>
-                    			<label class="upload-wrp btn-upload"><a>上传</a><input type="file" id="file11" onchange="up('file11',<%=FileInfoConfig.FILE_TYPE_TRACKING_MANAGEMENT_PROTOCOL %>);"></label>
-								<%} %></td>
-                    			<%}%>   
-                    			<input type="hidden" id="<%=FileInfoConfig.FILE_TYPE_TRACKING_MANAGEMENT_PROTOCOL %>_id" value="<%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_TRACKING_MANAGEMENT_PROTOCOL)!=null ? fileInfoMap.get(FileInfoConfig.FILE_TYPE_TRACKING_MANAGEMENT_PROTOCOL).getFileId(): "" %>" />           
+                    			<td>未上传</td>
+                    			<td></td>                    			
+                    			<%}%>  
+                    			<td>                    		
+								<a onclick="javascript:location.href='TrainingClassImageList.do?classId=<%=classInfoBean.getClassId()%>&fileType=<%=FileInfoConfig.FILE_TYPE_TRACKING_MANAGEMENT_PROTOCOL%>'" class="">查看</a>
+								</td>         
                     		</tr>
                     		<tr>
-                    			<td>跟踪服务对接表</td>
-                    			<%if(fileInfoMap.get(FileInfoConfig.FILE_TYPE_TRACKING_SERVICE_SHEET) !=null){%>
-                    			<td>已提交</td>
-                    			<td><%=DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_TRACKING_SERVICE_SHEET).getCreateTime(), DateKit.DEFAULT_DATE_TIME_FORMAT)%></td>
-                    			<td>
-                    			<a onclick="javascript:location.href='FileInfoDownload.do?fileId=<%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_TRACKING_SERVICE_SHEET).getFileId()%>'" class="">下载</a>
-                    			<%if(!isGovernment) {%>
-								<label class="ml-10 btn-upload upload-wrp"><a>上传</a><input type="file" id="file12" onchange="up('file12',<%=FileInfoConfig.FILE_TYPE_TRACKING_SERVICE_SHEET %>);"></label>
-								<%} %>
-                    			</td>
-                    			<%} else{%>
-                    			<td>未提交</td>
-                    			<td></td>
-                    			<td><%if(!isGovernment) {%>
-                    			<label class="upload-wrp btn-upload"><a>上传</a><input type="file" id="file12" onchange="up('file12',<%=FileInfoConfig.FILE_TYPE_TRACKING_SERVICE_SHEET %>);"></label>
-								<%} %></td>
-                    			<%}%>   
-                    			<input type="hidden" id="<%=FileInfoConfig.FILE_TYPE_TRACKING_SERVICE_SHEET %>_id" value="<%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_TRACKING_SERVICE_SHEET)!=null ? fileInfoMap.get(FileInfoConfig.FILE_TYPE_TRACKING_SERVICE_SHEET).getFileId(): "" %>" />           
-                    		</tr>
-                    		<tr>
+                    		    <td>10</td>
                     			<td>培育资金使用计划</td>
+                    			<td><%=FileInfoConfig.FILE_FORMAT_EXCEL%></td>
                     			<%if(fileInfoMap.get(FileInfoConfig.FILE_TYPE_TRAINING_FUND_USE_PLAN) !=null){%>
-                    			<td>已提交</td>
-                    			<td><%=DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_TRAINING_FUND_USE_PLAN).getCreateTime(), DateKit.DEFAULT_DATE_TIME_FORMAT)%></td>
+                    			<td>已上传</td>
+                    			<td><%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_TRAINING_FUND_USE_PLAN).getModifyTime() == null ? DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_TRAINING_FUND_USE_PLAN).getCreateTime(), DateKit.DEFAULT_DATE_TIME_FORMAT) : DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_TRAINING_FUND_USE_PLAN).getModifyTime(), DateKit.DEFAULT_DATE_TIME_FORMAT)%></td>  
                     			<td>
-                    			<a onclick="javascript:location.href='FileInfoDownload.do?fileId=<%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_TRAINING_FUND_USE_PLAN).getFileId()%>'" class="">下载</a>
+                    			<a onclick="javascript:location.href='FileInfoDownload.do?fileId=<%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_TRAINING_FUND_USE_PLAN).getFileId()%>'" class="">下载</a>  
                     			<%if(!isGovernment) {%>
-								<label class="ml-10 btn-upload upload-wrp"><a>上传</a><input type="file" id="file13" onchange="up('file13',<%=FileInfoConfig.FILE_TYPE_TRAINING_FUND_USE_PLAN %>);"></label>
-								<%} %>
+                    			|<a onclick="javascript:location.href='FileInfoRemove.do?fileId=<%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_TRAINING_FUND_USE_PLAN).getFileId()%>&url=TrainingClassCentralizedManage'" class="">删除</a>| 
+								<label class="ml-10 btn-upload upload-wrp"><a>更换</a><input type="file" id="file10" onchange="up('file10',<%=FileInfoConfig.FILE_TYPE_TRAINING_FUND_USE_PLAN %>);"></label>
+								<%} %>                    			                 			
                     			</td>
                     			<%} else{%>
-                    			<td>未提交</td>
+                    			<td>未上传</td>
                     			<td></td>
                     			<td><%if(!isGovernment) {%>
-                    			<label class="upload-wrp btn-upload"><a>上传</a><input type="file" id="file13" onchange="up('file13',<%=FileInfoConfig.FILE_TYPE_TRAINING_FUND_USE_PLAN %>);"></label>
+                    			<label class="upload-wrp btn-upload"><a>上传</a><input type="file" id="file10" onchange="up('file10',<%=FileInfoConfig.FILE_TYPE_TRAINING_FUND_USE_PLAN %>);"></label>
 								<%} %></td>
                     			<%}%>   
                     			<input type="hidden" id="<%=FileInfoConfig.FILE_TYPE_TRAINING_FUND_USE_PLAN %>_id" value="<%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_TRAINING_FUND_USE_PLAN)!=null ? fileInfoMap.get(FileInfoConfig.FILE_TYPE_TRAINING_FUND_USE_PLAN).getFileId(): "" %>" />           
                     		</tr>
                     		<tr>
-                    			<td>身份证复印件(扫描上传)</td>
+                    		    <td>11</td>
+                    			<td>学员台帐</td>
+                    			<td><%=FileInfoConfig.FILE_FORMAT_PIC_OR_EXCEL%></td>
+                    			<%if(fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_USER_SHEET) !=null){%>
+                    			<td>已上传</td>  
+                    			<td><%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_USER_SHEET).getModifyTime() == null ? DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_USER_SHEET).getCreateTime(), DateKit.DEFAULT_DATE_TIME_FORMAT) : DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_USER_SHEET).getModifyTime(), DateKit.DEFAULT_DATE_TIME_FORMAT)%></td>                  			
+                    			<%} else{%>
+                    			<td>未上传</td>
+                    			<td></td>                    			
+                    			<%}%>  
+                    			<td>                    		
+								<a onclick="javascript:location.href='TrainingClassImageList.do?classId=<%=classInfoBean.getClassId()%>&fileType=<%=FileInfoConfig.FILE_TYPE_CLASS_USER_SHEET%>'" class="">查看</a>
+								</td>        
+                    		</tr>
+                    		<%-- <tr>
+                    		    <td>12</td>
+                    			<td>认定申报表</td>
+                    			<td><%=FileInfoConfig.FILE_FORMAT_PIC_OR_WORD%></td>
+                    			<%if(fileInfoMap.get(FileInfoConfig.FILE_TYPE_IDENTIFY_DECLARE_FORM) !=null){%>
+                    			<td>已上传</td>  
+                    			<td><%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_IDENTIFY_DECLARE_FORM).getModifyTime() == null ? DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_IDENTIFY_DECLARE_FORM).getCreateTime(), DateKit.DEFAULT_DATE_TIME_FORMAT) : DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_IDENTIFY_DECLARE_FORM).getModifyTime(), DateKit.DEFAULT_DATE_TIME_FORMAT)%></td>                 			
+                    			<%} else{%>
+                    			<td>未上传</td>
+                    			<td></td>                    			
+                    			<%}%>  
+                    			<td>                    		
+								<a onclick="javascript:location.href='TrainingClassImageList.do?classId=<%=classInfoBean.getClassId()%>&fileType=<%=FileInfoConfig.FILE_TYPE_IDENTIFY_DECLARE_FORM%>'" class="">查看</a>
+								</td>          
+                    		</tr> --%>
+                    		<tr>
+                    		    <td>12</td>
+                    			<td>认定信息采集表</td>
+                    			<td><%=FileInfoConfig.FILE_FORMAT_PIC_OR_WORD%></td>
+                    			<%if(fileInfoMap.get(FileInfoConfig.FILE_TYPE_INFORMATION_ACAUISITION_FORM) !=null){%>
+                    			<td>已上传</td>
+                    			<td><%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_INFORMATION_ACAUISITION_FORM).getModifyTime() == null ? DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_INFORMATION_ACAUISITION_FORM).getCreateTime(), DateKit.DEFAULT_DATE_TIME_FORMAT) : DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_INFORMATION_ACAUISITION_FORM).getModifyTime(), DateKit.DEFAULT_DATE_TIME_FORMAT)%></td>                   			
+                    			<%} else{%>
+                    			<td>未上传</td>
+                    			<td></td>                    			
+                    			<%}%>  
+                    			<td>                    		
+								<a onclick="javascript:location.href='TrainingClassImageList.do?classId=<%=classInfoBean.getClassId()%>&fileType=<%=FileInfoConfig.FILE_TYPE_INFORMATION_ACAUISITION_FORM%>'" class="">查看</a>
+								</td>          
+                    		</tr>
+                    		<tr>
+                    		    <td>13</td>
+                    			<td>身份证复印件</td>
+                    			<td><%=FileInfoConfig.FILE_FORMAT_PIC_OR_WORD%></td>
                     			<%if(fileInfoMap.get(FileInfoConfig.FILE_TYPE_IDENTITY_CARD_COPY) !=null){%>
-                    			<td>已提交</td>
-                    			<td><%=DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_IDENTITY_CARD_COPY).getCreateTime(), DateKit.DEFAULT_DATE_TIME_FORMAT)%></td>
+                    			<td>已上传</td>   
+                    			<td><%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_IDENTITY_CARD_COPY).getModifyTime() == null ? DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_IDENTITY_CARD_COPY).getCreateTime(), DateKit.DEFAULT_DATE_TIME_FORMAT) : DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_IDENTITY_CARD_COPY).getModifyTime(), DateKit.DEFAULT_DATE_TIME_FORMAT)%></td>               			
+                    			<%} else{%>
+                    			<td>未上传</td>
+                    			<td></td>                    			
+                    			<%}%>  
                     			<td>                    		
 								<a onclick="javascript:location.href='TrainingClassImageList.do?classId=<%=classInfoBean.getClassId()%>&fileType=<%=FileInfoConfig.FILE_TYPE_IDENTITY_CARD_COPY%>'" class="">查看</a>
-								</td>
-                    			<%} else{%>
-                    			<td>未提交</td>
-                    			<td></td>
-                    			<td>
-                    			<%if(!isGovernment) {%>
-								<a onclick="javascript:location.href='TrainingClassImageList.do?classId=<%=classInfoBean.getClassId()%>&fileType=<%=FileInfoConfig.FILE_TYPE_IDENTITY_CARD_COPY%>'" class="">查看</a>
-								<%} %></td>
-                    			<%}%>                      			
-                    		</tr>
+								</td>                    			
+                    		</tr> 
                     		<tr>
-                    			<td>认定申报表</td>
-                    			<%if(fileInfoMap.get(FileInfoConfig.FILE_TYPE_IDENTIFY_DECLARE_FORM) !=null){%>
-                    			<td>已提交</td>
-                    			<td><%=DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_IDENTIFY_DECLARE_FORM).getCreateTime(), DateKit.DEFAULT_DATE_TIME_FORMAT)%></td>
-                    			<td>
-                    			<a onclick="javascript:location.href='FileInfoDownload.do?fileId=<%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_IDENTIFY_DECLARE_FORM).getFileId()%>'" class="">下载</a>
-                    			<%if(!isGovernment) {%>
-								<label class="ml-10 btn-upload upload-wrp"><a>上传</a><input type="file" id="file15" onchange="up('file15',<%=FileInfoConfig.FILE_TYPE_IDENTIFY_DECLARE_FORM %>);"></label>
-								<%} %>
-                    			</td>
-                    			<%} else{%>
-                    			<td>未提交</td>
-                    			<td></td>
-                    			<td><%if(!isGovernment) {%>
-                    			<label class="upload-wrp btn-upload"><a>上传</a><input type="file" id="file15" onchange="up('file15',<%=FileInfoConfig.FILE_TYPE_IDENTIFY_DECLARE_FORM %>);"></label>
-								<%} %></td>
-                    			<%}%>   
-                    			<input type="hidden" id="<%=FileInfoConfig.FILE_TYPE_IDENTIFY_DECLARE_FORM %>_id" value="<%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_IDENTIFY_DECLARE_FORM)!=null ? fileInfoMap.get(FileInfoConfig.FILE_TYPE_IDENTIFY_DECLARE_FORM).getFileId(): "" %>" />           
-                    		</tr>
-                    		<tr>
-                    			<td>典型学员</td>
+                    		    <td>14</td>
+                    			<td>典型学员材料</td>
+                    			<td><%=FileInfoConfig.FILE_FORMAT_WORD%></td>
                     			<%if(fileInfoMap.get(FileInfoConfig.FILE_TYPE_TYPICAL_CLASS_USER) !=null){%>
-                    			<td>已提交</td>
-                    			<td><%=DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_TYPICAL_CLASS_USER).getCreateTime(), DateKit.DEFAULT_DATE_TIME_FORMAT)%></td>
+                    			<td>已上传</td>
+                    			<td><%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_TYPICAL_CLASS_USER).getModifyTime() == null ? DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_TYPICAL_CLASS_USER).getCreateTime(), DateKit.DEFAULT_DATE_TIME_FORMAT) : DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_TYPICAL_CLASS_USER).getModifyTime(), DateKit.DEFAULT_DATE_TIME_FORMAT)%></td>  
                     			<td>
-                    			<a onclick="javascript:location.href='FileInfoDownload.do?fileId=<%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_TYPICAL_CLASS_USER).getFileId()%>'" class="">下载</a>
+                    			<a onclick="javascript:location.href='FileInfoDownload.do?fileId=<%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_TYPICAL_CLASS_USER).getFileId()%>'" class="">下载</a>  
                     			<%if(!isGovernment) {%>
-								<label class="ml-10 btn-upload upload-wrp"><a>上传</a><input type="file" id="file16" onchange="up('file16',<%=FileInfoConfig.FILE_TYPE_TYPICAL_CLASS_USER %>);"></label>
-								<%} %>
+                    			|<a onclick="javascript:location.href='FileInfoRemove.do?fileId=<%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_TYPICAL_CLASS_USER).getFileId()%>&url=TrainingClassCentralizedManage'" class="">删除</a>| 
+								<label class="ml-10 btn-upload upload-wrp"><a>更换</a><input type="file" id="file15" onchange="up('file15',<%=FileInfoConfig.FILE_TYPE_TYPICAL_CLASS_USER %>);"></label>
+								<%} %>                   			                 			
                     			</td>
                     			<%} else{%>
-                    			<td>未提交</td>
+                    			<td>未上传</td>
                     			<td></td>
                     			<td><%if(!isGovernment) {%>
-                    			<label class="upload-wrp btn-upload"><a>上传</a><input type="file" id="file16" onchange="up('file16',<%=FileInfoConfig.FILE_TYPE_TYPICAL_CLASS_USER %>);"></label>
+                    			<label class="upload-wrp btn-upload"><a>上传</a><input type="file" id="file15" onchange="up('file15',<%=FileInfoConfig.FILE_TYPE_TYPICAL_CLASS_USER %>);"></label>
 								<%} %></td>
                     			<%}%>   
                     			<input type="hidden" id="<%=FileInfoConfig.FILE_TYPE_TYPICAL_CLASS_USER %>_id" value="<%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_TYPICAL_CLASS_USER)!=null ? fileInfoMap.get(FileInfoConfig.FILE_TYPE_TYPICAL_CLASS_USER).getFileId(): "" %>" />           
                     		</tr>
                     		<tr>
+                    		    <td>15</td>
                     			<td>培训班总结</td>
+                    			<td><%=FileInfoConfig.FILE_FORMAT_WORD%></td>
                     			<%if(fileInfoMap.get(FileInfoConfig.FILE_TYPE_TRAINING_CLASS_SUMMARY) !=null){%>
-                    			<td>已提交</td>
-                    			<td><%=DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_TRAINING_CLASS_SUMMARY).getCreateTime(), DateKit.DEFAULT_DATE_TIME_FORMAT)%></td>
+                    			<td>已上传</td>
+                    			<td><%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_TRAINING_CLASS_SUMMARY).getModifyTime() == null ? DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_TRAINING_CLASS_SUMMARY).getCreateTime(), DateKit.DEFAULT_DATE_TIME_FORMAT) : DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_TRAINING_CLASS_SUMMARY).getModifyTime(), DateKit.DEFAULT_DATE_TIME_FORMAT)%></td>  
                     			<td>
-                    			<a onclick="javascript:location.href='FileInfoDownload.do?fileId=<%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_TRAINING_CLASS_SUMMARY).getFileId()%>'" class="">下载</a>
+                    			<a onclick="javascript:location.href='FileInfoDownload.do?fileId=<%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_TRAINING_CLASS_SUMMARY).getFileId()%>'" class="">下载</a> 
                     			<%if(!isGovernment) {%>
-								<label class="ml-10 btn-upload upload-wrp"><a>上传</a><input type="file" id="file17" onchange="up('file17',<%=FileInfoConfig.FILE_TYPE_TRAINING_CLASS_SUMMARY %>);"></label>
-								<%} %>
+                    			|<a onclick="javascript:location.href='FileInfoRemove.do?fileId=<%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_TRAINING_CLASS_SUMMARY).getFileId()%>&url=TrainingClassCentralizedManage'" class="">删除</a>| 
+								<label class="ml-10 btn-upload upload-wrp"><a>更换</a><input type="file" id="file16" onchange="up('file16',<%=FileInfoConfig.FILE_TYPE_TRAINING_CLASS_SUMMARY %>);"></label>
+								<%} %>                   			                   			
                     			</td>
                     			<%} else{%>
-                    			<td>未提交</td>
+                    			<td>未上传</td>
                     			<td></td>
                     			<td><%if(!isGovernment) {%>
-                    			<label class="upload-wrp btn-upload"><a>上传</a><input type="file" id="file17" onchange="up('file17',<%=FileInfoConfig.FILE_TYPE_TRAINING_CLASS_SUMMARY %>);"></label>
+                    			<label class="upload-wrp btn-upload"><a>上传</a><input type="file" id="file16" onchange="up('file16',<%=FileInfoConfig.FILE_TYPE_TRAINING_CLASS_SUMMARY %>);"></label>
 								<%} %></td>
                     			<%}%>   
                     			<input type="hidden" id="<%=FileInfoConfig.FILE_TYPE_TRAINING_CLASS_SUMMARY %>_id" value="<%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_TRAINING_CLASS_SUMMARY)!=null ? fileInfoMap.get(FileInfoConfig.FILE_TYPE_TRAINING_CLASS_SUMMARY).getFileId(): "" %>" />           
                     		</tr>
+                    		<tr>
+                    		    <td>16</td>
+                    			<td>宣传材料</td>
+                    			<td><%=FileInfoConfig.FILE_FORMAT_PIC_OR_WORD%></td>
+                    			<%if(fileInfoMap.get(FileInfoConfig.FILE_TYPE_PROMOTIONAL_MATERIAL) !=null){%>
+                    			<td>已上传</td>           
+                    			<td><%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_PROMOTIONAL_MATERIAL).getModifyTime() == null ? DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_PROMOTIONAL_MATERIAL).getCreateTime(), DateKit.DEFAULT_DATE_TIME_FORMAT) : DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_PROMOTIONAL_MATERIAL).getModifyTime(), DateKit.DEFAULT_DATE_TIME_FORMAT)%></td>         			
+                    			<%} else{%>
+                    			<td>未上传</td>
+                    			<td></td>                    			
+                    			<%}%>  
+                    			<td>                    		
+								<a onclick="javascript:location.href='TrainingClassImageList.do?classId=<%=classInfoBean.getClassId()%>&fileType=<%=FileInfoConfig.FILE_TYPE_PROMOTIONAL_MATERIAL%>'" class="">查看</a>
+								</td>                    			
+                    		</tr> 
+                    		<tr>
+                    		    <td>17</td>
+                    			<td>参观基地简介</td>
+                    			<td><%=FileInfoConfig.FILE_FORMAT_WORD%></td>
+                    			<%if(fileInfoMap.get(FileInfoConfig.FILE_TYPE_VISIT_BASE_INTRODUCTION) !=null){%>
+                    			<td>已上传</td>
+                    			<td><%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_VISIT_BASE_INTRODUCTION).getModifyTime() == null ? DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_VISIT_BASE_INTRODUCTION).getCreateTime(), DateKit.DEFAULT_DATE_TIME_FORMAT) : DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_VISIT_BASE_INTRODUCTION).getModifyTime(), DateKit.DEFAULT_DATE_TIME_FORMAT)%></td>  
+                    			<td>
+                    			<a onclick="javascript:location.href='FileInfoDownload.do?fileId=<%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_VISIT_BASE_INTRODUCTION).getFileId()%>'" class="">下载</a> 
+                    			<%if(!isGovernment) {%>
+                    			|<a onclick="javascript:location.href='FileInfoRemove.do?fileId=<%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_VISIT_BASE_INTRODUCTION).getFileId()%>&url=TrainingClassCentralizedManage'" class="">删除</a>| 
+								<label class="ml-10 btn-upload upload-wrp"><a>更换</a><input type="file" id="file18" onchange="up('file18',<%=FileInfoConfig.FILE_TYPE_VISIT_BASE_INTRODUCTION %>);"></label>
+								<%} %>                 			
+                    			</td>
+                    			<%} else{%>
+                    			<td>未上传</td>
+                    			<td></td>
+                    			<td><%if(!isGovernment) {%>
+                    			<label class="upload-wrp btn-upload"><a>上传</a><input type="file" id="file18" onchange="up('file18',<%=FileInfoConfig.FILE_TYPE_VISIT_BASE_INTRODUCTION %>);"></label>
+								<%} %></td>
+                    			<%}%>   
+                    			<input type="hidden" id="<%=FileInfoConfig.FILE_TYPE_VISIT_BASE_INTRODUCTION %>_id" value="<%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_VISIT_BASE_INTRODUCTION)!=null ? fileInfoMap.get(FileInfoConfig.FILE_TYPE_VISIT_BASE_INTRODUCTION).getFileId(): "" %>" />           
+                    		</tr>                   		               		                   		
+                    		<tr>
+                    		    <td>18</td>
+                    			<td>培训现场照片</td>
+                    			<td><%=FileInfoConfig.FILE_FORMAT_PIC_OR_WORD%></td>
+                    			<%if(fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_PHOTO) !=null){%>
+                    			<td>已上传</td>
+                    			<td><%=fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_PHOTO).getModifyTime() == null ? DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_PHOTO).getCreateTime(), DateKit.DEFAULT_DATE_TIME_FORMAT) : DateKit.formatTimestamp(fileInfoMap.get(FileInfoConfig.FILE_TYPE_CLASS_PHOTO).getModifyTime(), DateKit.DEFAULT_DATE_TIME_FORMAT)%></td>                     			
+                    			<%} else{%>
+                    			<td>未上传</td>
+                    			<td></td>
+                    			<%}%>      
+                    			<td>                    		
+								<a onclick="javascript:location.href='TrainingClassImageList.do?classId=<%=classInfoBean.getClassId()%>&fileType=<%=FileInfoConfig.FILE_TYPE_CLASS_PHOTO%>'" class="">查看</a>
+								</td>                			
+                    		</tr>                    		                   		                   		
                     	    </table>
                             </div>
                         </div>
@@ -499,6 +517,32 @@ function up(fileInput,fileType) {
             }
         });
     }
+}
+function remove(fileType) {
+	$('.loading-box').removeClass('dn');
+    var existId = $('#'+fileType+'_id').val();
+        $.ajax({
+        		url: 'FileInfoRemove.do?fileId='+existId+"&fileType="+fileType,
+            data: fd,
+            contentType: false,
+            processData: false,
+            type: 'POST',
+            success: function (data) {
+                console.log(data);
+                if(data.code == '1'){
+                		alert("删除成功");
+                		var url = "TrainingClassCentralizedManage.do?classId=" + classId;
+                		window.location.href= url
+                }else{
+                		alert(data.message);
+                }
+                $('.loading-box').addClass('dn');
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+    
 }
 </script>
 </html>

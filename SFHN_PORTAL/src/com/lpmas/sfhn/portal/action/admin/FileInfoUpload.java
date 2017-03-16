@@ -17,6 +17,7 @@ import com.lpmas.framework.config.Constants;
 import com.lpmas.framework.transfer.FileUploadKit;
 import com.lpmas.framework.transfer.FileUploadResultBean;
 import com.lpmas.framework.transfer.FileUploadResultBean.FileUploadItem;
+import com.lpmas.framework.util.BeanKit;
 import com.lpmas.framework.util.JsonKit;
 import com.lpmas.framework.util.UuidKit;
 import com.lpmas.framework.web.HttpResponseKit;
@@ -52,8 +53,7 @@ public class FileInfoUpload extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
-			IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<String> resultList = new ArrayList<String>();
 		ReturnMessageBean returnMessage = new ReturnMessageBean();
 		// 获取用户Id
@@ -68,13 +68,26 @@ public class FileInfoUpload extends HttpServlet {
 		}
 
 		int fileId = ParamKit.getIntParameter(request, "fileId", 0);
-
+		FileInfoBusiness fileInfoBusiness = new FileInfoBusiness();
+		FileInfoBean fileInfoBean = new FileInfoBean();
+		int allowedFileType = 0;
+		if (fileId > 0) {
+			fileInfoBean = fileInfoBusiness.getFileInfoByKey(fileId);
+			allowedFileType = fileInfoBean.getFileType();
+		} else {
+			allowedFileType = ParamKit.getIntParameter(request, "fileType", 0);
+		}
 		try {
 			FileUploadKit fileUploadKit = new FileUploadKit();
 			String fileName = UuidKit.getUuid();
 			String filePath = String.valueOf(orgUserBean.getInfoType() + "/" + orgUserBean.getOrganizationId());
 			String uploadPath = FileInfoConfig.ADMIN_FILE_PATH + filePath;
-			fileUploadKit.setAllowedFileType(FileInfoConfig.ALLOWED_FILE_TYPE);// 设置允许上传的文件类型
+			// 设置允许上传的文件类型
+			if (FileInfoConfig.ALLOWED_FILE_TYPE_MAP.containsKey(allowedFileType)) {
+				fileUploadKit.setAllowedFileType(FileInfoConfig.ALLOWED_FILE_TYPE_MAP.get(allowedFileType));
+			} else {
+				fileUploadKit.setAllowedFileType(FileInfoConfig.ALLOWED_FILE_TYPE);
+			}
 			fileUploadKit.setMaxSize(FileInfoConfig.MAX_SIZE);
 			FileUploadResultBean resultBean = fileUploadKit.fileUpload(request, "file", uploadPath, fileName);
 			// 获取上传结果
@@ -82,47 +95,43 @@ public class FileInfoUpload extends HttpServlet {
 				List<FileUploadItem> list = resultBean.getFileItemList();
 				for (FileUploadItem item : list) {
 					if (item.getResult()) {
-						FileInfoBusiness fileInfoBusiness = new FileInfoBusiness();
 						FileInfoBean bean = new FileInfoBean();
 						if (fileId > 0) {
 							// 更新文件
-							bean = fileInfoBusiness.getFileInfoByKey(fileId);
+							BeanKit.copyBean(bean, fileInfoBean);
 							String deletePath = bean.getFilePath();
 							String deleteName = bean.getFileName();
 							String deleteFormat = bean.getFileFormat();
 							bean.setFileName(item.getFileName().substring(0, item.getFileName().lastIndexOf(".")));
 							bean.setFileFormat(item.getExtensionFileName());
-							bean.setFilePath(filePath + Constants.FILE_SEPARATOR + fileName + "."
-									+ item.getExtensionFileName());
+							bean.setFilePath(filePath + Constants.FILE_SEPARATOR + fileName + "." + item.getExtensionFileName());
 							bean.setModifyUser(userId);
 							int result = fileInfoBusiness.updateFileInfo(bean);
-							//删除原文件
-							if(result > 0){
+							// 删除原文件
+							if (result > 0) {
 								bean.setFilePath(deletePath);
 								bean.setFileName(deleteName);
 								bean.setFileFormat(deleteFormat);
 								fileInfoBusiness.deleteFile(bean);
 							}
 						} else {
-							int fileType = ParamKit.getIntParameter(request, "fileType", 0);
+							int fileType = allowedFileType;
 							int infoType = ParamKit.getIntParameter(request, "infoType", 0);
 							int infoId1 = ParamKit.getIntParameter(request, "infoId1", 0);
 							bean.setFileType(fileType);
 							bean.setInfoType(infoType);
 							bean.setInfoId1(infoId1);
 							if (fileType > 0 && infoType > 0 && infoId1 > 0) {
-								//当存在此参数，表名是有了实体后再上传文件，则文件直接为有效的文件
+								// 当存在此参数，表名是有了实体后再上传文件，则文件直接为有效的文件
 								bean.setStatus(Constants.STATUS_VALID);
 							}
 							bean.setFileName(item.getFileName().substring(0, item.getFileName().lastIndexOf(".")));
 							bean.setFileFormat(item.getExtensionFileName());
-							bean.setFilePath(filePath + Constants.FILE_SEPARATOR + fileName + "."
-									+ item.getExtensionFileName());
+							bean.setFilePath(filePath + Constants.FILE_SEPARATOR + fileName + "." + item.getExtensionFileName());
 							bean.setCreateUser(userId);
 							fileInfoBusiness.addFileInfo(bean);
 						}
-						resultList.add(filePath + Constants.FILE_SEPARATOR + fileName + "."
-								+ item.getExtensionFileName());
+						resultList.add(filePath + Constants.FILE_SEPARATOR + fileName + "." + item.getExtensionFileName());
 					} else {
 						returnMessage.setCode(Constants.STATUS_NOT_VALID);
 						returnMessage.setMessage(item.getResultContent());

@@ -98,7 +98,7 @@ public class MajorTypeDao {
 				condList.add("memo = ?");
 				paramList.add(memo);
 			}
-			String orderQuery = "order by major_id desc";
+			String orderQuery = "order by major_id asc";
 
 			DBExecutor dbExecutor = dbFactory.getDBExecutor();
 			result = dbExecutor.getRecordListResult(sql, orderQuery, condList, paramList, MajorTypeBean.class, db);

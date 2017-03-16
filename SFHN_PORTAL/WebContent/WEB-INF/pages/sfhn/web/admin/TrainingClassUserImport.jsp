@@ -59,7 +59,7 @@ int trainingClassId = ParamKit.getIntParameter(request, "classId", 0);
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                             <li><a href="http://passport.1haowenjian.cn/user/UserInfoManage.do">个人设置</a></li>
-                            <li><a href="http://passport.1haowenjian.cn/user/Logout.do">退出</a></li>
+                            <li><a href="http://passport.1haowenjian.cn/user/Logout.do?target=http://zhxn.1haowenjian.cn/sfhn/admin/Index.do">退出</a></li>
                         </ul>
                     </div>
                 </div>
@@ -101,7 +101,7 @@ int trainingClassId = ParamKit.getIntParameter(request, "classId", 0);
                                 <div class="col-xs-10">
                                     <div class="row">                                      
                                         <div class="col-xs-8">
-                                            <input type="file" id="file" name="file" value="上传" class="form-control" onchange="submitSheet();">
+                                            <input type="file" id="file" name="file" value="上传" class="form-control">
                                         </div>                                      
                                        <!--  <div class="col-xs-4">
                                             <a class="download-link" onclick="downloadFile()">台账模板下载</a>
@@ -110,7 +110,7 @@ int trainingClassId = ParamKit.getIntParameter(request, "classId", 0);
                                 </div>
                             </div>
                             </form>
-                            <form method="post" enctype="multipart/form-data" action="TrainingClassUserDetailImport.do" id="TrainingClassUserDetailImport">
+                           <!--  <form method="post" enctype="multipart/form-data" action="TrainingClassUserDetailImport.do" id="TrainingClassUserDetailImport">
                             <div class="form-group">
                                 <div class="col-xs-2 form-label">学员信息表</div>
                                 <div class="col-xs-10">
@@ -121,12 +121,12 @@ int trainingClassId = ParamKit.getIntParameter(request, "classId", 0);
                                     </div>
                                 </div>
                             </div>
-                            </form>
+                            </form> -->
                         </div>
-                        <p class="bg-info pd-15">提示：学员信息表可多选，系统将根据信息表的命名与台帐中的身份证号自动匹配确定学员信息</p>
+                       <!--  <p class="bg-info pd-15">提示：学员信息表可多选，系统将根据信息表的命名与台帐中的身份证号自动匹配确定学员信息</p> -->
                         <div class="text-center btn-wrp">
                         	<button type="button" class="btn first btn-default btn-mini" id="cancel">取消</button>
-                            <button type="button" class="btn btn-success btn-mini" onclick="submitForm();">提交</button>
+                            <button type="button" class="btn btn-success btn-mini" onclick="submitSheet();">提交</button>
                         </div>
                      <%if(messageList != null &&!messageList.isEmpty()){ %>                   
                     <hr>

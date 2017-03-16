@@ -50,8 +50,7 @@ public class TrainingClassUserBusiness {
 		return dao.getTrainingClassUserByKey(classId, declareId);
 	}
 
-	public PageResultBean<TrainingClassUserBean> getTrainingClassUserPageListByMap(HashMap<String, String> condMap,
-			PageBean pageBean) {
+	public PageResultBean<TrainingClassUserBean> getTrainingClassUserPageListByMap(HashMap<String, String> condMap, PageBean pageBean) {
 		TrainingClassUserDao dao = new TrainingClassUserDao();
 		return dao.getTrainingClassUserPageListByMap(condMap, pageBean);
 	}
@@ -63,7 +62,6 @@ public class TrainingClassUserBusiness {
 		result.setUserId(String.valueOf(userId));
 		return result;
 	}
-
 
 	public List<TrainingClassUserBean> getTrainingClassUserListByClassId(int classId) {
 		TrainingClassUserDao dao = new TrainingClassUserDao();
@@ -89,13 +87,13 @@ public class TrainingClassUserBusiness {
 		return dao.getTrainingClassUserByDeclare(declareId);
 	}
 
-	public PageResultBean<TrainingClassUserBean> getTrainingClassUserPageListByClassIdList(
-			HashMap<String, String> condMap, PageBean pageBean, List<Integer> classInfoIdList) {
+	public PageResultBean<TrainingClassUserBean> getTrainingClassUserPageListByClassIdList(HashMap<String, String> condMap, PageBean pageBean,
+			List<Integer> classInfoIdList) {
 		TrainingClassUserDao dao = new TrainingClassUserDao();
 		return dao.getTrainingClassUserPageListByClassIdList(condMap, pageBean, classInfoIdList);
 	}
 
-	public ClassRoomMemberAddBean trainingClassUser2MemberAddBean(TrainingClassUserBean bean, String activationCode) {
+	public ClassRoomMemberAddBean trainingClassUser2MemberAddBean(TrainingClassUserBean bean) {
 		ClassRoomMemberAddBean memberAddBean = new ClassRoomMemberAddBean();
 		memberAddBean.setClassroomId(String.valueOf(bean.getClassId()));
 		DeclareReportBusiness declareReportBusiness = new DeclareReportBusiness();
@@ -117,7 +115,6 @@ public class TrainingClassUserBusiness {
 		IndustryInfoBean industryInfoBean = industryInfoBusiness.getIndustryInfoByKey(declareReportBean.getIndustryId1());
 		String industryName = industryInfoBean != null ? industryInfoBean.getIndustryName() : "";
 		memberAddBean.setTradeName(industryName);
-		memberAddBean.setActivationCode(activationCode);
 		return memberAddBean;
 	}
 

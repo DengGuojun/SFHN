@@ -5,13 +5,14 @@ import java.util.List;
 
 import org.bson.Document;
 
+import com.lpmas.framework.config.Constants;
 import com.lpmas.framework.page.PageBean;
 import com.lpmas.framework.page.PageResultBean;
 import com.lpmas.framework.util.StringKit;
 import com.lpmas.sfhn.declare.bean.DeclareReportBean;
 import com.lpmas.sfhn.portal.util.MongoDBUtil;
+import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
-import com.mongodb.QueryOperators;
 import com.mongodb.client.MongoCollection;
 
 public class DeclareReportBusiness {
@@ -79,13 +80,12 @@ public class DeclareReportBusiness {
 		}
 		// 范围条件处理
 		HashMap<String, HashMap<String, Object>> queryScopeMap = new HashMap<String, HashMap<String, Object>>();
-		List<DeclareReportBean> bean = (List<DeclareReportBean>) MongoDBUtil.getRecordListResult(queryMap,
-				queryScopeMap, DeclareReportBean.class, "declareId", true, collection);
+		List<DeclareReportBean> bean = (List<DeclareReportBean>) MongoDBUtil.getRecordListResult(queryMap, queryScopeMap, DeclareReportBean.class,
+				"declareId", true, collection);
 		return bean;
 	}
 
-	public PageResultBean<DeclareReportBean> getDeclareReportPageListByMap(HashMap<String, String> condMap,
-			PageBean pageBean) throws Exception {
+	public PageResultBean<DeclareReportBean> getDeclareReportPageListByMap(HashMap<String, String> condMap, PageBean pageBean) throws Exception {
 		MongoCollection<Document> collection = MongoDBUtil.getCollection(collectionName);
 		// 条件处理
 		HashMap<String, Object> queryMap = new HashMap<String, Object>();
@@ -122,15 +122,28 @@ public class DeclareReportBusiness {
 			queryMap.put("status", Integer.parseInt(status));
 		}
 		String classId = condMap.get("classId");
-		if (Integer.valueOf(classId) >0) {
-			queryMap.put("trainingClassInfoList", new BasicDBObject().append(QueryOperators.NE, null));
-		}else{
-			queryMap.put("trainingClassInfoList", null);
+		if (StringKit.isValid(classId)) {
+			if (Integer.valueOf(classId) == 1) {
+				BasicDBObject cond = new BasicDBObject();
+				cond.append("$gte", Constants.STATUS_VALID);
+				queryMap.put("trainingClassInfoList", cond);
+			} else if (Integer.valueOf(classId) == 0) {
+				BasicDBList searchQueryCondition = new BasicDBList();
+				BasicDBObject cond = new BasicDBObject();
+				cond.append("trainingClassInfoList", null);
+				searchQueryCondition.add(cond);
+				cond = new BasicDBObject();
+				cond.append("$size", Constants.STATUS_NOT_VALID);
+				BasicDBObject condOther = new BasicDBObject();
+				condOther.append("trainingClassInfoList", cond);
+				searchQueryCondition.add(condOther);
+				queryMap.put("$or", searchQueryCondition);
+			}
 		}
 		// 范围条件处理
 		HashMap<String, HashMap<String, Object>> queryScopeMap = new HashMap<String, HashMap<String, Object>>();
-		PageResultBean<DeclareReportBean> bean = (PageResultBean<DeclareReportBean>) MongoDBUtil.getPageListResult(
-				queryMap, queryScopeMap, DeclareReportBean.class, pageBean, "declareId", true, collection);
+		PageResultBean<DeclareReportBean> bean = (PageResultBean<DeclareReportBean>) MongoDBUtil.getPageListResult(queryMap, queryScopeMap,
+				DeclareReportBean.class, pageBean, "declareId", true, collection);
 		return bean;
 	}
 }

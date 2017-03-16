@@ -145,7 +145,7 @@ public class TrainingClassInfoConfig {
 		OPEN_STATUS_LIST.add(new StatusBean<String, String>(OPEN_STATUS_NOT_APPROVED, "未审批通过"));
 		OPEN_STATUS_LIST.add(new StatusBean<String, String>(OPEN_STATUS_NOT_OPENED, "未开班"));
 		OPEN_STATUS_LIST.add(new StatusBean<String, String>(OPEN_STATUS_OPENED, "开班中"));
-		OPEN_STATUS_LIST.add(new StatusBean<String, String>(OPEN_STATUS_FINISHED, "已结束"));
+		OPEN_STATUS_LIST.add(new StatusBean<String, String>(OPEN_STATUS_FINISHED, "培训结束"));
 	}
 
 	private static void initOpenStatusMap() {

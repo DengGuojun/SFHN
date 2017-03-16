@@ -59,13 +59,13 @@ public class TrainingClassUserBaseList extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
-			IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int pageNum = ParamKit.getIntParameter(request, "pageNum", SfhnPortalConfig.DEFAULT_PAGE_NUM);
 		int pageSize = ParamKit.getIntParameter(request, "pageSize", SfhnPortalConfig.DEFAULT_PAGE_SIZE);
 		PageBean pageBean = new PageBean(pageNum, pageSize);
+		pageBean.setPrePageNumber(pageNum - 1);
 		// 是否参与培训班
-		int isTrain = ParamKit.getIntParameter(request, "isTrain", 1);
+		int isTrain = ParamKit.getIntParameter(request, "isTrain", -1);
 		// 获取用户Id
 		SsoClientHelper helper = new SsoClientHelper(request, response, false);
 		int userId = helper.getUserId();
@@ -132,8 +132,7 @@ public class TrainingClassUserBaseList extends HttpServlet {
 		} else if (orgUserBean.getInfoType() == InfoTypeConfig.INFO_TYPE_TRAINING_ORGANIZATION) {
 			// 用户是培训机构
 			TrainingOrganizationInfoBusiness trainingOrgBusiness = new TrainingOrganizationInfoBusiness();
-			TrainingOrganizationInfoBean trainingOrgBean = trainingOrgBusiness
-					.getTrainingOrganizationInfoByKey(orgUserBean.getOrganizationId());
+			TrainingOrganizationInfoBean trainingOrgBean = trainingOrgBusiness.getTrainingOrganizationInfoByKey(orgUserBean.getOrganizationId());
 			if (trainingOrgBean.getStatus() == Constants.STATUS_NOT_VALID) {
 				HttpResponseKit.alertMessage(response, "你没有该功能的操作权限", HttpResponseKit.ACTION_HISTORY_BACK);
 				return;
@@ -147,12 +146,11 @@ public class TrainingClassUserBaseList extends HttpServlet {
 		List<DeclareReportBean> declareList = new ArrayList<DeclareReportBean>();
 		if (isTrain == 0) {
 			condMap.put("classId", "0");
-		} else {
+		} else if (isTrain == 1) {
 			condMap.put("classId", "1");
 		}
 		try {
-			PageResultBean<DeclareReportBean> declarePageList = declareReportBusiness.getDeclareReportPageListByMap(
-					condMap, pageBean);
+			PageResultBean<DeclareReportBean> declarePageList = declareReportBusiness.getDeclareReportPageListByMap(condMap, pageBean);
 			declareList = declarePageList.getRecordList();
 			totalRecordNumber = declarePageList.getTotalRecordNumber();
 		} catch (Exception e) {

@@ -32,7 +32,7 @@
 		<dependency org="fastxml" name="jackson-databind" rev="2.7.0" transitive="false"/>
 		<dependency org="lpmas" name="lpmas-framework" rev="1.0.0" transitive="false"/>
 		<dependency org="lpmas" name="lpmas-tools" rev="0.1.0" transitive="false"/>
-		<dependency org="lpmas" name="lpmas-region-client" rev="0.1.0" transitive="false"/>
+		<dependency org="lpmas" name="lpmas-region-client" rev="1.1.0" transitive="false"/>
 		<dependency org="lpmas" name="lpmas-passport-client" rev="1.0.0" transitive="false"/>
 		<dependency org="lpmas" name="lpmas-constant" rev="1.0.0" transitive="false"/>
 		<dependency org="lpmas" name="lpmas-picture-client" rev="0.1.0" transitive="false"/>
